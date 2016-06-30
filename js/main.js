@@ -57,7 +57,6 @@ Item.prototype.isInternal = function(x, y) {
 var Apl = function() {
 	this.dragging = false;
 	this.dragItem = null;
-	this.gridWidth = 80;
 	
 	// get canvas DOM element and context
 	var $canvas = $('#canvas');
@@ -83,13 +82,13 @@ var Apl = function() {
 
 	// create items
 	this.item = [];
-	this.item.push(new Item(Item.CIRCLE, this.gridWidth));
-	this.item.push(new Item(Item.TRIANGLE, this.gridWidth));
-	this.item.push(new Item(Item.SQUARE, this.gridWidth));
+	this.item.push(new Item(Item.CIRCLE, 40));
+	this.item.push(new Item(Item.TRIANGLE, 40));
+	this.item.push(new Item(Item.SQUARE, 40));
 	for (var i = 0; i < this.item.length; i++) {
 		// initialize position randomely in the canvas
-		var x = parseInt(Math.random()*(this.canvasWidth - this.gridWidth) + this.gridWidth/2);
-		var y = parseInt(Math.random()*(this.canvasHeight - this.gridWidth) + this.gridWidth/2);
+		var x = parseInt(Math.random()*(this.canvasWidth - 40) + 20);
+		var y = parseInt(Math.random()*(this.canvasHeight - 40) + 20);
 		this.item[i].setPosition(x, y);
 	}
 
@@ -103,20 +102,6 @@ var Apl = function() {
 };
 Apl.prototype._blank = function() {
 	this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-
-	for (var x = 0; x < this.canvasWidth; x += this.gridWidth) {
-		this.ctx.beginPath();
-		this.ctx.moveTo(x, 0);
-		this.ctx.lineTo(x, this.canvasHeight);
-		this.ctx.stroke();
-	}
-
-	for (var y = 0; y < this.canvasHeight; y += this.gridWidth) {
-		this.ctx.beginPath();
-		this.ctx.moveTo(0, y);
-		this.ctx.lineTo(this.canvasWidth, y);
-		this.ctx.stroke();
-	}
 };
 Apl.prototype.draw = function() {
 	this._blank();
