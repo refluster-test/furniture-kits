@@ -4,7 +4,11 @@ var Furniture = function(width, height) {
 
 	// create items
 	this.item = [];
-	this.item.push(new ItemCircle());
+	this.item.push(new ItemWallH());
+	this.item.push(new ItemWallH());
+	this.item.push(new ItemWallH());
+	this.item.push(new ItemWallH());
+	this.item.push(new ItemWallH());
 };
 
 Furniture.prototype.draw = function(ctx) {

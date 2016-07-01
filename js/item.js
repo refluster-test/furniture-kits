@@ -26,16 +26,18 @@ Item.prototype.isInternal = function(x, y) {
 }
 
 //////////////////////////////
-ItemCircle = function() {
+ItemWallH = function() {
 	this.color = 'white';
 	this.pos = {x: 100, y: 100, z: 0};
 	this.area = {t: 30, r: 70, b: 20, l: 30};
+	this.size = 300;
+	this.thick = 10;
 };
 
-Object.setPrototypeOf(ItemCircle.prototype, Item.prototype);
+Object.setPrototypeOf(ItemWallH.prototype, Item.prototype);
 
-ItemCircle.prototype.draw = function(ctx) {
+ItemWallH.prototype.draw = function(ctx) {
 	ctx.fillStyle = this.color;
-	ctx.fillRect(this.pos.x - this.area.l, this.pos.y - this.area.t,
-                 this.area.l + this.area.r, this.area.t + this.area.b);
+	ctx.fillRect(this.pos.x - this.size/2, this.pos.y - this.thick/2,
+				 this.size, this.thick);
 };
