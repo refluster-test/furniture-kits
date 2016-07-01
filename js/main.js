@@ -6,15 +6,14 @@ var Furniture = function(width, height) {
 
 	// create items
 	this.item = [];
-	this.item.push(new Item(Item.CIRCLE, 40));
-	this.item.push(new Item(Item.TRIANGLE, 40));
-	this.item.push(new Item(Item.SQUARE, 40));
+	this.item.push(new Item(Item.CIRCLE, 100));
+	this.item.push(new Item(Item.TRIANGLE, 100));
+	this.item.push(new Item(Item.SQUARE, 100));
 	for (var i = 0; i < this.item.length; i++) {
 		// initialize position randomely in the canvas
 		var x = parseInt(Math.random()*(this.width - 40) + 20);
 		var y = parseInt(Math.random()*(this.height - 40) + 20);
 		this.item[i].setPosition(x, y);
-		console.log({x: x, y: y});
 	}
 };
 
@@ -59,19 +58,14 @@ var Apl = function() {
 	this.canvasStyleWidth = $canvas.width();
 	this.canvasStyleHeight = $canvas.height();
 
-	$canvas.attr('width', $canvas.width());
-	$canvas.attr('height', $canvas.width()*WH_RATIO);
+	$canvas.attr('width', 1024);
+	$canvas.attr('height', 1024*WH_RATIO);
 
 	// get canvas info
 	this.canvasLeft = $canvas.offset().left;
 	this.canvasTop = $canvas.offset().top;
 	this.canvasWidth = parseInt($canvas.attr('width'));
 	this.canvasHeight = parseInt($canvas.attr('height'));
-
-	console.log({cw: this.canvasStyleWidth,
-				 ch: this.canvasStyleHeight,
-				 w: this.canvasWidth,
-				 h: this.canvasHeight});
 
 	// context settnigs
 	this.ctx.strokeStyle = "#888";
@@ -98,24 +92,15 @@ Apl.prototype.draw = function() {
 	this.furniture.draw(this.ctx);
 	this.ctx.restore();
 };
-Apl.prototype.checkItem = function(x, y) {
-	x *= this.canvasWidth / this.canvasStyleWidth;
-	y *= this.canvasHeight / this.canvasStyleHeight;
-
-	return this.furniture.checkItem(x, y);
-};
 Apl.prototype.hDown = function(evt) {
 	if (!this.dragging) {
 		// convert coordinate from point to canvas
 		var x = parseInt(evt.pageX - this.canvasLeft);
 		var y = parseInt(evt.pageY - this.canvasTop);
-		console.log({x: x, y: y});
-		x *= this.canvasWidth / this.canvasStyleWidth;
-		y *= this.canvasHeight / this.canvasStyleHeight;
-		console.log({x: x, y: y});
+		x = parseInt(x * this.canvasWidth / this.canvasStyleWidth);
+		y = parseInt(y * this.canvasHeight / this.canvasStyleHeight);
 		// check if any object is at the point
-		var itemIdx = this.checkItem(x, y);
-		console.log(itemIdx);
+		var itemIdx = this.furniture.checkItem(x, y);
 		if (itemIdx != null) {
 			this.dragging = true;
 			this.dragItem = itemIdx;
@@ -143,8 +128,8 @@ Apl.prototype.hMove = function(evt) {
 		// convert coordinate from point to canvas
 		var x = parseInt(evt.pageX - this.canvasLeft);
 		var y = parseInt(evt.pageY - this.canvasTop);
-		x *= this.canvasWidth / this.canvasStyleWidth;
-		y *= this.canvasHeight / this.canvasStyleHeight;
+		x = parseInt(x * this.canvasWidth / this.canvasStyleWidth);
+		y = parseInt(y * this.canvasHeight / this.canvasStyleHeight);
 		// check if the canvas should be updated
 		if (this.furniture.move(this.dragItem, x, y)) {
 			this.draw();
