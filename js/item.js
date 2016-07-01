@@ -6,8 +6,6 @@ var Item = function(size) {
 	this.type = 0;
 	this.linkItem = [];
 	this.linkItemType = [];
-
-	this.name;
 };
 Item.prototype.setPosition = function(x, y) {
 	this.x = x; this.y = y;
@@ -23,18 +21,16 @@ Item.prototype.isInternal = function(x, y) {
 	}
 	return false;
 }
-Item.prototype.test = function(x, y) {
-	console.log(this.name);
-};
 
 //////////////////////////////
 ItemCircle = function() {
-	this.name = 'c---';
+	this.color = 'white';
+	this.pos = {x: 100, y: 100, z: 0};
+	this.area = {t: 30, r: 70, b: 20, l: 30};
 };
 Object.setPrototypeOf(ItemCircle.prototype, Item.prototype);
 ItemCircle.prototype.draw = function(ctx) {
 	ctx.fillStyle = this.color;
-	ctx.beginPath();
-	ctx.arc(this.x, this.y, this.size/2, 0, Math.PI*2, false);
-	ctx.fill();
+	ctx.fillRect(this.pos.x - this.area.l, this.pos.y - this.area.t,
+                 this.area.l + this.area.r, this.area.t + this.area.b);
 };

@@ -6,18 +6,13 @@ var Furniture = function(width, height) {
 
 	// create items
 	this.item = [];
-	this.item.push(new Item(100));
-	this.item.push(new Item(100));
-	this.item.push(new Item(100));
+	this.item.push(new ItemCircle());
 	for (var i = 0; i < this.item.length; i++) {
 		// initialize position randomely in the canvas
 		var x = parseInt(Math.random()*(this.width - 40) + 20);
 		var y = parseInt(Math.random()*(this.height - 40) + 20);
 		this.item[i].setPosition(x, y);
 	}
-
-	var i = new ItemCircle();
-	i.test();
 };
 
 Furniture.prototype.draw = function(ctx) {
