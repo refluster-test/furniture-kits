@@ -1,38 +1,5 @@
 const WH_RATIO = (3/4);
 
-var Furniture = function(width, height) {
-	this.width = width;
-	this.height = height;
-
-	// create items
-	this.item = [];
-	this.item.push(new ItemCircle());
-};
-
-Furniture.prototype.draw = function(ctx) {
-	for (var i = 0; i < this.item.length; i++) {
-		this.item[i].draw(ctx);
-	}
-};
-
-Furniture.prototype.checkItem = function(x, y) {
-	for (var i = 0; i < this.item.length; i++) {
-		if (this.item[i].isInternal(x, y)) {
-			return i;
-		}
-	}
-	return null;
-};
-
-Furniture.prototype.move = function(idx, x, y) {
-	if (x != this.item[idx].x ||
-		y != this.item[idx].y) {
-		this.item[idx].setPosition(x, y);
-		return true;
-	}
-	return false;
-}
-
 var Apl = function() {
 	this.dragging = false;
 	this.dragItem = null;
@@ -75,15 +42,18 @@ var Apl = function() {
 
 	this.draw();
 };
+
 Apl.prototype._blank = function() {
 	this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 };
+
 Apl.prototype.draw = function() {
 	this._blank();
 	this.ctx.save();
 	this.furniture.draw(this.ctx);
 	this.ctx.restore();
 };
+
 Apl.prototype.hDown = function(evt) {
 	if (!this.dragging) {
 		// convert coordinate from point to canvas
@@ -99,10 +69,12 @@ Apl.prototype.hDown = function(evt) {
 		}
 	}
 };
+
 Apl.prototype.hUp = function(evt) {
 	this.dragging = false;
 	this.dragItem = null;
 };
+
 Apl.prototype.hMove = function(evt) {
 	if (this.dragging) {
 		// convert coordinate from point to canvas

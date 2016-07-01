@@ -7,11 +7,14 @@ var Item = function(size) {
 	this.linkItem = [];
 	this.linkItemType = [];
 };
+
 Item.prototype.setPosition = function(x, y) {
 	this.pos.x = x; this.pos.y = y;
 };
+
 Item.prototype.draw = function(ctx) {
 };
+
 Item.prototype.isInternal = function(x, y) {
 	if (x >= this.pos.x - this.area.l &&
 		x <= this.pos.x + this.area.r &&
@@ -28,7 +31,9 @@ ItemCircle = function() {
 	this.pos = {x: 100, y: 100, z: 0};
 	this.area = {t: 30, r: 70, b: 20, l: 30};
 };
+
 Object.setPrototypeOf(ItemCircle.prototype, Item.prototype);
+
 ItemCircle.prototype.draw = function(ctx) {
 	ctx.fillStyle = this.color;
 	ctx.fillRect(this.pos.x - this.area.l, this.pos.y - this.area.t,
