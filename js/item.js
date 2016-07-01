@@ -8,15 +8,15 @@ var Item = function(size) {
 	this.linkItemType = [];
 };
 Item.prototype.setPosition = function(x, y) {
-	this.x = x; this.y = y;
+	this.pos.x = x; this.pos.y = y;
 };
 Item.prototype.draw = function(ctx) {
 };
 Item.prototype.isInternal = function(x, y) {
-	if (x >= this.pos.x - this.size/2 &&
-		x <= this.pos.x + this.size/2 &&
-		y >= this.pos.y - this.size/2 &&
-		y <= this.pos.y + this.size/2) {
+	if (x >= this.pos.x - this.area.l &&
+		x <= this.pos.x + this.area.r &&
+		y >= this.pos.y - this.area.t &&
+		y <= this.pos.y + this.area.b) {
 		return true;
 	}
 	return false;
