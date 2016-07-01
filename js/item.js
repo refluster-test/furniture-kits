@@ -45,12 +45,6 @@ Item.prototype._drawSquare = function(ctx) {
 				 this.size, this.size);
 };
 Item.prototype.isInternal = function(x, y) {
-	console.log({l: this.x - this.size/2,
-				 u: this.y + this.size/2,
-				 r: this.x + this.size/2,
-				 d: this.y - this.size/2
-				});
-
 	if (x >= this.x - this.size/2 &&
 		x <= this.x + this.size/2 &&
 		y >= this.y - this.size/2 &&

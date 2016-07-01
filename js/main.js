@@ -108,20 +108,8 @@ Apl.prototype.hDown = function(evt) {
 	}
 };
 Apl.prototype.hUp = function(evt) {
-	if (this.dragging) {
-		// convert coordinate from point to canvas
-		var x = parseInt(evt.pageX - this.canvasLeft);
-		var y = parseInt(evt.pageY - this.canvasTop);
-		if (x < 0) x = 0;
-		if (x > this.canvasWidth) x = this.canvasWidth;
-		if (y < 0) y = 0;
-		if (y > this.canvasHeight) y = this.canvasHeight;
-		// update canvas
-		this.draw();
-
-		this.dragging = false;
-		this.dragItem = null;
-	}
+	this.dragging = false;
+	this.dragItem = null;
 };
 Apl.prototype.hMove = function(evt) {
 	if (this.dragging) {
