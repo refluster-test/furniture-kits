@@ -15,6 +15,9 @@ var Furniture = function(width, height) {
 		var y = parseInt(Math.random()*(this.height - 40) + 20);
 		this.item[i].setPosition(x, y);
 	}
+
+	var i = new ItemCircle();
+	i.test();
 };
 
 Furniture.prototype.draw = function(ctx) {
