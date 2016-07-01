@@ -1,3 +1,43 @@
+const WH_RATIO = (3/4);
+
+var Furniture = function() {
+	// create items
+	this.item = [];
+	this.item.push(new Item(Item.CIRCLE, 40));
+	this.item.push(new Item(Item.TRIANGLE, 40));
+	this.item.push(new Item(Item.SQUARE, 40));
+	for (var i = 0; i < this.item.length; i++) {
+		// initialize position randomely in the canvas
+		var x = parseInt(Math.random()*(this.canvasWidth - 40) + 20);
+		var y = parseInt(Math.random()*(this.canvasHeight - 40) + 20);
+		this.item[i].setPosition(x, y);
+	}
+};
+
+Furniture.prototype.draw = function(ctx) {
+	for (var i = 0; i < this.item.length; i++) {
+		this.item[i].draw(ctx);
+	}
+};
+
+Furniture.prototype.checkItem = function(x, y) {
+	for (var i = 0; i < this.item.length; i++) {
+		if (this.item[i].isInternal(x, y)) {
+			return i;
+		}
+	}
+	return null;
+};
+
+Furniture.prototype.move = function(x, y) {
+	if (x != this.item[this.dragItem].x ||
+		y != this.item[this.dragItem].y) {
+		this.item[this.dragItem].setPosition(x, y);
+		return true;
+	}
+	return false;
+}
+
 var Apl = function() {
 	this.dragging = false;
 	this.dragItem = null;
@@ -10,8 +50,10 @@ var Apl = function() {
 	this.ctx = $canvas[0].getContext("2d");
 
 	// resize canvas
+	$canvas.css('width', $canvas.width());
+	$canvas.css('height', $canvas.width()*WH_RATIO);
 	$canvas.attr('width', $canvas.width());
-	$canvas.attr('height', $canvas.height());
+	$canvas.attr('height', $canvas.width()*WH_RATIO);
 
 	// get canvas info
 	this.canvasLeft = $canvas.offset().left;
@@ -24,17 +66,8 @@ var Apl = function() {
 	this.ctx.lineWidth = 1;
 	this.ctx.globalCompositeOperation = "source-over";
 
-	// create items
-	this.item = [];
-	this.item.push(new Item(Item.CIRCLE, 40));
-	this.item.push(new Item(Item.TRIANGLE, 40));
-	this.item.push(new Item(Item.SQUARE, 40));
-	for (var i = 0; i < this.item.length; i++) {
-		// initialize position randomely in the canvas
-		var x = parseInt(Math.random()*(this.canvasWidth - 40) + 20);
-		var y = parseInt(Math.random()*(this.canvasHeight - 40) + 20);
-		this.item[i].setPosition(x, y);
-	}
+	// create room
+	this.furniture = new Furniture();
 
 	// set events to the canvas
 	$canvas.mousedown(this.hDown.bind(this));
@@ -50,18 +83,11 @@ Apl.prototype._blank = function() {
 Apl.prototype.draw = function() {
 	this._blank();
 	this.ctx.save();
-	for (var i = 0; i < this.item.length; i++) {
-		this.item[i].draw(this.ctx);
-	}
+	this.furniture.draw(this.ctx);
 	this.ctx.restore();
 };
 Apl.prototype.checkItem = function(x, y) {
-	for (var i = 0; i < this.item.length; i++) {
-		if (this.item[i].isInternal(x, y)) {
-			return i;
-		}
-	}
-	return null;
+	this.furniture.checkItem(x, y);
 };
 Apl.prototype.hDown = function(evt) {
 	if (!this.dragging) {
@@ -98,9 +124,7 @@ Apl.prototype.hMove = function(evt) {
 		var x = parseInt(evt.pageX - this.canvasLeft);
 		var y = parseInt(evt.pageY - this.canvasTop);
 		// check if the canvas should be updated
-		if (x != this.item[this.dragItem].x ||
-			y != this.item[this.dragItem].y) {
-			this.item[this.dragItem].setPosition(x, y);
+		if (this.furniture.move(x, y)) {
 			this.draw();
 		}
 	}
