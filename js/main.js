@@ -6,9 +6,9 @@ var Furniture = function(width, height) {
 
 	// create items
 	this.item = [];
-	this.item.push(new Item(Item.CIRCLE, 100));
-	this.item.push(new Item(Item.TRIANGLE, 100));
-	this.item.push(new Item(Item.SQUARE, 100));
+	this.item.push(new Item(100));
+	this.item.push(new Item(100));
+	this.item.push(new Item(100));
 	for (var i = 0; i < this.item.length; i++) {
 		// initialize position randomely in the canvas
 		var x = parseInt(Math.random()*(this.width - 40) + 20);
