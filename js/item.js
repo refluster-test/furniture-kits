@@ -16,11 +16,9 @@ Item.prototype.setConfig = function(envConfig, itemConf, item) {
 	this.image = undefined;
 	this.color = 'white';
 	this.type = Item;
-	console.log(itemConf);
-	
 	this.linkItem = [];
-	for (var i = 0; i < itemConf.linkItemIdx.length; i++) {
-		this.linkItem.push(item[itemConf.linkItemIdx[i]]);
+	for (var i = 0; i < itemConf.itemAttachTo.length; i++) {
+		this.linkItem.push(item[itemConf.itemAttachTo[i]]);
 	}
 };
 
