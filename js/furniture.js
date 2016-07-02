@@ -2,18 +2,45 @@ var Furniture = function(width, height) {
 	this.width = width;
 	this.height = height;
 
+	this.state = {
+		config: {
+			height: 300,
+			width: 250,
+			wallColor: 'blue',
+		},
+		item: [
+			{
+				type: ItemWallHorizontal,
+				pos: {x: 200, y: 80, z: 0},
+			},
+			{
+				type: ItemWallHorizontal,
+				pos: {x: 150, y: 380, z: 0},
+			},
+			{
+				type: ItemWallVertical,
+				pos: {x: 180, y: 80, z: 0},
+			},
+		]
+	};
+
 	// create items
 	this.item = [];
-	this.item.push(new ItemWallH());
-	this.item.push(new ItemWallH());
-	this.item.push(new ItemWallH());
-	this.item.push(new ItemWallH());
-	this.item.push(new ItemWallH());
+	for (var i = 0; i < this.state.item.length; i++) {
+		this.item.push(new this.state.item[i].type());
+	}
+
+	for (var i = 0; i < this.item.length; i++) {
+		this.item[i].setConfig(this.state.config, this.state.item[i], this.item);
+	}
 };
 
 Furniture.prototype.draw = function(ctx) {
 	for (var i = 0; i < this.item.length; i++) {
 		this.item[i].draw(ctx);
+		if (this.item[i].test) {
+			this.item[i].test();
+		}
 	}
 };
 

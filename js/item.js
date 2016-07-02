@@ -1,11 +1,20 @@
-var Item = function(size) {
+var Item = function() {
 	this.pos = {x: 0, y: 0, z: 0};
-	this.area = {u: 0, l: 0, r: 0, b: 0};
-	this.image = false;
+	this.image = undefined;
 	this.color = 'white';
-	this.type = 0;
+	this.type = Item;
 	this.linkItem = [];
-	this.linkItemType = [];
+	this.area = {u: 0, l: 0, r: 0, b: 0};
+	this.linkableItemType = [];
+};
+
+Item.prototype.setConfig = function(envConfig, itemConf, item) {
+	this.envConfig = envConfig;
+	this.pos = itemConf.pos;
+	this.image = undefined;
+	this.color = 'white';
+	this.type = Item;
+	this.linkItem = [];
 };
 
 Item.prototype.setPosition = function(x, y) {
@@ -13,6 +22,10 @@ Item.prototype.setPosition = function(x, y) {
 };
 
 Item.prototype.draw = function(ctx) {
+};
+
+Item.prototype.test = function() {
+	console.log('item log');
 };
 
 Item.prototype.isInternal = function(x, y) {
@@ -23,21 +36,34 @@ Item.prototype.isInternal = function(x, y) {
 		return true;
 	}
 	return false;
-}
+};
 
 //////////////////////////////
-ItemWallH = function() {
-	this.color = 'white';
-	this.pos = {x: 100, y: 100, z: 0};
+ItemWallHorizontal = function() {
 	this.area = {t: 30, r: 70, b: 20, l: 30};
 	this.size = 300;
 	this.thick = 10;
 };
 
-Object.setPrototypeOf(ItemWallH.prototype, Item.prototype);
+Object.setPrototypeOf(ItemWallHorizontal.prototype, Item.prototype);
 
-ItemWallH.prototype.draw = function(ctx) {
-	ctx.fillStyle = this.color;
+ItemWallHorizontal.prototype.draw = function(ctx) {
+	ctx.fillStyle = this.envConfig.wallColor;
 	ctx.fillRect(this.pos.x - this.size/2, this.pos.y - this.thick/2,
 				 this.size, this.thick);
+};
+
+//////////////////////////////
+ItemWallVertical = function() {
+	this.area = {t: 30, r: 70, b: 20, l: 30};
+	this.size = 500;
+	this.thick = 10;
+};
+
+Object.setPrototypeOf(ItemWallVertical.prototype, Item.prototype);
+
+ItemWallVertical.prototype.draw = function(ctx) {
+	ctx.fillStyle = this.color;
+	ctx.fillRect(this.pos.x - this.thick/2, this.pos.y - this.size/2, 
+				 this.thick, this.size);
 };
