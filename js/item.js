@@ -84,7 +84,6 @@ Item.prototype.attachPosition = function() {
 //////////////////////////////
 ItemWallHorizontal = function() {
 	this.area = {t: 30, r: 70, b: 20, l: 30};
-	this.size = 300;
 	this.thick = 10;
 };
 
@@ -97,7 +96,6 @@ ItemWallHorizontal.prototype.draw = function(ctx) {
 	ctx.fillStyle = this.envConfig.wallColor;
 	ctx.fillRect(left, this.pos.y - this.thick/2,
 				 right - left, WALL_THICK);
-	
 };
 
 //////////////////////////////
