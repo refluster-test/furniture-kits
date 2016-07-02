@@ -1,3 +1,5 @@
+const WALL_THICK = 10;
+
 var Item = function() {
 	this.pos = {x: 0, y: 0, z: 0};
 	this.image = undefined;
@@ -35,6 +37,33 @@ Item.prototype.isInternal = function(x, y) {
 };
 
 //////////////////////////////
+ItemFrame = function() {
+	this.area = {t: 0, r: 0, b: 0, l: 0};
+	this.thick = WALL_THICK;
+};
+
+Object.setPrototypeOf(ItemFrame.prototype, Item.prototype);
+
+ItemFrame.prototype.draw = function(ctx) {
+	var width = this.envConfig.width;
+	var height = this.envConfig.height;
+	var left = this.pos.x - width/2;
+	var right = this.pos.x + width/2;
+	var top = this.pos.y - height/2;
+	var bottom = this.pos.y + height/2;
+
+	ctx.fillStyle = this.envConfig.wallColor;
+	// left side
+	ctx.fillRect(left, top, WALL_THICK, height);
+	// right side
+	ctx.fillRect(right, top, -WALL_THICK, height);
+	// upper side
+	ctx.fillRect(left, top, width, WALL_THICK);
+	// lower side
+	ctx.fillRect(left, bottom, width, -WALL_THICK);
+};
+
+//////////////////////////////
 ItemWallHorizontal = function() {
 	this.area = {t: 30, r: 70, b: 20, l: 30};
 	this.size = 300;
@@ -59,7 +88,7 @@ ItemWallVertical = function() {
 Object.setPrototypeOf(ItemWallVertical.prototype, Item.prototype);
 
 ItemWallVertical.prototype.draw = function(ctx) {
-	ctx.fillStyle = this.color;
+	ctx.fillStyle = this.envConfig.wallColor;
 	ctx.fillRect(this.pos.x - this.thick/2, this.pos.y - this.size/2, 
 				 this.thick, this.size);
 };

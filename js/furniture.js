@@ -4,11 +4,16 @@ var Furniture = function(width, height) {
 
 	this.state = {
 		config: {
-			height: 300,
-			width: 250,
-			wallColor: 'blue',
+			width: 800,
+			height: 600,
+			wallColor: '#68c',
+			windowColor: ''
 		},
 		item: [
+			{
+				type: ItemFrame,
+				pos: {x: this.width/2, y: this.height/2, z: 0},
+			},
 			{
 				type: ItemWallHorizontal,
 				pos: {x: 200, y: 80, z: 0},
@@ -30,6 +35,7 @@ var Furniture = function(width, height) {
 		this.item.push(new this.state.item[i].type());
 	}
 
+	// set config for items
 	for (var i = 0; i < this.item.length; i++) {
 		this.item[i].setConfig(this.state.config, this.state.item[i], this.item);
 	}
