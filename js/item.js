@@ -46,7 +46,6 @@ Item.prototype.isInternal = function(x, y) {
 //////////////////////////////
 ItemFrame = function() {
 	this.area = {t: 0, r: 0, b: 0, l: 0};
-	this.thick = WALL_THICK;
 };
 
 Object.setPrototypeOf(ItemFrame.prototype, Item.prototype);
@@ -84,7 +83,6 @@ Item.prototype.attachPosition = function() {
 //////////////////////////////
 ItemWallHorizontal = function() {
 	this.area = {t: 30, r: 70, b: 20, l: 30};
-	this.thick = 10;
 };
 
 Object.setPrototypeOf(ItemWallHorizontal.prototype, Item.prototype);
@@ -94,7 +92,7 @@ ItemWallHorizontal.prototype.draw = function(ctx) {
 	var right = this.linkItem[1].attachPosition().l;
 
 	ctx.fillStyle = this.envConfig.wallColor;
-	ctx.fillRect(left, this.pos.y - this.thick/2,
+	ctx.fillRect(left, this.pos.y - WALL_THICK/2,
 				 right - left, WALL_THICK);
 };
 
