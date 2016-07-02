@@ -16,7 +16,12 @@ Item.prototype.setConfig = function(envConfig, itemConf, item) {
 	this.image = undefined;
 	this.color = 'white';
 	this.type = Item;
+	console.log(itemConf);
+	
 	this.linkItem = [];
+	for (var i = 0; i < itemConf.linkItemIdx.length; i++) {
+		this.linkItem.push(item[itemConf.linkItemIdx[i]]);
+	}
 };
 
 Item.prototype.setPosition = function(x, y) {
@@ -24,6 +29,10 @@ Item.prototype.setPosition = function(x, y) {
 };
 
 Item.prototype.draw = function(ctx) {
+};
+
+Item.prototype.attachPosition = function() {
+	return undefined;
 };
 
 Item.prototype.isInternal = function(x, y) {
@@ -63,6 +72,17 @@ ItemFrame.prototype.draw = function(ctx) {
 	ctx.fillRect(left, bottom, width, -WALL_THICK);
 };
 
+Item.prototype.attachPosition = function() {
+	var width = this.envConfig.width;
+	var height = this.envConfig.height;
+	var left = this.pos.x - width/2;
+	var right = this.pos.x + width/2;
+	var top = this.pos.y - height/2;
+	var bottom = this.pos.y + height/2;
+	return {u: top + WALL_THICK, b: bottom - WALL_THICK,
+			l: left + WALL_THICK, r: right - WALL_THICK};
+};
+
 //////////////////////////////
 ItemWallHorizontal = function() {
 	this.area = {t: 30, r: 70, b: 20, l: 30};
@@ -73,9 +93,13 @@ ItemWallHorizontal = function() {
 Object.setPrototypeOf(ItemWallHorizontal.prototype, Item.prototype);
 
 ItemWallHorizontal.prototype.draw = function(ctx) {
+	var left = this.linkItem[0].attachPosition().r;
+	var right = this.linkItem[1].attachPosition().l;
+
 	ctx.fillStyle = this.envConfig.wallColor;
-	ctx.fillRect(this.pos.x - this.size/2, this.pos.y - this.thick/2,
-				 this.size, this.thick);
+	ctx.fillRect(left, this.pos.y - this.thick/2,
+				 right - left, WALL_THICK);
+	
 };
 
 //////////////////////////////

@@ -13,19 +13,25 @@ var Furniture = function(width, height) {
 			{
 				type: ItemFrame,
 				pos: {x: this.width/2, y: this.height/2, z: 0},
+				linkItemIdx: [],
 			},
 			{
 				type: ItemWallHorizontal,
-				pos: {x: 200, y: 80, z: 0},
+				pos: {x: 400, y: 180, z: 0},
+				linkItemIdx: [0, 0],
 			},
 			{
 				type: ItemWallHorizontal,
-				pos: {x: 150, y: 380, z: 0},
+				pos: {x: 350, y: 380, z: 0},
+				linkItemIdx: [0, 0],
 			},
+/*
 			{
 				type: ItemWallVertical,
 				pos: {x: 180, y: 80, z: 0},
+				linkItem: [0, 0],
 			},
+*/
 		]
 	};
 
