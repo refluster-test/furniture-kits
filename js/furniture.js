@@ -38,9 +38,6 @@ var Furniture = function(width, height) {
 Furniture.prototype.draw = function(ctx) {
 	for (var i = 0; i < this.item.length; i++) {
 		this.item[i].draw(ctx);
-		if (this.item[i].test) {
-			this.item[i].test();
-		}
 	}
 };
 

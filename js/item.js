@@ -24,10 +24,6 @@ Item.prototype.setPosition = function(x, y) {
 Item.prototype.draw = function(ctx) {
 };
 
-Item.prototype.test = function() {
-	console.log('item log');
-};
-
 Item.prototype.isInternal = function(x, y) {
 	if (x >= this.pos.x - this.area.l &&
 		x <= this.pos.x + this.area.r &&
