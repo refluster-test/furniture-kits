@@ -20,6 +20,7 @@ Item.prototype.setConfig = function(envConfig, itemConf, item) {
 	for (var i = 0; i < itemConf.itemAttachTo.length; i++) {
 		this.linkItem.push(item[itemConf.itemAttachTo[i]]);
 	}
+	this.calcArea();
 };
 
 Item.prototype.setPosition = function(x, y) {
@@ -33,13 +34,27 @@ Item.prototype.attachPosition = function() {
 	return undefined;
 };
 
+Item.prototype.calcArea = function() {
+};
+
 Item.prototype.isInternal = function(x, y) {
-	if (x >= this.pos.x - this.area.l &&
+	console.log({x: x, y: y});
+	if (x >= this.pos.x + this.area.l &&
 		x <= this.pos.x + this.area.r &&
-		y >= this.pos.y - this.area.t &&
+		y >= this.pos.y + this.area.t &&
 		y <= this.pos.y + this.area.b) {
+		console.log({j: true,
+					 l: this.pos.x - this.area.l,
+					 r: this.pos.x + this.area.r,
+					 t: this.pos.y - this.area.t,
+					 b: this.pos.y + this.area.b});
 		return true;
 	}
+	console.log({j: false,
+				 l: this.pos.x + this.area.l,
+				 r: this.pos.x + this.area.r,
+				 t: this.pos.y + this.area.t,
+				 b: this.pos.y + this.area.b});
 	return false;
 };
 
@@ -69,7 +84,7 @@ ItemFrame.prototype.draw = function(ctx) {
 	ctx.fillRect(left, bottom, width, -WALL_THICK);
 };
 
-Item.prototype.attachPosition = function() {
+ItemFrame.prototype.attachPosition = function() {
 	var width = this.envConfig.width;
 	var height = this.envConfig.height;
 	var left = this.pos.x - width/2;
@@ -77,7 +92,7 @@ Item.prototype.attachPosition = function() {
 	var top = this.pos.y - height/2;
 	var bottom = this.pos.y + height/2;
 	return {u: top + WALL_THICK, b: bottom - WALL_THICK,
-			l: left + WALL_THICK, r: right - WALL_THICK};
+			r: left + WALL_THICK, l: right - WALL_THICK};
 };
 
 //////////////////////////////
@@ -94,6 +109,17 @@ ItemWallHorizontal.prototype.draw = function(ctx) {
 	ctx.fillStyle = this.envConfig.wallColor;
 	ctx.fillRect(left, this.pos.y - WALL_THICK/2,
 				 right - left, WALL_THICK);
+};
+
+ItemWallHorizontal.prototype.calcArea = function() {
+	var left = this.linkItem[0].attachPosition().r;
+	var right = this.linkItem[1].attachPosition().l;
+
+	this.area = {
+		t: -WALL_THICK/2, l: left - this.pos.x,
+		b: WALL_THICK/2, r: right - this.pos.x,
+	};
+	console.log(this.area);
 };
 
 //////////////////////////////
