@@ -73,17 +73,12 @@ Furniture.prototype.draw = function(ctx) {
 };
 
 Furniture.prototype.grabItem = function(x, y) {
-	this.dragItem = this.item[this.checkItem(x, y)];
-}
-
-Furniture.prototype.checkItem = function(x, y) {
 	for (var i = 0; i < this.item.length; i++) {
 		if (this.item[i].isInternal(x, y)) {
-			return i;
+			this.dragItem = this.item[i];
 		}
 	}
-	return undefined;
-};
+}
 
 Furniture.prototype.move = function(x, y) {
 	if (this.dragItem &&
