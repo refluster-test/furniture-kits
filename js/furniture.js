@@ -35,33 +35,36 @@ var Furniture = function(width, height) {
 	// create items
 	this.item = [];
 	for (var i = 0; i < this.state.item.length; i++) {
-		this.item.push(new this.state.item[i].type());
-		this.item[i].setConfig(this.state.config, this.state.item[i], this.item);
-		switch(this.item[i].linkType) {
-		case Item.LINK_VARIABLE_HORIZONTAL:
-			for (var j = 0; j < this.item.length; j++) {
-				console.log(this.item[j].type);
-
-				if (this.item[j].type === ItemFrame) {
-					this.item[i].linkItem[0] = this.item[j];
-					console.log(this.item[j]);
-				}
-				if (this.item[j].type === ItemFrame) {
-					this.item[i].linkItem[1] = this.item[j];
-				}
-			}
-			break;
-		case Item.LINK_VARIABLE_VERTICAL:
-			break;
-		case Item.LINK_ATTACH_HORIZONTAL:
-			break;
-		case Item.LINK_ATTACH_TOP:
-			break;
-		}
-		this.item[i].calcArea();
+		this.addItem(this.state.config, this.state.item[i]);
 	}
 
 	this.dragItem = undefined;
+};
+
+Furniture.prototype.addItem = function(confEnv, confItem) {
+	var item = new confItem.type();
+	item.setConfig(confEnv, confItem);
+	switch(item.linkType) {
+	case Item.LINK_VARIABLE_HORIZONTAL:
+		for (var j = 0; j < this.item.length; j++) {
+			if (this.item[j].type === ItemFrame) {
+				item.linkItem[0] = this.item[j];
+			}
+			if (this.item[j].type === ItemFrame) {
+				item.linkItem[1] = this.item[j];
+			}
+		}
+		break;
+	case Item.LINK_VARIABLE_VERTICAL:
+		break;
+	case Item.LINK_ATTACH_HORIZONTAL:
+		break;
+	case Item.LINK_ATTACH_TOP:
+		break;
+	}
+	item.calcArea();
+
+	this.item.push(item);
 };
 
 Furniture.prototype.draw = function(ctx) {
