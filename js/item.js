@@ -5,22 +5,24 @@ var Item = function() {
 	this.image = undefined;
 	this.color = 'white';
 	this.type = Item;
+	this.linkType = undefined;
 	this.linkItem = [];
 	this.area = {u: 0, l: 0, r: 0, b: 0};
 	this.linkableItemType = [];
 };
+
+Item.LINK_VARIABLE_HORIZONTAL = 0;
+Item.LINK_VARIABLE_VERTICAL = 1;
+Item.LINK_ATTACH_HORIZONTAL = 2;
+Item.LINK_ATTACH_TOP = 3;
 
 Item.prototype.setConfig = function(envConfig, itemConf, item) {
 	this.envConfig = envConfig;
 	this.pos = itemConf.pos;
 	this.image = undefined;
 	this.color = 'white';
-	this.type = Item;
+	this.type = itemConf.type;
 	this.linkItem = [];
-	for (var i = 0; i < itemConf.itemAttachTo.length; i++) {
-		this.linkItem.push(item[itemConf.itemAttachTo[i]]);
-	}
-	this.calcArea();
 };
 
 Item.prototype.setPosition = function(x, y) {
@@ -87,6 +89,7 @@ ItemFrame.prototype.attachPosition = function() {
 //////////////////////////////
 var ItemWallHorizontal = function() {
 	this.area = {t: 30, r: 70, b: 20, l: 30};
+	this.linkType = Item.LINK_VARIABLE_HORIZONTAL;
 };
 
 Object.setPrototypeOf(ItemWallHorizontal.prototype, Item.prototype);
