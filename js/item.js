@@ -38,23 +38,12 @@ Item.prototype.calcArea = function() {
 };
 
 Item.prototype.isInternal = function(x, y) {
-	console.log({x: x, y: y});
 	if (x >= this.pos.x + this.area.l &&
 		x <= this.pos.x + this.area.r &&
 		y >= this.pos.y + this.area.t &&
 		y <= this.pos.y + this.area.b) {
-		console.log({j: true,
-					 l: this.pos.x - this.area.l,
-					 r: this.pos.x + this.area.r,
-					 t: this.pos.y - this.area.t,
-					 b: this.pos.y + this.area.b});
 		return true;
 	}
-	console.log({j: false,
-				 l: this.pos.x + this.area.l,
-				 r: this.pos.x + this.area.r,
-				 t: this.pos.y + this.area.t,
-				 b: this.pos.y + this.area.b});
 	return false;
 };
 
@@ -119,7 +108,6 @@ ItemWallHorizontal.prototype.calcArea = function() {
 		t: -WALL_THICK/2, l: left - this.pos.x,
 		b: WALL_THICK/2, r: right - this.pos.x,
 	};
-	console.log(this.area);
 };
 
 //////////////////////////////

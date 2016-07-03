@@ -56,7 +56,6 @@ Furniture.prototype.draw = function(ctx) {
 Furniture.prototype.checkItem = function(x, y) {
 	for (var i = 0; i < this.item.length; i++) {
 		if (this.item[i].isInternal(x, y)) {
-			console.log(i);
 			return i;
 		}
 	}

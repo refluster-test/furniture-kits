@@ -66,8 +66,6 @@ Apl.prototype.hDown = function(evt) {
 		if (itemIdx != null) {
 			this.dragging = true;
 			this.dragItem = itemIdx;
-			console.log(itemIdx);
-			
 		}
 	}
 };
