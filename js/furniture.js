@@ -45,6 +45,8 @@ var Furniture = function(width, height) {
 	for (var i = 0; i < this.item.length; i++) {
 		this.item[i].setConfig(this.state.config, this.state.item[i], this.item);
 	}
+
+	this.dragItem = undefined;
 };
 
 Furniture.prototype.draw = function(ctx) {
@@ -53,21 +55,29 @@ Furniture.prototype.draw = function(ctx) {
 	}
 };
 
+Furniture.prototype.grabItem = function(x, y) {
+	this.dragItem = this.item[this.checkItem(x, y)];
+}
+
 Furniture.prototype.checkItem = function(x, y) {
 	for (var i = 0; i < this.item.length; i++) {
 		if (this.item[i].isInternal(x, y)) {
 			return i;
 		}
 	}
-	return null;
+	return undefined;
 };
 
-Furniture.prototype.move = function(idx, x, y) {
-	if (x != this.item[idx].x ||
-		y != this.item[idx].y) {
-		this.item[idx].setPosition(x, y);
+Furniture.prototype.move = function(x, y) {
+	if (this.dragItem &&
+		(x != this.dragItem.pos.x || y != this.dragItem.pos.y)) {
+		this.dragItem.setPosition(x, y);
 		return true;
 	}
 	return false;
-}
+};
+
+Furniture.prototype.releaseItem = function() {
+	this.dragItem = undefined;
+};
 

@@ -2,7 +2,6 @@ const WH_RATIO = (3/4);
 
 var Apl = function() {
 	this.dragging = false;
-	this.dragItem = null;
 	
 	// get canvas DOM element and context
 	var $canvas = $('#canvas');
@@ -61,18 +60,14 @@ Apl.prototype.hDown = function(evt) {
 		var y = parseInt(evt.pageY - this.canvasTop);
 		x = parseInt(x * this.canvasWidth / this.canvasStyleWidth);
 		y = parseInt(y * this.canvasHeight / this.canvasStyleHeight);
-		// check if any object is at the point
-		var itemIdx = this.furniture.checkItem(x, y);
-		if (itemIdx != null) {
-			this.dragging = true;
-			this.dragItem = itemIdx;
-		}
+		this.furniture.grabItem(x, y);
+		this.dragging = true;
 	}
 };
 
 Apl.prototype.hUp = function(evt) {
 	this.dragging = false;
-	this.dragItem = null;
+	this.furniture.releaseItem();
 };
 
 Apl.prototype.hMove = function(evt) {
@@ -83,7 +78,7 @@ Apl.prototype.hMove = function(evt) {
 		x = parseInt(x * this.canvasWidth / this.canvasStyleWidth);
 		y = parseInt(y * this.canvasHeight / this.canvasStyleHeight);
 		// check if the canvas should be updated
-		if (this.furniture.move(this.dragItem, x, y)) {
+		if (this.furniture.move(x, y)) {
 			this.draw();
 		}
 	}

@@ -48,7 +48,7 @@ Item.prototype.isInternal = function(x, y) {
 };
 
 //////////////////////////////
-ItemFrame = function() {
+var ItemFrame = function() {
 	this.area = {t: 0, r: 0, b: 0, l: 0};
 };
 
@@ -85,7 +85,7 @@ ItemFrame.prototype.attachPosition = function() {
 };
 
 //////////////////////////////
-ItemWallHorizontal = function() {
+var ItemWallHorizontal = function() {
 	this.area = {t: 30, r: 70, b: 20, l: 30};
 };
 
@@ -111,7 +111,7 @@ ItemWallHorizontal.prototype.calcArea = function() {
 };
 
 //////////////////////////////
-ItemWallVertical = function() {
+var ItemWallVertical = function() {
 	this.area = {t: 30, r: 70, b: 20, l: 30};
 	this.size = 500;
 	this.thick = 10;
