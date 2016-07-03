@@ -66,16 +66,23 @@ Furniture.prototype.addItem = function(confEnv, confItem, item) {
 	this.item.push(item);
 };
 
+Furniture.prototype.delItem = function(idx) {
+	this.state.item.splice(idx, 1);
+	this.item.splice(idx, 1);
+};
+
 Furniture.prototype.draw = function(ctx) {
 	for (var i = 0; i < this.item.length; i++) {
 		this.item[i].draw(ctx);
 	}
+	this.dragItem = undefined;
 };
 
 Furniture.prototype.grabItem = function(x, y) {
 	for (var i = 0; i < this.item.length; i++) {
 		if (this.item[i].isInternal(x, y)) {
 			this.dragItem = this.item[i];
+			this.delItem(i);
 		}
 	}
 }
