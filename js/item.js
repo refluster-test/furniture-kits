@@ -128,3 +128,4 @@ ItemWallVertical.prototype.draw = function(ctx) {
 	ctx.fillRect(this.pos.x - this.thick/2, this.pos.y - this.size/2, 
 				 this.thick, this.size);
 };
+

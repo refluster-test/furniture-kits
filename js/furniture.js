@@ -35,14 +35,13 @@ var Furniture = function(width, height) {
 	// create items
 	this.item = [];
 	for (var i = 0; i < this.state.item.length; i++) {
-		this.addItem(this.state.config, this.state.item[i]);
+		this.addItem(this.state.config, this.state.item[i], new this.state.item[i].type());
 	}
 
 	this.dragItem = undefined;
 };
 
-Furniture.prototype.addItem = function(confEnv, confItem) {
-	var item = new confItem.type();
+Furniture.prototype.addItem = function(confEnv, confItem, item) {
 	item.setConfig(confEnv, confItem);
 	switch(item.linkType) {
 	case Item.LINK_VARIABLE_HORIZONTAL:
