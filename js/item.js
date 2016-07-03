@@ -16,12 +16,13 @@ Item.LINK_VARIABLE_VERTICAL = 1;
 Item.LINK_ATTACH_HORIZONTAL = 2;
 Item.LINK_ATTACH_TOP = 3;
 
-Item.prototype.setConfig = function(envConfig, itemConf, item) {
+Item.prototype.setConfig = function(envConfig, itemConf) {
 	this.envConfig = envConfig;
 	this.pos = itemConf.pos;
+	this.type = itemConf.type;
+
 	this.image = undefined;
 	this.color = 'white';
-	this.type = itemConf.type;
 	this.linkItem = [];
 };
 

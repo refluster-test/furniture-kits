@@ -36,19 +36,7 @@ var Furniture = function(width, height) {
 	this.item = [];
 	for (var i = 0; i < this.state.item.length; i++) {
 		this.item.push(new this.state.item[i].type());
-	}
-
-	// set config for items
-	for (var i = 0; i < this.item.length; i++) {
 		this.item[i].setConfig(this.state.config, this.state.item[i], this.item);
-	}
-
-	// create link
-	for (var i = 0; i < this.item.length; i++) {
-		this.item[i].linkItem = [];
-
-		console.log(this.item[i].type === ItemWallHorizontal);
-		console.log(this.item[i].linkType );
 		switch(this.item[i].linkType) {
 		case Item.LINK_VARIABLE_HORIZONTAL:
 			for (var j = 0; j < this.item.length; j++) {
@@ -70,7 +58,6 @@ var Furniture = function(width, height) {
 		case Item.LINK_ATTACH_TOP:
 			break;
 		}
-		console.log(i);
 		this.item[i].calcArea();
 	}
 
