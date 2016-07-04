@@ -31,7 +31,7 @@ var Apl = function() {
 	this.ctx.globalCompositeOperation = "source-over";
 
 	// create room
-	this.furniture = new Furniture(this.canvasWidth, this.canvasHeight);
+	this.furniture = new Furniture(0, 100, this.canvasWidth, this.canvasHeight - 100);
 
 	// create menu
 	this.menu = new Menu(0, 0, this.canvasWidth, 100);

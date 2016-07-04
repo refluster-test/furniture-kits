@@ -1,9 +1,10 @@
 var Menu = function(left, top, width, height) {
+	Element.call(this, left, top, width, height);
+
 	this.step = 0; // 0: construct, 1: material
-	this.area = {
-		t: top, b: height, l: left, r: width
-	};
 };
+
+Object.setPrototypeOf(Furniture.prototype, Element.prototype);
 
 Menu.prototype.draw = function(ctx) {
 	ctx.fillStyle = 'white';

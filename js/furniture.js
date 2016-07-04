@@ -1,6 +1,5 @@
-var Furniture = function(width, height) {
-	this.width = width;
-	this.height = height;
+var Furniture = function(left, top, width, height) {
+	Element.call(this, left, top, width, height);
 
 	this.state = new Database().restore();
 
@@ -14,6 +13,8 @@ var Furniture = function(width, height) {
 
 	this.dragItem = undefined;
 };
+
+Object.setPrototypeOf(Furniture.prototype, Element.prototype);
 
 Furniture.prototype.addItem = function(item) {
 	switch(item.linkType) {
