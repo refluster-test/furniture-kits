@@ -49,6 +49,28 @@ var Apl = function() {
 	$canvas.bind('touchmove', this.hMove.bind(this));
 
 	this.draw();
+
+	////////////////////////////// svg
+	this.svg = Snap('#svg');
+	$svg = $('#svg');
+
+	// resize canvas
+	$svg.css('width', $svg.width());
+	$svg.css('height', $svg.width()*WH_RATIO);
+	this.svgStyleWidth = $svg.width();
+	this.svgStyleHeight = $svg.height();
+
+	$svg.attr('width', 1024);
+	$svg.attr('height', 1024*WH_RATIO);
+
+	// get canvas info
+	this.svgLeft = $svg.offset().left;
+	this.svgTop = $svg.offset().top;
+	this.svgWidth = parseInt($svg.attr('width'));
+	this.svgHeight = parseInt($svg.attr('height'));
+
+	var bigCircle = this.svg.circle(150, 150, 100);
+	bigCircle.touchstart(this.hDown.bind(this));
 };
 
 Apl.prototype._blank = function() {
@@ -63,10 +85,12 @@ Apl.prototype.draw = function() {
 };
 
 Apl.prototype.hDown = function(e) {
+	console.log('hdown');
+	console.log(e);
 	if (!this.dragging) {
 		// convert coordinate from point to canvas
-		var x = (e.pageX? e.pageX: e.originalEvent.touches[0].pageX) - this.canvasLeft;
-		var y = (e.pageY? e.pageY: e.originalEvent.touches[0].pageY) - this.canvasTop;
+		var x = (e.pageX? e.pageX: e.touches[0].pageX) - this.canvasLeft;
+		var y = (e.pageY? e.pageY: e.touches[0].pageY) - this.canvasTop;
 		x = parseInt(x * this.canvasWidth / this.canvasStyleWidth);
 		y = parseInt(y * this.canvasHeight / this.canvasStyleHeight);
 		if (this.furniture.isInternal(x, y)) {
