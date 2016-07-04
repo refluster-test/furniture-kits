@@ -73,7 +73,6 @@ Furniture.prototype.move = function(x, y) {
 
 Furniture.prototype.releaseItem = function() {
 	if (this.dragItem) {
-		console.log(this.dragItem);
 		this.addItem(this.dragItem);
 	}
 	this.dragItem = undefined;
@@ -81,5 +80,4 @@ Furniture.prototype.releaseItem = function() {
 
 Furniture.prototype.setDragItem = function(item) {
 	this.dragItem = item;
-	console.log(item);
 };

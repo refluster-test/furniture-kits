@@ -1,7 +1,9 @@
-var Menu = function(left, top, width, height) {
+var Menu = function(left, top, width, height, cbItemClick) {
 	Element.call(this, left, top, width, height);
 
-	this.step = 0; // 0: construct, 1: material
+	$('#test').mousedown(function(e) {
+		cbItemClick(new ItemWallHorizontal());
+	}.bind(this));
 };
 
 Object.setPrototypeOf(Furniture.prototype, Element.prototype);
@@ -30,3 +32,20 @@ Menu.prototype.operate = function(x, y, callback) {
 	callback(e);
 	// todo:
 }
+var MenuItem = function(area) {
+	this.area = area;
+};
+
+MenuItem.prototype.isInternal = function(x, y) {
+	if (x >= this.area.l && x <= this.area.r &&
+		y >= this.area.t && y <= this.area.b) {
+		return true;
+	}
+	return false;
+};
+
+MenuItem.prototype.hUp = function() {
+};
+
+MenuItem.prototype.hDown = function() {
+};
