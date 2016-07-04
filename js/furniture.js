@@ -73,12 +73,13 @@ Furniture.prototype.move = function(x, y) {
 
 Furniture.prototype.releaseItem = function() {
 	if (this.dragItem) {
+		console.log(this.dragItem);
 		this.addItem(this.dragItem);
 	}
 	this.dragItem = undefined;
 };
 
-Furniture.prototype.spawnItem = function() {
-	var item = new ItemWallHorizontal();
+Furniture.prototype.setDragItem = function(item) {
 	this.dragItem = item;
+	console.log(item);
 };

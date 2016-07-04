@@ -64,11 +64,20 @@ Apl.prototype.hDown = function(evt) {
 		var y = parseInt(evt.pageY - this.canvasTop);
 		x = parseInt(x * this.canvasWidth / this.canvasStyleWidth);
 		y = parseInt(y * this.canvasHeight / this.canvasStyleHeight);
+		if (this.menu.isInternal(x, y)) {
+			this.menu.operate(x, y, function(e) {
+				switch (e.type) {
+				case Menu.SPAWN_ITEM:
+					var item = new e.newItemType();
+					this.furniture.setDragItem(item);
+					break;
+				case Menu.CHANGE_CONFIG:
+					break;
+				}
+			}.bind(this));
+		}
 		if (this.furniture.isInternal(x, y)) {
 			this.furniture.grabItem(x, y);
-		}
-		if (this.menu.isInternal(x, y)) {
-			this.furniture.spawnItem();
 		}
 		this.dragging = true;
 	}
