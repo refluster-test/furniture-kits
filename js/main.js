@@ -68,6 +68,7 @@ Apl.prototype.hDown = function(evt) {
 Apl.prototype.hUp = function(evt) {
 	this.dragging = false;
 	this.furniture.releaseItem();
+	this.draw();
 };
 
 Apl.prototype.hMove = function(evt) {

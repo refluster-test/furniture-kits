@@ -76,7 +76,6 @@ Furniture.prototype.draw = function(ctx) {
 	for (var i = 0; i < this.item.length; i++) {
 		this.item[i].draw(ctx);
 	}
-	this.dragItem = undefined;
 };
 
 Furniture.prototype.grabItem = function(x, y) {
@@ -98,6 +97,8 @@ Furniture.prototype.move = function(x, y) {
 };
 
 Furniture.prototype.releaseItem = function() {
-	this.addItem(this.dragItem);
+	if (this.dragItem) {
+		this.addItem(this.dragItem);
+	}
 	this.dragItem = undefined;
 };
