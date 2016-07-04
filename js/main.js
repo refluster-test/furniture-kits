@@ -34,10 +34,9 @@ var Apl = function() {
 	this.furniture = new Furniture(0, 100, this.canvasWidth, this.canvasHeight - 100);
 
 	// create menu
-	this.menu = new Menu(0, 0, this.canvasWidth, 100, function(item) {
+	this.menu = new Menu(function(item) {
 		this.furniture.setDragItem(item);
 		this.dragging = true;
-		this.draw();
 	}.bind(this));
 
 	// set events to the canvas
@@ -57,7 +56,6 @@ Apl.prototype.draw = function() {
 	this._blank();
 	this.ctx.save();
 	this.furniture.draw(this.ctx);
-	this.menu.draw(this.ctx);
 	this.ctx.restore();
 };
 
@@ -69,18 +67,6 @@ Apl.prototype.hDown = function(evt) {
 		x = parseInt(x * this.canvasWidth / this.canvasStyleWidth);
 		y = parseInt(y * this.canvasHeight / this.canvasStyleHeight);
 
-		if (this.menu.isInternal(x, y)) {
-			this.menu.operate(x, y, function(e) {
-				switch (e.type) {
-				case Menu.SPAWN_ITEM:
-					var item = new e.newItemType();
-					this.furniture.setDragItem(item);
-					break;
-				case Menu.CHANGE_CONFIG:
-					break;
-				}
-			}.bind(this));
-		}
 		if (this.furniture.isInternal(x, y)) {
 			this.furniture.grabItem(x, y);
 		}
