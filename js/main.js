@@ -2,7 +2,7 @@ const WH_RATIO = (3/4);
 
 var Apl = function() {
 	this.dragging = false;
-	
+
 	// get canvas DOM element and context
 	var $canvas = $('#canvas');
 	if ( ! $canvas[0] || ! $canvas[0].getContext ) {
@@ -76,11 +76,19 @@ var Apl = function() {
 	var bigrect = this.svg.rect(30, 30, 100, 80);
 	bigCircle.touchstart(this.hDown.bind(this));
 
+	console.log(bigCircle);
+	console.log(bigrect);
+
+	var testHash = {};
+	testHash[bigCircle.id] = 'circle0';
+	testHash[bigrect.id] = 'rect0';
+
 	this.svg.touchmove(function(e) {
 		console.log(e.touches[0].pageX, e.touches[0].pageY);
-		var elm = document.elementFromPoint(e.touches[0].pageX, e.touches[0].pageY);
-		console.log(elm);
-	});
+		var elm = Snap.getElementByPoint(e.touches[0].pageX, e.touches[0].pageY);
+		console.log(elm.id);
+		console.log(testHash[elm.id]);
+	}.bind(this));
 
 	this.svgDraw();
 };
