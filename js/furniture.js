@@ -89,14 +89,16 @@ Furniture.prototype.setDragItem = function(item) {
 };
 
 ////////////////////////////// svg
-var SvgFurniture = function(left, top, width, height) {
+var SvgFurniture = function(left, top, width, height, svg) {
 	this.dragItem = undefined;
+	this.svg = svg;
 
 	this.state = new Database().svgRestore();
 	this.type = {
 		'WallHorizontal': {
 			zIndex: 0,
-			draw: function() {
+			getElem: function(x, y) {
+				return ;
 			},
 			getAttachPos: function() {
 			},
@@ -106,6 +108,12 @@ var SvgFurniture = function(left, top, width, height) {
 	// create items
 	this.item = [];
 	for (var i = 0; i < this.state.item.length; i++) {
+		var t = this.type[this.state.item[i].type];
+		//t.getElem(this.state.item[i].pos.x, this.state.item[i].pos.y);
+
+		var elem = this.getElem(this.state.item[i].pos.x, this.state.item[i].pos.y);
+		console.log(elem);
+
 //		var item = new this.state.item[i].type();
 //		item.setPosition(this.state.item[i].pos);
 //		this.setItemPosition(this.
@@ -115,9 +123,12 @@ var SvgFurniture = function(left, top, width, height) {
 	this.dragItem = undefined;
 };
 
-SvgFurniture.prototype.draw = function(svg) {
-	svg.clear();
+SvgFurniture.prototype.getElem = function(x, y) {
+	return this.svg.circle(x, y, 100);
+};
 
-	var bigCircle = this.svg.circle(200, 150, 100);
-	bigCircle.touchstart(this.hDown.bind(this));
+SvgFurniture.prototype.draw = function() {
+//	this.svg.clear();
+
+//	var bigCircle = this.svg.circle(200, 150, 100);
 };

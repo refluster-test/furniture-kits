@@ -51,11 +51,12 @@ var Apl = function() {
 	this.draw();
 
 	////////////////////////////// svg
-	this.svgFurniture = new SvgFurniture(0, 100, this.canvasWidth, this.canvasHeight - 100);
-	console.log(this.svgFurniture);
-
 	this.svg = Snap('#svg');
 	$svg = $('#svg');
+
+	this.svgFurniture = new SvgFurniture(0, 100, this.canvasWidth, this.canvasHeight - 100,
+										 this.svg);
+	console.log(this.svgFurniture);
 
 	// resize canvas
 	$svg.css('width', $svg.width());
@@ -74,19 +75,26 @@ var Apl = function() {
 
 	var bigCircle = this.svg.circle(150, 150, 100);
 	var bigrect = this.svg.rect(30, 30, 100, 80);
+	var group = this.svg.g(bigCircle, bigrect);
+
 	bigCircle.touchstart(this.hDown.bind(this));
+
+	bigCircle.originalType = 'hoge';
+	bigrect.originalType = 'fuga';
 
 	console.log(bigCircle);
 	console.log(bigrect);
+	console.log(group);
 
 	var testHash = {};
 	testHash[bigCircle.id] = 'circle0';
 	testHash[bigrect.id] = 'rect0';
+	testHash[group.id] = 'group0';
 
 	this.svg.touchmove(function(e) {
 		console.log(e.touches[0].pageX, e.touches[0].pageY);
 		var elm = Snap.getElementByPoint(e.touches[0].pageX, e.touches[0].pageY);
-		console.log(elm.id);
+		console.log(elm);
 		console.log(testHash[elm.id]);
 	}.bind(this));
 
@@ -105,7 +113,7 @@ Apl.prototype.draw = function() {
 };
 
 Apl.prototype.svgDraw = function() {
-	this.furniture.draw(this.ctx);
+	this.svgFurniture.draw(this.svg);
 };
 
 Apl.prototype.hDown = function(e) {
