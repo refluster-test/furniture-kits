@@ -33,6 +33,9 @@ var Apl = function() {
 	// create room
 	this.furniture = new Furniture(this.canvasWidth, this.canvasHeight);
 
+	// create menu
+	this.menu = new Menu();
+
 	// set events to the canvas
 	$canvas.mousedown(this.hDown.bind(this));
 	$canvas.mouseup(this.hUp.bind(this));
