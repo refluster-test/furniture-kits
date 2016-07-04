@@ -36,10 +36,10 @@ Item.prototype.calcArea = function() {
 };
 
 Item.prototype.isInternal = function(x, y) {
-	if (x >= this.pos.x + this.area.l &&
-		x <= this.pos.x + this.area.r &&
-		y >= this.pos.y + this.area.t &&
-		y <= this.pos.y + this.area.b) {
+	if (x >= this.area.l &&
+		x <= this.area.r &&
+		y >= this.area.t &&
+		y <= this.area.b) {
 		return true;
 	}
 	return false;
@@ -106,8 +106,8 @@ ItemWallHorizontal.prototype.calcArea = function() {
 	var right = this.linkItem[1].attachPosition().l;
 
 	this.area = {
-		t: -WALL_THICK/2, l: left - this.pos.x,
-		b: WALL_THICK/2, r: right - this.pos.x,
+		t: this.pos.y - WALL_THICK/2, l: left,
+		b: this.pos.y + WALL_THICK/2, r: right,
 	};
 };
 
