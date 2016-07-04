@@ -126,3 +126,16 @@ ItemWallVertical.prototype.draw = function(ctx) {
 				 this.thick, this.size);
 };
 
+////////////////////////////// svg
+var SvgItem = function() {
+	this.pos = {x: 0, y: 0};
+	this.zIndex = 0;
+	this.image = undefined;
+	this.color = 'white';
+	this.type = this.__proto__.constructor;
+	this.linkType = undefined;
+	this.linkItem = [];
+	this.area = {u: 0, l: 0, r: 0, b: 0};
+	this.linkableItemType = [];
+};
+

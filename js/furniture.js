@@ -16,7 +16,7 @@ var Furniture = function(left, top, width, height) {
 
 Object.setPrototypeOf(Furniture.prototype, Element.prototype);
 
-Furniture.prototype.addItem = function(item) {
+Furniture.prototype.addItem = function(item, svgItem) {
 	item.setConfig(this.state.config);
 
 	switch(item.linkType) {
@@ -53,6 +53,12 @@ Furniture.prototype.draw = function(ctx) {
 	}
 };
 
+Furniture.prototype.svgDraw = function(svg) {
+	for (var i = 0; i < this.item.length; i++) {
+		this.svgItem[i].draw(svg);
+	}
+};
+
 Furniture.prototype.grabItem = function(x, y) {
 	for (var i = 0; i < this.item.length; i++) {
 		if (this.item[i].isInternal(x, y)) {
@@ -80,4 +86,38 @@ Furniture.prototype.releaseItem = function() {
 
 Furniture.prototype.setDragItem = function(item) {
 	this.dragItem = item;
+};
+
+////////////////////////////// svg
+var SvgFurniture = function(left, top, width, height) {
+	this.dragItem = undefined;
+
+	this.state = new Database().svgRestore();
+	this.type = {
+		'WallHorizontal': {
+			zIndex: 0,
+			draw: function() {
+			},
+			getAttachPos: function() {
+			},
+		},
+	};
+
+	// create items
+	this.item = [];
+	for (var i = 0; i < this.state.item.length; i++) {
+//		var item = new this.state.item[i].type();
+//		item.setPosition(this.state.item[i].pos);
+//		this.setItemPosition(this.
+//		this.addItem(item);
+	}
+
+	this.dragItem = undefined;
+};
+
+SvgFurniture.prototype.draw = function(svg) {
+	svg.clear();
+
+	var bigCircle = this.svg.circle(200, 150, 100);
+	bigCircle.touchstart(this.hDown.bind(this));
 };

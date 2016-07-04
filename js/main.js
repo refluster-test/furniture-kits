@@ -51,6 +51,9 @@ var Apl = function() {
 	this.draw();
 
 	////////////////////////////// svg
+	this.svgFurniture = new SvgFurniture(0, 100, this.canvasWidth, this.canvasHeight - 100);
+	console.log(this.svgFurniture);
+
 	this.svg = Snap('#svg');
 	$svg = $('#svg');
 
@@ -70,7 +73,16 @@ var Apl = function() {
 	this.svgHeight = parseInt($svg.attr('height'));
 
 	var bigCircle = this.svg.circle(150, 150, 100);
+	var bigrect = this.svg.rect(30, 30, 100, 80);
 	bigCircle.touchstart(this.hDown.bind(this));
+
+	this.svg.touchmove(function(e) {
+		console.log(e.touches[0].pageX, e.touches[0].pageY);
+		var elm = document.elementFromPoint(e.touches[0].pageX, e.touches[0].pageY);
+		console.log(elm);
+	});
+
+	this.svgDraw();
 };
 
 Apl.prototype._blank = function() {
@@ -82,6 +94,10 @@ Apl.prototype.draw = function() {
 	this.ctx.save();
 	this.furniture.draw(this.ctx);
 	this.ctx.restore();
+};
+
+Apl.prototype.svgDraw = function() {
+	this.furniture.draw(this.ctx);
 };
 
 Apl.prototype.hDown = function(e) {
