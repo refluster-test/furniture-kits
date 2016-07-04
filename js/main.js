@@ -63,16 +63,12 @@ Apl.prototype.draw = function() {
 };
 
 Apl.prototype.hDown = function(e) {
-	console.log('canvas hDown');
-
 	if (!this.dragging) {
 		// convert coordinate from point to canvas
 		var x = (e.pageX? e.pageX: e.originalEvent.touches[0].pageX) - this.canvasLeft;
 		var y = (e.pageY? e.pageY: e.originalEvent.touches[0].pageY) - this.canvasTop;
 		x = parseInt(x * this.canvasWidth / this.canvasStyleWidth);
 		y = parseInt(y * this.canvasHeight / this.canvasStyleHeight);
-		console.log({x: x, y: y});
-
 		if (this.furniture.isInternal(x, y)) {
 			this.furniture.grabItem(x, y);
 		}
@@ -82,7 +78,6 @@ Apl.prototype.hDown = function(e) {
 };
 
 Apl.prototype.hUp = function(e) {
-	console.log('canvas hUp');
 	this.dragging = false;
 	this.furniture.releaseItem();
 	this.draw();
@@ -90,10 +85,8 @@ Apl.prototype.hUp = function(e) {
 };
 
 Apl.prototype.hMove = function(e, p) {
-	console.log('canvas hMove');
 	if (this.dragging) {
 		// convert coordinate from point to canvas
-		console.log(e);
 		var pageX, pageY;
 		if (e.pageX) {
 			pageX = e.pageX;

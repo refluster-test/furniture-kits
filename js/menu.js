@@ -5,19 +5,16 @@ var Menu = function(cbItemClick) {
 	}.bind(this));
 
 	$('#test').bind('touchstart', function(e) {
-		console.log('menu hDown');
 		cbItemClick(new ItemWallHorizontal());
-		$('#canvas').trigger('mousedown');
+		e.preventDefault();
 	}.bind(this));
 
 	$('#test').bind('touchend', function(e) {
-		console.log('menu hUp');
 		$('#canvas').trigger('mouseup');
+		e.preventDefault();
 	}.bind(this));
 
 	$('#test').bind('touchmove', function(e) {
-		console.log(e);
-		console.log('menu hMove');
 		$('#canvas').trigger('mousemove', e.originalEvent.touches[0]);
 		e.preventDefault();
 	}.bind(this));

@@ -1,4 +1,4 @@
-const WALL_THICK = 10;
+const WALL_THICK = 30;
 
 var Item = function() {
 	this.pos = {x: 0, y: 0};
