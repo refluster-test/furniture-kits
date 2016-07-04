@@ -7,7 +7,7 @@ var Furniture = function(left, top, width, height) {
 	this.item = [];
 	for (var i = 0; i < this.state.item.length; i++) {
 		var item = new this.state.item[i].type();
-		item.setConfig(this.state.config, this.state.item[i]);
+		item.setPosition(this.state.item[i].pos);
 		this.addItem(item);
 	}
 
@@ -17,6 +17,8 @@ var Furniture = function(left, top, width, height) {
 Object.setPrototypeOf(Furniture.prototype, Element.prototype);
 
 Furniture.prototype.addItem = function(item) {
+	item.setConfig(this.state.config);
+
 	switch(item.linkType) {
 	case Item.LINK_VARIABLE_HORIZONTAL:
 		for (var j = 0; j < this.item.length; j++) {
@@ -63,7 +65,7 @@ Furniture.prototype.grabItem = function(x, y) {
 Furniture.prototype.move = function(x, y) {
 	if (this.dragItem &&
 		(x != this.dragItem.pos.x || y != this.dragItem.pos.y)) {
-		this.dragItem.setPosition(x, y);
+		this.dragItem.setPosition({x: x, y: y});
 		return true;
 	}
 	return false;
@@ -78,6 +80,5 @@ Furniture.prototype.releaseItem = function() {
 
 Furniture.prototype.spawnItem = function() {
 	var item = new ItemWallHorizontal();
-	item.setConfig(this.state.config, {pos: item.pos});
 	this.dragItem = item;
 };

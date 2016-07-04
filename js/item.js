@@ -1,7 +1,8 @@
 const WALL_THICK = 10;
 
 var Item = function() {
-	this.pos = {x: 0, y: 0, z: 0};
+	this.pos = {x: 0, y: 0};
+	this.zIndex = 0;
 	this.image = undefined;
 	this.color = 'white';
 	this.type = this.__proto__.constructor;
@@ -16,13 +17,12 @@ Item.LINK_VARIABLE_VERTICAL = 1;
 Item.LINK_ATTACH_HORIZONTAL = 2;
 Item.LINK_ATTACH_TOP = 3;
 
-Item.prototype.setConfig = function(envConf, itemConf) {
+Item.prototype.setConfig = function(envConf) {
 	this.envConfig = envConf;
-	this.pos = itemConf.pos;
 };
 
-Item.prototype.setPosition = function(x, y) {
-	this.pos.x = x; this.pos.y = y;
+Item.prototype.setPosition = function(pos) {
+	this.pos = pos;
 };
 
 Item.prototype.draw = function(ctx) {

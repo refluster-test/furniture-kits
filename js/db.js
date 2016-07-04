@@ -9,20 +9,20 @@ var Database = function() {
 		item: [
 			{
 				type: ItemFrame,
-				pos: {x: 500, y: 400, z: 0},
+				pos: {x: 500, y: 400},
 			},
 			{
 				type: ItemWallHorizontal,
-				pos: {x: 400, y: 180, z: 0},
+				pos: {x: 400, y: 180},
 			},
 			{
 				type: ItemWallHorizontal,
-				pos: {x: 350, y: 380, z: 0},
+				pos: {x: 350, y: 380},
 			},
 /*
 			{
 				type: ItemWallVertical,
-				pos: {x: 180, y: 80, z: 0},
+				pos: {x: 180, y: 80},
 				linkItem: [0, 0],
 			},
 */
