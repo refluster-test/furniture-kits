@@ -64,13 +64,13 @@ Apl.prototype.hDown = function(evt) {
 		var y = parseInt(evt.pageY - this.canvasTop);
 		x = parseInt(x * this.canvasWidth / this.canvasStyleWidth);
 		y = parseInt(y * this.canvasHeight / this.canvasStyleHeight);
-		this.furniture.grabItem(x, y);
-		this.dragging = true;
-		// menu
+		if (this.furniture.isInternal(x, y)) {
+			this.furniture.grabItem(x, y);
+		}
 		if (this.menu.isInternal(x, y)) {
 			this.furniture.spawnItem();
 		}
-		
+		this.dragging = true;
 	}
 };
 
