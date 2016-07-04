@@ -74,3 +74,9 @@ Furniture.prototype.releaseItem = function() {
 	}
 	this.dragItem = undefined;
 };
+
+Furniture.prototype.spawnItem = function() {
+	var item = new ItemWallHorizontal();
+	item.setConfig(this.state.config, {pos: item.pos});
+	this.dragItem = item;
+};

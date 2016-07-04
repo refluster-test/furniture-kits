@@ -34,7 +34,7 @@ var Apl = function() {
 	this.furniture = new Furniture(this.canvasWidth, this.canvasHeight);
 
 	// create menu
-	this.menu = new Menu();
+	this.menu = new Menu(this.canvasWidth, this.canvasHeight);
 
 	// set events to the canvas
 	$canvas.mousedown(this.hDown.bind(this));
@@ -53,6 +53,7 @@ Apl.prototype.draw = function() {
 	this._blank();
 	this.ctx.save();
 	this.furniture.draw(this.ctx);
+	this.menu.draw(this.ctx);
 	this.ctx.restore();
 };
 
@@ -65,6 +66,11 @@ Apl.prototype.hDown = function(evt) {
 		y = parseInt(y * this.canvasHeight / this.canvasStyleHeight);
 		this.furniture.grabItem(x, y);
 		this.dragging = true;
+		// menu
+		if (this.menu.isInternal(x, y)) {
+			this.furniture.spawnItem();
+		}
+		
 	}
 };
 
