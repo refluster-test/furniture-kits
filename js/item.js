@@ -4,7 +4,7 @@ var Item = function() {
 	this.pos = {x: 0, y: 0, z: 0};
 	this.image = undefined;
 	this.color = 'white';
-	this.type = Item;
+	this.type = this.__proto__.constructor;
 	this.linkType = undefined;
 	this.linkItem = [];
 	this.area = {u: 0, l: 0, r: 0, b: 0};
@@ -16,14 +16,9 @@ Item.LINK_VARIABLE_VERTICAL = 1;
 Item.LINK_ATTACH_HORIZONTAL = 2;
 Item.LINK_ATTACH_TOP = 3;
 
-Item.prototype.setConfig = function(envConfig, itemConf) {
-	this.envConfig = envConfig;
+Item.prototype.setConfig = function(envConf, itemConf) {
+	this.envConfig = envConf;
 	this.pos = itemConf.pos;
-	this.type = itemConf.type;
-
-	this.image = undefined;
-	this.color = 'white';
-	this.linkItem = [];
 };
 
 Item.prototype.setPosition = function(x, y) {
@@ -52,6 +47,7 @@ Item.prototype.isInternal = function(x, y) {
 
 //////////////////////////////
 var ItemFrame = function() {
+	Item.call(this);
 	this.area = {t: 0, r: 0, b: 0, l: 0};
 };
 
@@ -89,6 +85,7 @@ ItemFrame.prototype.attachPosition = function() {
 
 //////////////////////////////
 var ItemWallHorizontal = function() {
+	Item.call(this);
 	this.area = {t: 30, r: 70, b: 20, l: 30};
 	this.linkType = Item.LINK_VARIABLE_HORIZONTAL;
 };

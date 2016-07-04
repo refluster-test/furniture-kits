@@ -35,14 +35,15 @@ var Furniture = function(width, height) {
 	// create items
 	this.item = [];
 	for (var i = 0; i < this.state.item.length; i++) {
-		this.addItem(this.state.config, this.state.item[i], new this.state.item[i].type());
+		var item = new this.state.item[i].type();
+		item.setConfig(this.state.config, this.state.item[i]);
+		this.addItem(item);
 	}
 
 	this.dragItem = undefined;
 };
 
-Furniture.prototype.addItem = function(confEnv, confItem, item) {
-	item.setConfig(confEnv, confItem);
+Furniture.prototype.addItem = function(item) {
 	switch(item.linkType) {
 	case Item.LINK_VARIABLE_HORIZONTAL:
 		for (var j = 0; j < this.item.length; j++) {
@@ -97,5 +98,6 @@ Furniture.prototype.move = function(x, y) {
 };
 
 Furniture.prototype.releaseItem = function() {
+	this.addItem(this.dragItem);
 	this.dragItem = undefined;
 };
