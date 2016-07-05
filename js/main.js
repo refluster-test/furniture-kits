@@ -46,6 +46,12 @@ var Apl = function() {
 	$canvas.mousemove(this.hMove.bind(this));
 
 	this.draw();
+
+	////////////////////////////// svg
+	this.svg = Snap('#svg');
+	this.svgFurniture = new SvgFurniture(0, 100, this.canvasWidth, this.canvasHeight - 100,
+										this.svg);
+	this.draw();
 };
 
 Apl.prototype._blank = function() {
@@ -57,6 +63,10 @@ Apl.prototype.draw = function() {
 	this.ctx.save();
 	this.furniture.draw(this.ctx);
 	this.ctx.restore();
+};
+
+Apl.prototype.svgDraw = function() {
+	this.svgFurniture.draw();
 };
 
 Apl.prototype.hDown = function(evt) {

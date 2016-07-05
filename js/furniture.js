@@ -81,3 +81,23 @@ Furniture.prototype.releaseItem = function() {
 Furniture.prototype.setDragItem = function(item) {
 	this.dragItem = item;
 };
+
+////////////////////////////// svg
+
+var SvgFurniture = function(left, top, width, height) {
+	this.state = new SvgDatabase().restore();
+
+	// create items
+	this.item = [];
+	for (var i = 0; i < this.state.item.length; i++) {
+//		var item = new this.state.item[i].type();
+//		item.setPosition(this.state.item[i].pos);
+//		this.addItem(item);
+	}
+
+	this.dragItem = undefined;
+};
+
+SvgFurniture.prototype.draw = function() {
+
+};
