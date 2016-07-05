@@ -41,7 +41,7 @@ var Svg = function(left, top, width, height, svg) {
 };
 
 Svg.prototype.createItem = function(type) {
-	return this.type[type].create(0, 0);
+	return this.type[type].create();
 };
 
 Svg.prototype.setDragItem = function(item) {
@@ -83,7 +83,7 @@ Svg.prototype.move = function(x, y) {
 	}
 };
 
-Svg.prototype.createAndSetFrame = function(x, y) {
+Svg.prototype.createAndSetFrame = function() {
 	var conf = this.state.config;
 	var left = (this.width - conf.width)/2;
 	var right = (this.width + conf.width)/2;
@@ -182,13 +182,12 @@ Svg.prototype.createAndSetFrame = function(x, y) {
 Svg.prototype.setFrame = function(x, y) {
 };
 
-Svg.prototype.createWallHorizontal = function(x, y) {
-	var elem = this.svg.rect(x - 40, y - 40, 80, 80);
+Svg.prototype.createWallHorizontal = function() {
+	var elem = this.svg.rect(-1000, -1000, 80, 80);
 	elem.attr({
 		fill: this.state.config.wallColor,
 		stroke: "#000",
 		strokeWidth: 1,
-		x: -100
 	});
 	elem.opt = {
 		type: 'WallHorizontal',
@@ -198,14 +197,12 @@ Svg.prototype.createWallHorizontal = function(x, y) {
 	return elem;
 };
 
-Svg.prototype.createWallVertical = function(x, y) {
-	var elem = this.svg.rect(x - 40, y - 40, 80, 80);
+Svg.prototype.createWallVertical = function() {
+	var elem = this.svg.rect(-1000, -1000, 80, 80);
 	elem.attr({
 		fill: this.state.config.wallColor,
 		stroke: "#000",
 		strokeWidth: 1,
-		x: 100,
-		y: 100,
 	});
 	elem.opt = {
 		type: 'WallVertical',
@@ -215,14 +212,12 @@ Svg.prototype.createWallVertical = function(x, y) {
 	return elem;
 };
 
-Svg.prototype.createHanger = function(x, y) {
-	var elem = this.svg.rect(x - 40, y - 40, 80, 80);
+Svg.prototype.createHanger = function() {
+	var elem = this.svg.rect(-1000, -1000, 80, 80);
 	elem.attr({
 		fill: this.state.config.wallColor,
 		stroke: "#000",
 		strokeWidth: 1,
-		x: 100,
-		y: 100,
 	});
 	elem.opt = {
 		type: 'Hanger',
