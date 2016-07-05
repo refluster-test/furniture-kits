@@ -49,8 +49,7 @@ Svg.prototype.deleteItem = function(obj) {
 
 Svg.prototype.reserveRemoveItem = function(obj) {
 	this.removeItem = obj;
-	this.dragItem = obj;
-	this.move(this.width, 0);
+	this.move(this.width, 0, obj);
 };
 
 Svg.prototype.createDraggingItem = function(type) {
@@ -81,17 +80,20 @@ Svg.prototype.releaseItem = function() {
 	this.dragItem = undefined;
 };
 
-Svg.prototype.move = function(x, y) {
-	if (! this.dragItem) {
+Svg.prototype.move = function(x, y, item) {
+	if (! item) {
+		item = this.dragItem;
+	}
+	if (! item) {
 		return;
 	}
-	switch (this.dragItem.opt.type) {
+	switch (item.opt.type) {
 	case 'Frame':
 		break;
 	case 'WallHorizontal':
 	case 'WallVertical':
 	case 'Hanger':
-		this.dragItem.attr({x: x, y: y});
+		item.attr({x: x, y: y});
 		break;
 	default:
 		console.log('def');
