@@ -94,6 +94,14 @@ var Apl = function() {
 
 	this.svgFurniture = new SvgFurniture(0, 0, this.svgWidth, this.svgHeight, this.svg);
 	this.svgDraw();
+
+	// create menu
+	this.svgMenu = new SvgMenu(function(type) {
+		var item = this.svgFurniture.spawnItem(type);
+		this.svgFurniture.setDragItem(item);
+		//this.svgFurniture.setDragItem(type);
+		this.dragging = true;
+	}.bind(this));
 };
 
 Apl.prototype._blank = function() {

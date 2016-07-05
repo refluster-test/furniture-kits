@@ -132,3 +132,10 @@ var SvgFurniture = function(left, top, width, height, svg) {
 SvgFurniture.prototype.draw = function() {
 };
 
+SvgFurniture.prototype.spawnItem = function(type) {
+	return this.type[type].draw(0, 0);
+};
+
+SvgFurniture.prototype.setDragItem = function(item) {
+	this.dragItem = item;
+};
