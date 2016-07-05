@@ -97,7 +97,7 @@ var SvgFurniture = function(left, top, width, height, svg) {
 	this.type = {
 		'Frame': {
 			zIndex: 0,
-			draw: function(x, y) {
+			create: function(x, y) {
 				console.log({x: x, y: y});
 				var elem = this.svg.circle(x, y, 80);
 				elem.attr({
@@ -106,11 +106,15 @@ var SvgFurniture = function(left, top, width, height, svg) {
 					strokeWidth: 5,
 					cx: 400
 				});
-			}.bind(this)
+				elem.opt = {
+					type: 'Frame',
+				}
+				return elem;
+			}.bind(this),
 		},
 		'WallHorizontal': {
 			zIndex: 0,
-			draw: function(x, y) {
+			create: function(x, y) {
 				var elem = this.svg.rect(x - 40, y - 40, 80, 80);
 				elem.attr({
 					fill: "#bada55",
@@ -118,7 +122,11 @@ var SvgFurniture = function(left, top, width, height, svg) {
 					strokeWidth: 5,
 					x: 400
 				});
-			}.bind(this)
+				elem.opt = {
+					type: 'Frame',
+				}
+				return elem;
+			}.bind(this),
 		},
 	};
 
@@ -127,16 +135,16 @@ var SvgFurniture = function(left, top, width, height, svg) {
 		console.log(item[i]);
 		console.log(this.type[item[i].type]);
 
-		this.type[item[i].type].draw(item[i].pos.x, item[i].pos.y);
+		this.type[item[i].type].create(item[i].pos.x, item[i].pos.y);
 	}
 };
 
 SvgFurniture.prototype.setItem = function(x, y) {
-	
+
 };
 
 SvgFurniture.prototype.spawnItem = function(type) {
-	return this.type[type].draw(0, 0);
+	return this.type[type].create(0, 0);
 };
 
 SvgFurniture.prototype.setDragItem = function(item) {
@@ -151,5 +159,17 @@ SvgFurniture.prototype.releaseItem = function() {
 };
 
 SvgFurniture.prototype.move = function(x, y) {
-	//this.dragItem.move
+	console.log(this.dragItem);
+	console.log({x: x, y: y});
+	switch (this.dragItem.opt.type) {
+	case 'Frame':
+		this.dragItem.attr({x: x, y: y});
+		break;
+	case 'WallHorizontal':
+		this.dragItem.attr({x: x, y: y});
+		break;
+	default:
+		console.log('def');
+		break;
+	}
 };

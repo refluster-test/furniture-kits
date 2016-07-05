@@ -149,7 +149,7 @@ Apl.prototype.hUp = function(e) {
 Apl.prototype.hMove = function(e, p) {
 	if (this.dragging) {
 		// convert coordinate from point to canvas
-		var pageX, pageY;
+		var pageX, pageY, x, y;
 		if (e.pageX) {
 			pageX = e.pageX;
 			pageY = e.pageY;
@@ -169,6 +169,8 @@ Apl.prototype.hMove = function(e, p) {
 			this.draw();
 		}
 		////////////////////////////// svg
+		x = pageX - this.svgLeft;
+		y = pageY - this.svgTop;
 		x = parseInt(x * this.svgWidth / this.svgStyleWidth);
 		y = parseInt(y * this.svgHeight / this.svgStyleHeight);
 		// check if the canvas should be updated
