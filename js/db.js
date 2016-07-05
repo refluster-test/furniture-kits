@@ -66,18 +66,22 @@ var SvgDatabase = function() {
 			windowColor: ''
 		},
 		item: [
+/*
 			{
 				type: 'Frame',
 				pos: {x: 150, y: 120},
 			},
+*/
 			{
 				type: 'WallHorizontal',
-				pos: {x: 80, y: 180},
+				pos: {x: 400, y: 180},
 			},
+/*
 			{
 				type: 'WallHorizontal',
 				pos: {x: 30, y: 80},
 			},
+*/
 		]
 	};
 };

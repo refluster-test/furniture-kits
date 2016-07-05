@@ -99,28 +99,35 @@ var SvgFurniture = function(left, top, width, height, svg) {
 	this.type = {
 		'Frame': {
 			zIndex: 0,
-			create: this.createFrame.bind(this)
+//			create: this.createFrame.bind(this),
+//			set: this.setFrame.bind(this),
 		},
 		'WallHorizontal': {
 			zIndex: 0,
 			create: this.createWallHorizontal.bind(this),
+			set: this.setWallHorizontal.bind(this),
 		},
 	};
 
 	var item = this.state.item
 	this.item = [];
+
+	this.createAndSetFrame();
+
 	for (var i = 0; i < item.length; i++) {
 		var it = this.type[item[i].type].create(item[i].pos.x, item[i].pos.y);
+		this.setDragItem(it);
+		this.type[item[i].type].set(item[i].pos.x, item[i].pos.y);
 		this.item.push(it);
 	}
 };
 
-SvgFurniture.prototype.setItem = function(x, y) {
-
+SvgFurniture.prototype.createItem = function(type) {
+	return this.type[type].create(0, 0);
 };
 
-SvgFurniture.prototype.spawnItem = function(type) {
-	return this.type[type].create(0, 0);
+SvgFurniture.prototype.setItem = function(x, y) {
+	return this.type[type].set(x, y);
 };
 
 SvgFurniture.prototype.setDragItem = function(item) {
@@ -151,13 +158,54 @@ SvgFurniture.prototype.move = function(x, y) {
 	}
 };
 
-SvgFurniture.prototype.createFrame = function(x, y) {
+SvgFurniture.prototype.createAndSetFrame = function(x, y) {
 	var conf = this.state.config;
 	var left = (this.width - conf.width)/2;
 	var right = (this.width + conf.width)/2;
 	var top = (this.height - conf.height)/2;
 	var bottom = (this.height + conf.height)/2;
 
+	// top
+	var elemt = this.svg.rect(left, top, right - left, 10);
+	var eleml = this.svg.rect(left, top, 10, bottom - top);
+	var elemb = this.svg.rect(left, bottom, right - left, 10);
+	var elemr = this.svg.rect(right, top, 10, bottom - top);
+
+	console.log(elemt);
+
+	$.each([elemt, eleml, elemb, elemr], function(i, elem) {
+		elem.attr({
+			stroke: "#bb88ee",
+			strokeWidth: 30,
+			fill: "none"
+		});
+		this.item.push(elem);
+	}.bind(this));
+
+	elemt.opt = {
+		type: 'Frame',
+		g: elemt,
+		area: {top: top, bottom: top + 60, left: left, right: right},
+	};
+	eleml.opt = {
+		type: 'Frame',
+		g: eleml,
+		area: {top: top, bottom: bottom, left: left, right: left + 60},
+	};
+	elemb.opt = {
+		type: 'Frame',
+		g: elemb,
+		area: {top: bottom, bottom: bottom + 60, left: left, right: right},
+	};
+	elemr.opt = {
+		type: 'Frame',
+		g: elemr,
+		area: {top: top, bottom: bottom, left: right, right: right + 60},
+	};
+
+//	this.item.concat([elemt, eleml, elemb, elemr]);
+
+/*
 	var elem = this.svg.rect(left, top, right - left, bottom - top);
 	elem.attr({
 		stroke: "#bb88ee",
@@ -167,8 +215,14 @@ SvgFurniture.prototype.createFrame = function(x, y) {
 	elem.opt = {
 		type: 'Frame',
 		g: elem
+		area = {t: bottom, bottom: top, left: right, right: left};
 	}
-	return elem;
+*/
+	
+//	return elem;
+};
+
+SvgFurniture.prototype.setFrame = function(x, y) {
 };
 
 SvgFurniture.prototype.createWallHorizontal = function(x, y) {
@@ -183,5 +237,52 @@ SvgFurniture.prototype.createWallHorizontal = function(x, y) {
 		type: 'WallHorizontal',
 		g: elem
 	}
+
 	return elem;
 };
+
+SvgFurniture.prototype.setWallHorizontal = function(x, y) {
+	var it = this.dragItem;
+	var adj = this.getAdjItems(x, y);
+
+	console.log(adj.left);
+	var left = adj.left.opt.area.right;
+	var right = adj.right.opt.area.left;
+
+	it.attr({
+		x: left,
+		y: y,
+		width: right - left,
+		height: 10
+	});
+};
+
+SvgFurniture.prototype.getAdjItems = function(x, y) {
+	var res = {};
+	var area = {top: 0, bottom: this.height, left: 0, right: this.width};
+
+	$.each(this.item, function(i, it) {
+		var a = it.opt.area;
+		console.log(it.node);
+		console.log(a);
+		if (area.top < a.bottom && x >= a.left && x <= a.right && a.bottom < y) {
+			res.top = it;
+			area.top = a.bottom;
+		}
+		if (area.bottom > a.top && x >= a.left && x <= a.right && a.top > y) {
+			res.bottom = it;
+			area.bottom = a.top;
+		}
+		if (area.left < a.right && y >= a.top && y <= a.bottom && a.right < x) {
+			res.left = it;
+			area.left = a.right;
+		}
+		if (area.right > a.left && y >= a.top && y <= a.bottom && a.left > x) {
+			res.right = it;
+			area.right = a.left;
+		}
+	});
+
+	return res;
+};
+

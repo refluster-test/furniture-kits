@@ -96,7 +96,7 @@ var Apl = function() {
 
 	// create menu
 	this.svgMenu = new SvgMenu(function(type) {
-		var item = this.svgFurniture.spawnItem(type);
+		var item = this.svgFurniture.createItem(type);
 		this.svgFurniture.setDragItem(item);
 		//this.svgFurniture.setDragItem(type);
 		this.dragging = true;
