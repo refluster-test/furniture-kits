@@ -90,45 +90,45 @@ Furniture.prototype.setDragItem = function(item) {
 
 ////////////////////////////// svg
 var SvgFurniture = function(left, top, width, height, svg) {
-	this.dragItem = undefined;
 	this.svg = svg;
+	this.state = new SvgDatabase().restore();
+	this.dragItem = undefined;
 
-	this.state = new Database().svgRestore();
 	this.type = {
+		'Frame': {
+			zIndex: 0,
+			draw: function(x, y) {
+				console.log({x: x, y: y});
+				var elem = this.svg.circle(x, y, 80);
+				elem.attr({
+					fill: "#bada55",
+					stroke: "#000",
+					strokeWidth: 5
+				});
+			}.bind(this)
+		},
 		'WallHorizontal': {
 			zIndex: 0,
-			getElem: function(x, y) {
-				return ;
-			},
-			getAttachPos: function() {
-			},
+			draw: function(x, y) {
+				var elem = this.svg.rect(x - 40, y - 40, 80, 80);
+				elem.attr({
+					fill: "#bada55",
+					stroke: "#000",
+					strokeWidth: 5
+				});
+			}.bind(this)
 		},
 	};
 
-	// create items
-	this.item = [];
-	for (var i = 0; i < this.state.item.length; i++) {
-		var t = this.type[this.state.item[i].type];
-		//t.getElem(this.state.item[i].pos.x, this.state.item[i].pos.y);
+	var item = this.state.item
+	for (var i = 0; i < item.length; i++) {
+		console.log(item[i]);
+		console.log(this.type[item[i].type]);
 
-		var elem = this.getElem(this.state.item[i].pos.x, this.state.item[i].pos.y);
-		console.log(elem);
-
-//		var item = new this.state.item[i].type();
-//		item.setPosition(this.state.item[i].pos);
-//		this.setItemPosition(this.
-//		this.addItem(item);
+		this.type[item[i].type].draw(item[i].pos.x, item[i].pos.y);
 	}
-
-	this.dragItem = undefined;
-};
-
-SvgFurniture.prototype.getElem = function(x, y) {
-	return this.svg.circle(x, y, 100);
 };
 
 SvgFurniture.prototype.draw = function() {
-//	this.svg.clear();
-
-//	var bigCircle = this.svg.circle(200, 150, 100);
 };
+

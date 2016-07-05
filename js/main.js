@@ -52,27 +52,8 @@ var Apl = function() {
 
 	////////////////////////////// svg
 	this.svg = Snap('#svg');
-	$svg = $('#svg');
 
-	this.svgFurniture = new SvgFurniture(0, 100, this.canvasWidth, this.canvasHeight - 100,
-										 this.svg);
-	console.log(this.svgFurniture);
-
-	// resize canvas
-	$svg.css('width', $svg.width());
-	$svg.css('height', $svg.width()*WH_RATIO);
-	this.svgStyleWidth = $svg.width();
-	this.svgStyleHeight = $svg.height();
-
-	$svg.attr('width', 1024);
-	$svg.attr('height', 1024*WH_RATIO);
-
-	// get canvas info
-	this.svgLeft = $svg.offset().left;
-	this.svgTop = $svg.offset().top;
-	this.svgWidth = parseInt($svg.attr('width'));
-	this.svgHeight = parseInt($svg.attr('height'));
-
+	/*
 	var bigCircle = this.svg.circle(150, 150, 100);
 	var bigrect = this.svg.rect(30, 30, 100, 80);
 	var group = this.svg.g(bigCircle, bigrect);
@@ -99,6 +80,20 @@ var Apl = function() {
 	}.bind(this));
 
 	this.svgDraw();
+	*/
+	$('#svg').css('width', $('#svg').width());
+	$('#svg').css('height', $('#svg').width()*WH_RATIO);
+	this.svgStyleWidth = $('#svg').width();
+	this.svgStyleHeight = $('#svg').height();
+	this.svgLeft = $('#svg').offset().left;
+	this.svgTop = $('#svg').offset().top;
+	this.svgWidth = 1024;
+	this.svgHeight = parseInt(1024*WH_RATIO);
+
+	$('#svg').attr('viewBox', '0 0 ' + this.svgWidth + ' ' + this.svgHeight);
+
+	this.svgFurniture = new SvgFurniture(0, 0, this.svgWidth, this.svgHeight, this.svg);
+	this.svgDraw();
 };
 
 Apl.prototype._blank = function() {
@@ -116,9 +111,7 @@ Apl.prototype.svgDraw = function() {
 	this.svgFurniture.draw(this.svg);
 };
 
-Apl.prototype.hDown = function(e) {
-	console.log('hdown');
-	console.log(e);
+Apl.prototype.hDown = function(evt) {
 	if (!this.dragging) {
 		// convert coordinate from point to canvas
 		var x = (e.pageX? e.pageX: e.touches[0].pageX) - this.canvasLeft;
