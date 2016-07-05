@@ -125,6 +125,22 @@ Svg.prototype.createAndSetFrame = function(x, y) {
 		g: elemr,
 		area: {top: top, bottom: bottom, left: right, right: right + this.wallWidth},
 	};
+
+	//////////////////////////////////
+	var Z = 100;
+	var area = eleml.opt.area;
+	var b = this.getViewPosition(area.right, area.top, Z);
+	var e = this.getViewPosition(area.right, area.bottom, Z);
+
+	var path = this.svg.path('M' + b.x + ',' + b.y +
+							 'L' + e.x + ',' + e.y +
+							 'L' + area.right + ',' + area.bottom +
+							 'L' + area.right + ',' + area.top);
+	path.attr({
+		stroke: "#000",
+		strokeWidth: 1,
+		fill: "#bb88ee"
+	});
 };
 
 Svg.prototype.setFrame = function(x, y) {
@@ -259,3 +275,14 @@ Svg.prototype.getAdjItems = function(x, y) {
 	return res;
 };
 
+Svg.prototype.getViewPosition = function(x, y, z) {
+	var camZ = -300;
+	var camX = this.width/2;
+	var camY = this.height/2;
+
+	var r = (0 - camZ)/(z - camZ)
+	var newX = parseInt((x - camX)*r + camX);
+	var newY = parseInt((y - camY)*r + camY);
+
+	return {x: newX, y:newY};
+};
