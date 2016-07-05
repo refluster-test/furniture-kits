@@ -93,7 +93,6 @@ var Apl = function() {
 	$('#svg').attr('viewBox', '0 0 ' + this.svgWidth + ' ' + this.svgHeight);
 
 	this.svgFurniture = new SvgFurniture(0, 0, this.svgWidth, this.svgHeight, this.svg);
-	this.svgDraw();
 
 	// create menu
 	this.svgMenu = new SvgMenu(function(type) {
@@ -123,10 +122,6 @@ Apl.prototype.draw = function() {
 	this.ctx.restore();
 };
 
-Apl.prototype.svgDraw = function() {
-	this.svgFurniture.draw(this.svg);
-};
-
 Apl.prototype.hDown = function(e) {
 	if (!this.dragging) {
 		// convert coordinate from point to canvas
@@ -147,6 +142,8 @@ Apl.prototype.hUp = function(e) {
 	this.furniture.releaseItem();
 	this.draw();
 	e.preventDefault();
+////////////////////////////// svg
+	this.svgFurniture.releaseItem();
 };
 
 Apl.prototype.hMove = function(e, p) {
@@ -171,6 +168,11 @@ Apl.prototype.hMove = function(e, p) {
 		if (this.furniture.move(x, y)) {
 			this.draw();
 		}
+		////////////////////////////// svg
+		x = parseInt(x * this.svgWidth / this.svgStyleWidth);
+		y = parseInt(y * this.svgHeight / this.svgStyleHeight);
+		// check if the canvas should be updated
+		this.svgFurniture.move(x, y);
 	}
 	e.preventDefault();
 };

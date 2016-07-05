@@ -103,7 +103,8 @@ var SvgFurniture = function(left, top, width, height, svg) {
 				elem.attr({
 					fill: "#bada55",
 					stroke: "#000",
-					strokeWidth: 5
+					strokeWidth: 5,
+					cx: 400
 				});
 			}.bind(this)
 		},
@@ -114,7 +115,8 @@ var SvgFurniture = function(left, top, width, height, svg) {
 				elem.attr({
 					fill: "#bada55",
 					stroke: "#000",
-					strokeWidth: 5
+					strokeWidth: 5,
+					x: 400
 				});
 			}.bind(this)
 		},
@@ -129,7 +131,8 @@ var SvgFurniture = function(left, top, width, height, svg) {
 	}
 };
 
-SvgFurniture.prototype.draw = function() {
+SvgFurniture.prototype.setItem = function(x, y) {
+	
 };
 
 SvgFurniture.prototype.spawnItem = function(type) {
@@ -138,4 +141,15 @@ SvgFurniture.prototype.spawnItem = function(type) {
 
 SvgFurniture.prototype.setDragItem = function(item) {
 	this.dragItem = item;
+};
+
+SvgFurniture.prototype.releaseItem = function() {
+	if (this.dragItem) {
+		this.setItem(this.dragItem);
+	}
+	this.dragItem = undefined;
+};
+
+SvgFurniture.prototype.move = function(x, y) {
+	//this.dragItem.move
 };
