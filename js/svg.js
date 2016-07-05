@@ -128,19 +128,54 @@ Svg.prototype.createAndSetFrame = function(x, y) {
 
 	//////////////////////////////////
 	var Z = 100;
-	var area = eleml.opt.area;
-	var b = this.getViewPosition(area.right, area.top, Z);
-	var e = this.getViewPosition(area.right, area.bottom, Z);
-
-	var path = this.svg.path('M' + b.x + ',' + b.y +
-							 'L' + e.x + ',' + e.y +
-							 'L' + area.right + ',' + area.bottom +
-							 'L' + area.right + ',' + area.top);
-	path.attr({
-		stroke: "#000",
-		strokeWidth: 1,
-		fill: "#bb88ee"
-	});
+	$.each([elemt, eleml, elemb, elemr], function(i, elem) {
+		var area = elem.opt.area;
+		var p1, p2;
+		p1 = p2 = undefined;
+		if (area.top > this.height/2) {
+			p1 = {x: area.left, y: area.top};
+			p2 = {x: area.right, y: area.top};
+		} else if (area.bottom < this.height/2) {
+			p1 = {x: area.left, y: area.bottom};
+			p2 = {x: area.right, y: area.bottom};
+		}
+		if (p1 && p2) {
+			var pz1 = this.getViewPosition(p1.x, p1.y, Z);
+			var pz2 = this.getViewPosition(p2.x, p2.y, Z);
+			var path = this.svg.path('M' + p1.x + ',' + p1.y +
+									 'L' + p2.x + ',' + p2.y +
+									 'L' + pz2.x + ',' + pz2.y +
+									 'L' + pz1.x + ',' + pz1.y +
+									 'L' + p1.x + ',' + p1.y);
+			path.attr({
+				stroke: "#000",
+				strokeWidth: 1,
+				fill: "#bb88ee",
+			});
+		}
+		p1 = p2 = undefined;
+		if (area.left > this.width/2) {
+			p1 = {x: area.left, y: area.top};
+			p2 = {x: area.left, y: area.bottom};
+		} else if (area.right < this.width/2) {
+			p1 = {x: area.right, y: area.top};
+			p2 = {x: area.right, y: area.bottom};
+		}
+		if (p1 && p2) {
+			var pz1 = this.getViewPosition(p1.x, p1.y, Z);
+			var pz2 = this.getViewPosition(p2.x, p2.y, Z);
+			var path = this.svg.path('M' + p1.x + ',' + p1.y +
+									 'L' + p2.x + ',' + p2.y +
+									 'L' + pz2.x + ',' + pz2.y +
+									 'L' + pz1.x + ',' + pz1.y +
+									 'L' + p1.x + ',' + p1.y);
+			path.attr({
+				stroke: "#000",
+				strokeWidth: 1,
+				fill: "#bb88ee",
+			});
+		}
+	}.bind(this));
 };
 
 Svg.prototype.setFrame = function(x, y) {
