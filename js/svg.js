@@ -278,8 +278,8 @@ Svg.prototype.setHanger = function(x, y) {
 
 	var top = adj.top.opt.area.bottom;
 	var width = 200;
-	var height = 1800;
-	it.attr({x: x, y: top});
+	var height = 300;
+	it.attr({x: x, y: top, width: width, height: height});
 	it.opt.area = {top: top, bottom: top + height, left: x, right: x + width};
 	return true;
 };
@@ -307,6 +307,7 @@ Svg.prototype.getAdjItems = function(x, y) {
 			area.right = a.left;
 		}
 	});
+	console.log(res);
 
 	return res;
 };
