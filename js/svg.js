@@ -33,8 +33,7 @@ var Svg = function(left, top, width, height, svg) {
 	this.createAndSetFrame();
 
 	for (var i = 0; i < item.length; i++) {
-		var it = this.type[item[i].type].create(item[i].pos.x, item[i].pos.y);
-		this.setDragItem(it);
+		var it = this.createDraggingItem(item[i].type);
 		this.type[item[i].type].set(item[i].pos.x, item[i].pos.y);
 		this.item.push(it);
 	}
@@ -44,8 +43,21 @@ Svg.prototype.createItem = function(type) {
 	return this.type[type].create();
 };
 
-Svg.prototype.setDragItem = function(item) {
-	this.dragItem = item;
+Svg.prototype.deleteItem = function(obj) {
+	obj.remove();
+};
+
+Svg.prototype.reserveRemoveItem = function(obj) {
+	this.removeItem = obj;
+	this.dragItem = obj;
+	this.move(0, 0);
+};
+
+Svg.prototype.createDraggingItem = function(type) {
+	console.log('createDraggingItem');
+	var it = this.type[type].create();
+	this.dragItem = it;
+	return it;
 };
 
 Svg.prototype.releaseItem = function() {
@@ -61,6 +73,10 @@ Svg.prototype.releaseItem = function() {
 		if (this.type[this.dragItem.opt.type].set(x, y)) {
 			this.item.push(this.dragItem);
 		}
+	}
+	if (this.removeItem) {
+		this.removeItem.remove();
+		this.removeItem = undefined;
 	}
 	this.dragItem = undefined;
 };

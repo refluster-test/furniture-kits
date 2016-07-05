@@ -19,9 +19,7 @@ var Apl = function() {
 
 	// create menu
 	this.Menu = new Menu(function(type) {
-		var item = this.svg.createItem(type);
-		this.svg.setDragItem(item);
-		//this.svg.setDragItem(type);
+		var item = this.svg.createDraggingItem(type);
 		this.dragging = true;
 	}.bind(this));
 
@@ -40,7 +38,9 @@ Apl.prototype.hDown = function(e) {
 		var y = (e.pageY? e.pageY: e.touches[0].pageY);
 		var obj = Snap.getElementByPoint(x, y);
 		if (obj.opt !== undefined) {
-			this.svg.setDragItem(Snap.getElementByPoint(x, y).opt.g);
+			var type = obj.opt.type;
+			this.svg.reserveRemoveItem(obj.opt.g);
+			this.svg.createDraggingItem(type);
 			this.dragging = true;
 		}
 	}
