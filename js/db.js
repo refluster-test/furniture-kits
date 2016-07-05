@@ -44,16 +44,16 @@ var SvgDatabase = function() {
 		},
 		item: [
 			{
-				type: ItemFrame,
-				pos: {x: 500, y: 400},
+				type: 'Frame',
+				pos: {x: 150, y: 120},
 			},
 			{
-				type: ItemWallHorizontal,
-				pos: {x: 400, y: 180},
+				type: 'WallHorizontal',
+				pos: {x: 80, y: 180},
 			},
 			{
-				type: ItemWallHorizontal,
-				pos: {x: 350, y: 380},
+				type: 'WallHorizontal',
+				pos: {x: 30, y: 80},
 			},
 		]
 	};

@@ -84,8 +84,35 @@ Furniture.prototype.setDragItem = function(item) {
 
 ////////////////////////////// svg
 
-var SvgFurniture = function(left, top, width, height) {
+var SvgFurniture = function(left, top, width, height, svg) {
+	this.svg = svg;
 	this.state = new SvgDatabase().restore();
+
+	this.type = {
+		'Frame': {
+			zIndex: 0,
+			draw: function(x, y) {
+				console.log({x: x, y: y});
+				var elem = this.svg.circle(x, y, 80);
+				elem.attr({
+					fill: "#bada55",
+					stroke: "#000",
+					strokeWidth: 5
+				});
+			}.bind(this)
+		},
+		'WallHorizontal': {
+			zIndex: 0,
+			draw: function(x, y) {
+				var elem = this.svg.rect(x - 40, y - 40, 80, 80);
+				elem.attr({
+					fill: "#bada55",
+					stroke: "#000",
+					strokeWidth: 5
+				});
+			}.bind(this)
+		},
+	};
 
 	// create items
 	this.item = [];
@@ -96,8 +123,15 @@ var SvgFurniture = function(left, top, width, height) {
 	}
 
 	this.dragItem = undefined;
+	this.draw();
 };
 
 SvgFurniture.prototype.draw = function() {
+	var item = this.state.item
+	for (var i = 0; i < item.length; i++) {
+		console.log(item[i]);
+		console.log(this.type[item[i].type]);
 
+		this.type[item[i].type].draw(item[i].pos.x, item[i].pos.y);
+	}
 };
