@@ -133,6 +133,12 @@ Apl.prototype.hDown = function(e) {
 			this.furniture.grabItem(x, y);
 		}
 		this.dragging = true;
+
+		////////////////////////////// svg
+		var x = (e.pageX? e.pageX: e.touches[0].pageX);
+		var y = (e.pageY? e.pageY: e.touches[0].pageY);
+		this.svgFurniture.setDragItem(Snap.getElementByPoint(x, y).opt.g);
+		this.dragging = true;
 	}
 	e.preventDefault();
 };

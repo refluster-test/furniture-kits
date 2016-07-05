@@ -106,8 +106,10 @@ var SvgFurniture = function(left, top, width, height, svg) {
 	};
 
 	var item = this.state.item
+	this.item = [];
 	for (var i = 0; i < item.length; i++) {
-		this.type[item[i].type].create(item[i].pos.x, item[i].pos.y);
+		var it = this.type[item[i].type].create(item[i].pos.x, item[i].pos.y);
+		this.item.push(it);
 	}
 };
 
@@ -131,11 +133,9 @@ SvgFurniture.prototype.releaseItem = function() {
 };
 
 SvgFurniture.prototype.move = function(x, y) {
-	console.log(this.dragItem);
-	console.log({x: x, y: y});
 	switch (this.dragItem.opt.type) {
 	case 'Frame':
-		this.dragItem.attr({x: x, y: y});
+		this.dragItem.attr({cx: x, cy: y});
 		break;
 	case 'WallHorizontal':
 		this.dragItem.attr({x: x, y: y});
@@ -156,6 +156,7 @@ SvgFurniture.prototype.createFrame = function(x, y) {
 	});
 	elem.opt = {
 		type: 'Frame',
+		g: elem
 	}
 	return elem;
 };
@@ -169,7 +170,8 @@ SvgFurniture.prototype.createWallHorizontal = function(x, y) {
 		x: 400
 	});
 	elem.opt = {
-		type: 'Frame',
+		type: 'WallHorizontal',
+		g: elem
 	}
 	return elem;
 };
