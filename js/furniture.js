@@ -133,6 +133,9 @@ SvgFurniture.prototype.releaseItem = function() {
 };
 
 SvgFurniture.prototype.move = function(x, y) {
+	if (! this.dragItem) {
+		return;
+	}
 	switch (this.dragItem.opt.type) {
 	case 'Frame':
 		this.dragItem.attr({cx: x, cy: y});
