@@ -102,6 +102,14 @@ var Apl = function() {
 		//this.svgFurniture.setDragItem(type);
 		this.dragging = true;
 	}.bind(this));
+
+	$('#svg').mousedown(this.hDown.bind(this));
+	$('#svg').mouseup(this.hUp.bind(this));
+	$('#svg').mouseleave(this.hUp.bind(this));
+	$('#svg').mousemove(this.hMove.bind(this));
+	$('#svg').bind('touchstart', this.hDown.bind(this));
+	$('#svg').bind('touchend', this.hUp.bind(this));
+	$('#svg').bind('touchmove', this.hMove.bind(this));
 };
 
 Apl.prototype._blank = function() {
