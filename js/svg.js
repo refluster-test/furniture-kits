@@ -27,24 +27,18 @@ var Svg = function(left, top, width, height, svg) {
 		},
 	};
 
-	var item = this.state.item
 	this.item = [];
-
 	this.createAndSetFrame();
-
-	for (var i = 0; i < item.length; i++) {
-		var it = this.createDraggingItem(item[i].type);
-		this.type[item[i].type].set(item[i].pos.x, item[i].pos.y);
+	$.each(this.state.item, function(idx, _it) {
+		console.log(_it);
+		var it = this.createDraggingItem(_it.type);
+		this.type[_it.type].set(_it.pos.x, _it.pos.y);
 		this.item.push(it);
-	}
+	}.bind(this));
 };
 
 Svg.prototype.createItem = function(type) {
 	return this.type[type].create();
-};
-
-Svg.prototype.deleteItem = function(obj) {
-	obj.remove();
 };
 
 Svg.prototype.reserveRemoveItem = function(obj) {
@@ -53,7 +47,6 @@ Svg.prototype.reserveRemoveItem = function(obj) {
 };
 
 Svg.prototype.createDraggingItem = function(type) {
-	console.log('createDraggingItem');
 	var it = this.type[type].create();
 	this.dragItem = it;
 	return it;
