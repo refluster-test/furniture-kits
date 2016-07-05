@@ -50,7 +50,7 @@ Svg.prototype.deleteItem = function(obj) {
 Svg.prototype.reserveRemoveItem = function(obj) {
 	this.removeItem = obj;
 	this.dragItem = obj;
-	this.move(0, 0);
+	this.move(this.width, 0);
 };
 
 Svg.prototype.createDraggingItem = function(type) {
