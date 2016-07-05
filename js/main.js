@@ -18,7 +18,7 @@ var Apl = function() {
 	this.svg = new Svg(0, 0, this.svgWidth, this.svgHeight, this.svg);
 
 	// create menu
-	this.svgMenu = new SvgMenu(function(type) {
+	this.Menu = new Menu(function(type) {
 		var item = this.svg.createItem(type);
 		this.svg.setDragItem(item);
 		//this.svg.setDragItem(type);
