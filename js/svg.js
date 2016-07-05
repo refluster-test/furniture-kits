@@ -58,8 +58,9 @@ Svg.prototype.releaseItem = function() {
 			x = parseInt(this.dragItem.attr('x'));
 			y = parseInt(this.dragItem.attr('y'));
 		}
-		this.type[this.dragItem.opt.type].set(x, y);
-		this.item.push(this.dragItem);
+		if (this.type[this.dragItem.opt.type].set(x, y)) {
+			this.item.push(this.dragItem);
+		}
 	}
 	this.dragItem = undefined;
 };
@@ -237,8 +238,7 @@ Svg.prototype.setWallHorizontal = function(x, y) {
 
 	if (!adj.left || !adj.right) {
 		this.dragItem.remove();
-		this.dragItem = undefined;
-		return;
+		return false;
 	}
 
 	var left = adj.left.opt.area.right;
@@ -246,6 +246,7 @@ Svg.prototype.setWallHorizontal = function(x, y) {
 
 	it.attr({x: left, y: y, width: right - left, height: this.wallWidth});
 	it.opt.area = {top: y, bottom: y + this.wallWidth, left: left, right: right};
+	return true;
 };
 
 Svg.prototype.setWallVertical = function(x, y) {
@@ -255,8 +256,7 @@ Svg.prototype.setWallVertical = function(x, y) {
 	console.log(it);
 	if (!adj.top || !adj.bottom) {
 		this.dragItem.remove();
-		this.dragItem = undefined;
-		return;
+		return false;
 	}
 
 	var top = adj.top.opt.area.bottom;
@@ -264,6 +264,7 @@ Svg.prototype.setWallVertical = function(x, y) {
 
 	it.attr({x: x, y: top, width: this.wallWidth, height: bottom - top});
 	it.opt.area = {top: top, bottom: bottom, left: x, right: x + this.wallWidth};
+	return true;
 };
 
 Svg.prototype.setHanger = function(x, y) {
@@ -272,8 +273,7 @@ Svg.prototype.setHanger = function(x, y) {
 
 	if (!adj.top) {
 		this.dragItem.remove();
-		this.dragItem = undefined;
-		return;
+		return false;
 	}
 
 	var top = adj.top.opt.area.bottom;
@@ -281,6 +281,7 @@ Svg.prototype.setHanger = function(x, y) {
 	var height = 1800;
 	it.attr({x: x, y: top});
 	it.opt.area = {top: top, bottom: top + height, left: x, right: x + width};
+	return true;
 };
 
 Svg.prototype.getAdjItems = function(x, y) {
