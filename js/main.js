@@ -138,6 +138,7 @@ Apl.prototype.hDown = function(e) {
 		var x = (e.pageX? e.pageX: e.touches[0].pageX);
 		var y = (e.pageY? e.pageY: e.touches[0].pageY);
 		var obj = Snap.getElementByPoint(x, y);
+		console.log(obj);
 		if (obj.opt !== undefined) {
 			this.svgFurniture.setDragItem(Snap.getElementByPoint(x, y).opt.g);
 			this.dragging = true;

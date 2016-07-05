@@ -91,6 +91,8 @@ Furniture.prototype.setDragItem = function(item) {
 ////////////////////////////// svg
 var SvgFurniture = function(left, top, width, height, svg) {
 	this.svg = svg;
+	this.width = width;
+	this.height = height;
 	this.state = new SvgDatabase().restore();
 	this.dragItem = undefined;
 
@@ -150,12 +152,17 @@ SvgFurniture.prototype.move = function(x, y) {
 };
 
 SvgFurniture.prototype.createFrame = function(x, y) {
-	var elem = this.svg.circle(x, y, 80);
+	var conf = this.state.config;
+	var left = (this.width - conf.width)/2;
+	var right = (this.width + conf.width)/2;
+	var top = (this.height - conf.height)/2;
+	var bottom = (this.height + conf.height)/2;
+
+	var elem = this.svg.rect(left, top, right - left, bottom - top);
 	elem.attr({
-		fill: "#bada55",
-		stroke: "#000",
-		strokeWidth: 5,
-		cx: 400
+		stroke: "#bb88ee",
+		strokeWidth: 30,
+		fill: "none"
 	});
 	elem.opt = {
 		type: 'Frame',
