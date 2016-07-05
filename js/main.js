@@ -58,8 +58,9 @@ var Apl = function() {
 	this.svgWidth = parseInt($('#svg').attr('width'));
 	this.svgHeight = parseInt($('#svg').attr('height'));
 
-	$('#svg').attr('width', 1024);
-	$('#svg').attr('height', 1024*WH_RATIO);
+	//$('#svg').attr('width', 1024);
+	//$('#svg').attr('height', 1024*WH_RATIO);
+	$('#svg').attr('viewBox', '0 0 1024 ' + parseInt(1024*WH_RATIO));
 
 	this.svgFurniture = new SvgFurniture(0, 100, this.svgWidth, this.svgHeight - 100,
 										this.svg);
