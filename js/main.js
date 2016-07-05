@@ -49,7 +49,19 @@ var Apl = function() {
 
 	////////////////////////////// svg
 	this.svg = Snap('#svg');
-	this.svgFurniture = new SvgFurniture(0, 100, this.canvasWidth, this.canvasHeight - 100,
+	$('#svg').css('width', $('#svg').width());
+	$('#svg').css('height', $('#svg').width()*WH_RATIO);
+	this.svgStyleWidth = $('#svg').width();
+	this.svgStyleHeight = $('#svg').height();
+	this.svgLeft = $('#svg').offset().left;
+	this.svgTop = $('#svg').offset().top;
+	this.svgWidth = parseInt($('#svg').attr('width'));
+	this.svgHeight = parseInt($('#svg').attr('height'));
+
+	$('#svg').attr('width', 1024);
+	$('#svg').attr('height', 1024*WH_RATIO);
+
+	this.svgFurniture = new SvgFurniture(0, 100, this.svgWidth, this.svgHeight - 100,
 										this.svg);
 	this.draw();
 };
