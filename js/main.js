@@ -127,7 +127,7 @@ Apl.prototype.svgDraw = function() {
 	this.svgFurniture.draw(this.svg);
 };
 
-Apl.prototype.hDown = function(evt) {
+Apl.prototype.hDown = function(e) {
 	if (!this.dragging) {
 		// convert coordinate from point to canvas
 		var x = (e.pageX? e.pageX: e.touches[0].pageX) - this.canvasLeft;
