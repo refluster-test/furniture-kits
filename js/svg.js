@@ -20,6 +20,11 @@ var Svg = function(left, top, width, height, svg) {
 			create: this.createWallVertical.bind(this),
 			set: this.setWallVertical.bind(this),
 		},
+		'Hanger': {
+			zIndex: 0,
+			create: this.createHanger.bind(this),
+			set: this.setHanger.bind(this),
+		},
 	};
 
 	var item = this.state.item
@@ -68,6 +73,7 @@ Svg.prototype.move = function(x, y) {
 		break;
 	case 'WallHorizontal':
 	case 'WallVertical':
+	case 'Hanger':
 		this.dragItem.attr({x: x, y: y});
 		break;
 	default:
@@ -157,6 +163,23 @@ Svg.prototype.createWallVertical = function(x, y) {
 	return elem;
 };
 
+Svg.prototype.createHanger = function(x, y) {
+	var elem = this.svg.rect(x - 40, y - 40, 80, 80);
+	elem.attr({
+		fill: this.state.config.wallColor,
+		stroke: "#000",
+		strokeWidth: 1,
+		x: 100,
+		y: 100,
+	});
+	elem.opt = {
+		type: 'Hanger',
+		g: elem,
+	}
+
+	return elem;
+};
+
 Svg.prototype.setWallHorizontal = function(x, y) {
 	var it = this.dragItem;
 	var adj = this.getAdjItems(x, y);
@@ -190,6 +213,23 @@ Svg.prototype.setWallVertical = function(x, y) {
 
 	it.attr({x: x, y: top, width: this.wallWidth, height: bottom - top});
 	it.opt.area = {top: top, bottom: bottom, left: x, right: x + this.wallWidth};
+};
+
+Svg.prototype.setHanger = function(x, y) {
+	var it = this.dragItem;
+	var adj = this.getAdjItems(x, y);
+
+	if (!adj.top) {
+		this.dragItem.remove();
+		this.dragItem = undefined;
+		return;
+	}
+
+	var top = adj.top.opt.area.bottom;
+	var width = 200;
+	var height = 1800;
+	it.attr({x: x, y: top});
+	it.opt.area = {top: top, bottom: top + height, left: x, right: x + width};
 };
 
 Svg.prototype.getAdjItems = function(x, y) {
