@@ -97,44 +97,16 @@ var SvgFurniture = function(left, top, width, height, svg) {
 	this.type = {
 		'Frame': {
 			zIndex: 0,
-			create: function(x, y) {
-				console.log({x: x, y: y});
-				var elem = this.svg.circle(x, y, 80);
-				elem.attr({
-					fill: "#bada55",
-					stroke: "#000",
-					strokeWidth: 5,
-					cx: 400
-				});
-				elem.opt = {
-					type: 'Frame',
-				}
-				return elem;
-			}.bind(this),
+			create: this.createFrame.bind(this)
 		},
 		'WallHorizontal': {
 			zIndex: 0,
-			create: function(x, y) {
-				var elem = this.svg.rect(x - 40, y - 40, 80, 80);
-				elem.attr({
-					fill: "#bada55",
-					stroke: "#000",
-					strokeWidth: 5,
-					x: 400
-				});
-				elem.opt = {
-					type: 'Frame',
-				}
-				return elem;
-			}.bind(this),
+			create: this.createWallHorizontal.bind(this),
 		},
 	};
 
 	var item = this.state.item
 	for (var i = 0; i < item.length; i++) {
-		console.log(item[i]);
-		console.log(this.type[item[i].type]);
-
 		this.type[item[i].type].create(item[i].pos.x, item[i].pos.y);
 	}
 };
@@ -172,4 +144,32 @@ SvgFurniture.prototype.move = function(x, y) {
 		console.log('def');
 		break;
 	}
+};
+
+SvgFurniture.prototype.createFrame = function(x, y) {
+	var elem = this.svg.circle(x, y, 80);
+	elem.attr({
+		fill: "#bada55",
+		stroke: "#000",
+		strokeWidth: 5,
+		cx: 400
+	});
+	elem.opt = {
+		type: 'Frame',
+	}
+	return elem;
+};
+
+SvgFurniture.prototype.createWallHorizontal = function(x, y) {
+	var elem = this.svg.rect(x - 40, y - 40, 80, 80);
+	elem.attr({
+		fill: "#bada55",
+		stroke: "#000",
+		strokeWidth: 5,
+		x: 400
+	});
+	elem.opt = {
+		type: 'Frame',
+	}
+	return elem;
 };
