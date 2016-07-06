@@ -1,5 +1,5 @@
 ////////////////////////////// svg
-var SvgFurniture = function(left, top, width, height, svg) {
+var Svg = function(left, top, width, height, svg) {
 	this.svg = svg;
 	this.width = width;
 	this.height = height;
@@ -33,20 +33,20 @@ var SvgFurniture = function(left, top, width, height, svg) {
 	}
 };
 
-SvgFurniture.prototype.createItem = function(type) {
+Svg.prototype.createItem = function(type) {
 	return this.type[type].create(0, 0);
 };
 
-SvgFurniture.prototype.setItem = function(x, y) {
+Svg.prototype.setItem = function(x, y) {
 	return this.type[this.dragItem.opt.type].set(x, y);
 };
 
-SvgFurniture.prototype.setDragItem = function(item) {
+Svg.prototype.setDragItem = function(item) {
 	console.log(item);
 	this.dragItem = item;
 };
 
-SvgFurniture.prototype.releaseItem = function() {
+Svg.prototype.releaseItem = function() {
 	if (this.dragItem) {
 		var x, y;
 		if (this.dragItem.node.nodeName == 'circle') {
@@ -61,7 +61,7 @@ SvgFurniture.prototype.releaseItem = function() {
 	this.dragItem = undefined;
 };
 
-SvgFurniture.prototype.move = function(x, y) {
+Svg.prototype.move = function(x, y) {
 	if (! this.dragItem) {
 		return;
 	}
@@ -78,7 +78,7 @@ SvgFurniture.prototype.move = function(x, y) {
 	}
 };
 
-SvgFurniture.prototype.createAndSetFrame = function(x, y) {
+Svg.prototype.createAndSetFrame = function(x, y) {
 	var conf = this.state.config;
 	var left = (this.width - conf.width)/2;
 	var right = (this.width + conf.width)/2;
@@ -142,10 +142,10 @@ SvgFurniture.prototype.createAndSetFrame = function(x, y) {
 //	return elem;
 };
 
-SvgFurniture.prototype.setFrame = function(x, y) {
+Svg.prototype.setFrame = function(x, y) {
 };
 
-SvgFurniture.prototype.createWallHorizontal = function(x, y) {
+Svg.prototype.createWallHorizontal = function(x, y) {
 	var elem = this.svg.rect(x - 40, y - 40, 80, 80);
 	elem.attr({
 		fill: "#bada55",
@@ -161,7 +161,7 @@ SvgFurniture.prototype.createWallHorizontal = function(x, y) {
 	return elem;
 };
 
-SvgFurniture.prototype.setWallHorizontal = function(x, y) {
+Svg.prototype.setWallHorizontal = function(x, y) {
 	var it = this.dragItem;
 	var adj = this.getAdjItems(x, y);
 
@@ -183,7 +183,7 @@ SvgFurniture.prototype.setWallHorizontal = function(x, y) {
 	it.opt.area = {top: y, bottom: y + this.wallWidth, left: left, right: right};
 };
 
-SvgFurniture.prototype.getAdjItems = function(x, y) {
+Svg.prototype.getAdjItems = function(x, y) {
 	var res = {};
 	var area = {top: 0, bottom: this.height, left: 0, right: this.width};
 

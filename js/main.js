@@ -43,13 +43,13 @@ var Apl = function() {
 
 	$('#svg').attr('viewBox', '0 0 ' + this.svgWidth + ' ' + this.svgHeight);
 
-	this.svgFurniture = new SvgFurniture(0, 0, this.svgWidth, this.svgHeight, this.svg);
+	this.svg = new Svg(0, 0, this.svgWidth, this.svgHeight, this.svg);
 
 	// create menu
 	this.svgMenu = new SvgMenu(function(type) {
-		var item = this.svgFurniture.createItem(type);
-		this.svgFurniture.setDragItem(item);
-		//this.svgFurniture.setDragItem(type);
+		var item = this.svg.createItem(type);
+		this.svg.setDragItem(item);
+		//this.svg.setDragItem(type);
 		this.dragging = true;
 	}.bind(this));
 
@@ -69,7 +69,7 @@ Apl.prototype.hDown = function(e) {
 		var obj = Snap.getElementByPoint(x, y);
 		console.log(obj);
 		if (obj.opt !== undefined) {
-			this.svgFurniture.setDragItem(Snap.getElementByPoint(x, y).opt.g);
+			this.svg.setDragItem(Snap.getElementByPoint(x, y).opt.g);
 			this.dragging = true;
 		}
 	}
@@ -78,7 +78,7 @@ Apl.prototype.hDown = function(e) {
 
 Apl.prototype.hUp = function(e) {
 	this.dragging = false;
-	this.svgFurniture.releaseItem();
+	this.svg.releaseItem();
 	e.preventDefault();
 };
 
@@ -100,7 +100,7 @@ Apl.prototype.hMove = function(e, p) {
 		x = parseInt(x * this.svgWidth / this.svgStyleWidth);
 		y = parseInt(y * this.svgHeight / this.svgStyleHeight);
 		// check if the canvas should be updated
-		this.svgFurniture.move(x, y);
+		this.svg.move(x, y);
 	}
 	e.preventDefault();
 };
