@@ -132,6 +132,7 @@ SvgFurniture.prototype.setItem = function(x, y) {
 };
 
 SvgFurniture.prototype.setDragItem = function(item) {
+	console.log(item);
 	this.dragItem = item;
 };
 
@@ -254,7 +255,11 @@ SvgFurniture.prototype.setWallHorizontal = function(x, y) {
 	var it = this.dragItem;
 	var adj = this.getAdjItems(x, y);
 
-	console.log(adj.left);
+	if (!adj.left || !adj.right) {
+		this.dragItem.remove();
+		this.dragItem = undefined;
+	}
+
 	var left = adj.left.opt.area.right;
 	var right = adj.right.opt.area.left;
 
