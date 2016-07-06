@@ -4,34 +4,6 @@ var Apl = function() {
 	this.dragging = false;
 	this.svg = Snap('#svg');
 
-	/*
-	var bigCircle = this.svg.circle(150, 150, 100);
-	var bigrect = this.svg.rect(30, 30, 100, 80);
-	var group = this.svg.g(bigCircle, bigrect);
-
-	bigCircle.touchstart(this.hDown.bind(this));
-
-	bigCircle.originalType = 'hoge';
-	bigrect.originalType = 'fuga';
-
-	console.log(bigCircle);
-	console.log(bigrect);
-	console.log(group);
-
-	var testHash = {};
-	testHash[bigCircle.id] = 'circle0';
-	testHash[bigrect.id] = 'rect0';
-	testHash[group.id] = 'group0';
-
-	this.svg.touchmove(function(e) {
-		console.log(e.touches[0].pageX, e.touches[0].pageY);
-		var elm = Snap.getElementByPoint(e.touches[0].pageX, e.touches[0].pageY);
-		console.log(elm);
-		console.log(testHash[elm.id]);
-	}.bind(this));
-
-	this.svgDraw();
-	*/
 	$('#svg').css('width', $('#svg').width());
 	$('#svg').css('height', $('#svg').width()*WH_RATIO);
 	this.svgStyleWidth = $('#svg').width();
@@ -67,7 +39,6 @@ Apl.prototype.hDown = function(e) {
 		var x = (e.pageX? e.pageX: e.touches[0].pageX);
 		var y = (e.pageY? e.pageY: e.touches[0].pageY);
 		var obj = Snap.getElementByPoint(x, y);
-		console.log(obj);
 		if (obj.opt !== undefined) {
 			this.svg.setDragItem(Snap.getElementByPoint(x, y).opt.g);
 			this.dragging = true;
@@ -99,7 +70,6 @@ Apl.prototype.hMove = function(e, p) {
 		y = pageY - this.svgTop;
 		x = parseInt(x * this.svgWidth / this.svgStyleWidth);
 		y = parseInt(y * this.svgHeight / this.svgStyleHeight);
-		// check if the canvas should be updated
 		this.svg.move(x, y);
 	}
 	e.preventDefault();
