@@ -15,6 +15,11 @@ var Svg = function(left, top, width, height, svg) {
 			create: this.createWallHorizontal.bind(this),
 			set: this.setWallHorizontal.bind(this),
 		},
+		'WallVertical': {
+			zIndex: 0,
+			create: this.createWallVertical.bind(this),
+			set: this.setWallVertical.bind(this),
+		},
 	};
 
 	var item = this.state.item
@@ -34,10 +39,6 @@ Svg.prototype.createItem = function(type) {
 	return this.type[type].create(0, 0);
 };
 
-Svg.prototype.setItem = function(x, y) {
-	return this.type[this.dragItem.opt.type].set(x, y);
-};
-
 Svg.prototype.setDragItem = function(item) {
 	this.dragItem = item;
 };
@@ -46,13 +47,14 @@ Svg.prototype.releaseItem = function() {
 	if (this.dragItem) {
 		var x, y;
 		if (this.dragItem.node.nodeName == 'circle') {
-			x = this.dragItem.attr('cx');
-			y = this.dragItem.attr('cy');
+			x = parseInt(this.dragItem.attr('cx'));
+			y = parseInt(this.dragItem.attr('cy'));
 		} else {
-			x = this.dragItem.attr('x');
-			y = this.dragItem.attr('y');
+			x = parseInt(this.dragItem.attr('x'));
+			y = parseInt(this.dragItem.attr('y'));
 		}
-		this.setItem(x, y);
+		this.type[this.dragItem.opt.type].set(x, y);
+		this.item.push(this.dragItem);
 	}
 	this.dragItem = undefined;
 };
@@ -65,6 +67,7 @@ Svg.prototype.move = function(x, y) {
 	case 'Frame':
 		break;
 	case 'WallHorizontal':
+	case 'WallVertical':
 		this.dragItem.attr({x: x, y: y});
 		break;
 	default:
@@ -124,13 +127,30 @@ Svg.prototype.setFrame = function(x, y) {
 Svg.prototype.createWallHorizontal = function(x, y) {
 	var elem = this.svg.rect(x - 40, y - 40, 80, 80);
 	elem.attr({
-		fill: "#bada55",
+		fill: this.state.config.wallColor,
 		stroke: "#000",
 		strokeWidth: 1,
-		x: 400
+		x: -100
 	});
 	elem.opt = {
 		type: 'WallHorizontal',
+		g: elem,
+	}
+
+	return elem;
+};
+
+Svg.prototype.createWallVertical = function(x, y) {
+	var elem = this.svg.rect(x - 40, y - 40, 80, 80);
+	elem.attr({
+		fill: this.state.config.wallColor,
+		stroke: "#000",
+		strokeWidth: 1,
+		x: 100,
+		y: 100,
+	});
+	elem.opt = {
+		type: 'WallVertical',
 		g: elem,
 	}
 
@@ -152,6 +172,24 @@ Svg.prototype.setWallHorizontal = function(x, y) {
 
 	it.attr({x: left, y: y, width: right - left, height: this.wallWidth});
 	it.opt.area = {top: y, bottom: y + this.wallWidth, left: left, right: right};
+};
+
+Svg.prototype.setWallVertical = function(x, y) {
+	var it = this.dragItem;
+	var adj = this.getAdjItems(x, y);
+
+	console.log(it);
+	if (!adj.top || !adj.bottom) {
+		this.dragItem.remove();
+		this.dragItem = undefined;
+		return;
+	}
+
+	var top = adj.top.opt.area.bottom;
+	var bottom = adj.bottom.opt.area.top;
+
+	it.attr({x: x, y: top, width: this.wallWidth, height: bottom - top});
+	it.opt.area = {top: top, bottom: bottom, left: x, right: x + this.wallWidth};
 };
 
 Svg.prototype.getAdjItems = function(x, y) {
