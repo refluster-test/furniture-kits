@@ -128,7 +128,7 @@ SvgFurniture.prototype.createItem = function(type) {
 };
 
 SvgFurniture.prototype.setItem = function(x, y) {
-	return this.type[type].set(x, y);
+	return this.type[this.dragItem.opt.type].set(x, y);
 };
 
 SvgFurniture.prototype.setDragItem = function(item) {
@@ -137,7 +137,15 @@ SvgFurniture.prototype.setDragItem = function(item) {
 
 SvgFurniture.prototype.releaseItem = function() {
 	if (this.dragItem) {
-		this.setItem(this.dragItem);
+		var x, y;
+		if (this.dragItem.node.nodeName == 'circle') {
+			x = this.dragItem.attr('cx');
+			y = this.dragItem.attr('cy');
+		} else {
+			x = this.dragItem.attr('x');
+			y = this.dragItem.attr('y');
+		}
+		this.setItem(x, y);
 	}
 	this.dragItem = undefined;
 };
@@ -236,7 +244,7 @@ SvgFurniture.prototype.createWallHorizontal = function(x, y) {
 	});
 	elem.opt = {
 		type: 'WallHorizontal',
-		g: elem
+		g: elem,
 	}
 
 	return elem;
@@ -256,6 +264,7 @@ SvgFurniture.prototype.setWallHorizontal = function(x, y) {
 		width: right - left,
 		height: this.wallWidth
 	});
+	it.opt.area = {top: y, bottom: y + this.wallWidth, left: left, right: right};
 };
 
 SvgFurniture.prototype.getAdjItems = function(x, y) {
