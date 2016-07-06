@@ -10,8 +10,6 @@ var Svg = function(left, top, width, height, svg) {
 	this.type = {
 		'Frame': {
 			zIndex: 0,
-//			create: this.createFrame.bind(this),
-//			set: this.setFrame.bind(this),
 		},
 		'WallHorizontal': {
 			zIndex: 0,
@@ -42,7 +40,6 @@ Svg.prototype.setItem = function(x, y) {
 };
 
 Svg.prototype.setDragItem = function(item) {
-	console.log(item);
 	this.dragItem = item;
 };
 
@@ -67,7 +64,6 @@ Svg.prototype.move = function(x, y) {
 	}
 	switch (this.dragItem.opt.type) {
 	case 'Frame':
-		this.dragItem.attr({cx: x, cy: y});
 		break;
 	case 'WallHorizontal':
 		this.dragItem.attr({x: x, y: y});
@@ -85,7 +81,6 @@ Svg.prototype.createAndSetFrame = function(x, y) {
 	var top = (this.height - conf.height)/2;
 	var bottom = (this.height + conf.height)/2;
 
-	// top
 	var elemt = this.svg.rect(left, top, right - left, this.wallWidth);
 	var eleml = this.svg.rect(left, top, this.wallWidth, bottom - top);
 	var elemb = this.svg.rect(left, bottom, right - left, this.wallWidth);
@@ -122,24 +117,6 @@ Svg.prototype.createAndSetFrame = function(x, y) {
 		g: elemr,
 		area: {top: top, bottom: bottom, left: right, right: right + this.wallWidth},
 	};
-
-//	this.item.concat([elemt, eleml, elemb, elemr]);
-
-/*
-	var elem = this.svg.rect(left, top, right - left, bottom - top);
-	elem.attr({
-		stroke: "#bb88ee",
-		strokeWidth: 30,
-		fill: "none"
-	});
-	elem.opt = {
-		type: 'Frame',
-		g: elem
-		area = {t: bottom, bottom: top, left: right, right: left};
-	}
-*/
-	
-//	return elem;
 };
 
 Svg.prototype.setFrame = function(x, y) {
@@ -174,12 +151,7 @@ Svg.prototype.setWallHorizontal = function(x, y) {
 	var left = adj.left.opt.area.right;
 	var right = adj.right.opt.area.left;
 
-	it.attr({
-		x: left,
-		y: y,
-		width: right - left,
-		height: this.wallWidth
-	});
+	it.attr({x: left, y: y, width: right - left, height: this.wallWidth});
 	it.opt.area = {top: y, bottom: y + this.wallWidth, left: left, right: right};
 };
 
@@ -189,8 +161,6 @@ Svg.prototype.getAdjItems = function(x, y) {
 
 	$.each(this.item, function(i, it) {
 		var a = it.opt.area;
-		console.log(it.node);
-		console.log(a);
 		if (area.top < a.bottom && x >= a.left && x <= a.right && a.bottom < y) {
 			res.top = it;
 			area.top = a.bottom;
