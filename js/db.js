@@ -1,4 +1,4 @@
-var SvgDatabase = function() {
+var Database = function() {
 	this.state = {
 		config: {
 			width: 800,
@@ -27,6 +27,6 @@ var SvgDatabase = function() {
 	};
 };
 
-SvgDatabase.prototype.restore = function() {
+Database.prototype.restore = function() {
 	return this.state;
 };
