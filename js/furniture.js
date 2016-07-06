@@ -231,7 +231,7 @@ SvgFurniture.prototype.createWallHorizontal = function(x, y) {
 	elem.attr({
 		fill: "#bada55",
 		stroke: "#000",
-		strokeWidth: 5,
+		strokeWidth: 1,
 		x: 400
 	});
 	elem.opt = {
@@ -250,13 +250,11 @@ SvgFurniture.prototype.setWallHorizontal = function(x, y) {
 	var left = adj.left.opt.area.right;
 	var right = adj.right.opt.area.left;
 
-	console.log
-
 	it.attr({
 		x: left,
 		y: y,
 		width: right - left,
-		height: 10
+		height: this.wallWidth
 	});
 };
 
