@@ -95,6 +95,7 @@ var SvgFurniture = function(left, top, width, height, svg) {
 	this.height = height;
 	this.state = new SvgDatabase().restore();
 	this.dragItem = undefined;
+	this.wallWidth = 30;
 
 	this.type = {
 		'Frame': {
@@ -166,18 +167,18 @@ SvgFurniture.prototype.createAndSetFrame = function(x, y) {
 	var bottom = (this.height + conf.height)/2;
 
 	// top
-	var elemt = this.svg.rect(left, top, right - left, 10);
-	var eleml = this.svg.rect(left, top, 10, bottom - top);
-	var elemb = this.svg.rect(left, bottom, right - left, 10);
-	var elemr = this.svg.rect(right, top, 10, bottom - top);
+	var elemt = this.svg.rect(left, top, right - left, this.wallWidth);
+	var eleml = this.svg.rect(left, top, this.wallWidth, bottom - top);
+	var elemb = this.svg.rect(left, bottom, right - left, this.wallWidth);
+	var elemr = this.svg.rect(right, top, this.wallWidth, bottom - top);
 
 	console.log(elemt);
 
 	$.each([elemt, eleml, elemb, elemr], function(i, elem) {
 		elem.attr({
-			stroke: "#bb88ee",
-			strokeWidth: 30,
-			fill: "none"
+			stroke: "#000",
+			strokeWidth: 1,
+			fill: "#bb88ee"
 		});
 		this.item.push(elem);
 	}.bind(this));
@@ -185,22 +186,22 @@ SvgFurniture.prototype.createAndSetFrame = function(x, y) {
 	elemt.opt = {
 		type: 'Frame',
 		g: elemt,
-		area: {top: top, bottom: top + 60, left: left, right: right},
+		area: {top: top, bottom: top + this.wallWidth, left: left, right: right},
 	};
 	eleml.opt = {
 		type: 'Frame',
 		g: eleml,
-		area: {top: top, bottom: bottom, left: left, right: left + 60},
+		area: {top: top, bottom: bottom, left: left, right: left + this.wallWidth},
 	};
 	elemb.opt = {
 		type: 'Frame',
 		g: elemb,
-		area: {top: bottom, bottom: bottom + 60, left: left, right: right},
+		area: {top: bottom, bottom: bottom + this.wallWidth, left: left, right: right},
 	};
 	elemr.opt = {
 		type: 'Frame',
 		g: elemr,
-		area: {top: top, bottom: bottom, left: right, right: right + 60},
+		area: {top: top, bottom: bottom, left: right, right: right + this.wallWidth},
 	};
 
 //	this.item.concat([elemt, eleml, elemb, elemr]);
@@ -248,6 +249,8 @@ SvgFurniture.prototype.setWallHorizontal = function(x, y) {
 	console.log(adj.left);
 	var left = adj.left.opt.area.right;
 	var right = adj.right.opt.area.left;
+
+	console.log
 
 	it.attr({
 		x: left,
