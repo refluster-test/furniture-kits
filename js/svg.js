@@ -251,6 +251,9 @@ Svg.prototype.setWallHorizontal = function(x, y) {
 
 	it.attr({x: left, y: y, width: right - left, height: this.wallWidth});
 	it.opt.area = {top: y, bottom: y + this.wallWidth, left: left, right: right};
+
+	this.getOverWall(it);
+
 	return true;
 };
 
@@ -269,6 +272,9 @@ Svg.prototype.setWallVertical = function(x, y) {
 
 	it.attr({x: x, y: top, width: this.wallWidth, height: bottom - top});
 	it.opt.area = {top: top, bottom: bottom, left: x, right: x + this.wallWidth};
+
+	this.getOverWall(it);
+
 	return true;
 };
 
