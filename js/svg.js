@@ -107,6 +107,23 @@ Svg.prototype.move = function(x, y, item) {
 	}
 };
 
+// front coordinate top, left, bottom, right
+Svg.prototype.get3dBox = function(top, left, bottom, right) {
+	var g = this.svg.g();
+	var front = this.svg.rect(left, top, right - left, bottom - top);
+	var hSide;
+	var vSide;
+
+	g.add(front);
+	front.opt = {g: g};
+	g.opt = {
+		type: 'Frame',
+		g: g,
+		area: {top: top, bottom: bottom, left: left, right: right},
+	};
+	return g;
+};
+
 Svg.prototype.createAndSetFrame = function() {
 	var conf = this.state.config;
 	var left = (this.width - conf.width)/2;
@@ -114,20 +131,13 @@ Svg.prototype.createAndSetFrame = function() {
 	var top = (this.height - conf.height)/2;
 	var bottom = (this.height + conf.height)/2;
 
-	var elemt = this.svg.rect(left, top, right - left, this.wallWidth);
 	var eleml = this.svg.rect(left, top, this.wallWidth, bottom - top);
 	var elemb = this.svg.rect(left, bottom, right - left, this.wallWidth);
 	var elemr = this.svg.rect(right, top, this.wallWidth, bottom - top);
 
-	var gt = this.svg.g(elemt);
-	elemt.opt = {g: gt};
-	gt.opt = {
-		type: 'Frame',
-		g: gt,
-		area: {top: top, bottom: top + this.wallWidth, left: left, right: right},
-	};
-	this.addOverWallAsGroup(gt);
-	this.item.push(gt);
+	var g = this.get3dBox(top, left, top + this.wallWidth, right);
+	this.addOverWallAsGroup(g);
+	this.item.push(g);
 
 	var gl = this.svg.g(eleml);
 	eleml.opt = {g: gl};
