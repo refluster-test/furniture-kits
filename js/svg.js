@@ -159,21 +159,23 @@ Svg.prototype.createAndSetFrame = function() {
 	this.addOverWallAsGroup(gr);
 	this.item.push(gr);
 
+	createSideWall.call(this, left, top);
+
 	////////////////////////////// side frame
-	{
+	function createSideWall(x, y) {
 		var Z = 100;
-		var leftSide = left - this.state.config.leftSide;
-		var pz = this.getViewPosition(leftSide, top, Z);
+		var leftSide = x - this.state.config.leftSide;
+		var pz = this.getViewPosition(leftSide, y, Z);
 		var w = this.wallWidth;
 
-		var p1 = this.svg.path('M'+ left + ',' + top +
-							   'Q' + pz.x + ',' + top + ',' + pz.x + ' ' + pz.y +
+		var p1 = this.svg.path('M'+ x + ',' + y +
+							   'Q' + pz.x + ',' + y + ',' + pz.x + ' ' + pz.y +
 							   'L' + pz.x + ',' + (pz.y + w) +
-							   'Q' + pz.x + ',' + (top + w) + ',' + left + ' ' + (top + w) +
+							   'Q' + pz.x + ',' + (y + w) + ',' + x + ' ' + (y + w) +
 							   'Z');
 		var p2 = this.svg.path('M' + pz.x + ',' + (pz.y + w) +
-							   'Q' + pz.x + ',' + (top + w) + ',' + left + ' ' + (top + w) +
-							   'L' + left + ',' + (pz.y + w) +
+							   'Q' + pz.x + ',' + (y + w) + ',' + x + ' ' + (y + w) +
+							   'L' + x + ',' + (pz.y + w) +
 							   'Z');
 		var g = this.svg.g(p1, p2);
 		g.attr({
