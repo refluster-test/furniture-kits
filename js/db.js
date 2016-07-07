@@ -4,7 +4,8 @@ var Database = function() {
 			width: 800,
 			height: 600,
 			wallColor: '#68c',
-			windowColor: ''
+			windowColor: '',
+			leftSide: 200,
 		},
 		item: [
 /*

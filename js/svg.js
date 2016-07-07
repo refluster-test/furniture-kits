@@ -137,52 +137,56 @@ Svg.prototype.createAndSetFrame = function() {
 
 	//////////////////////////////////
 	$.each([elemt, eleml, elemb, elemr], function(i, elem) {
-		var area = elem.opt.area;
-		var p1, p2;
-		p1 = p2 = undefined;
-		if (area.top > this.height/2) {
-			p1 = {x: area.left, y: area.top};
-			p2 = {x: area.right, y: area.top};
-		} else if (area.bottom < this.height/2) {
-			p1 = {x: area.left, y: area.bottom};
-			p2 = {x: area.right, y: area.bottom};
-		}
-		var hWall = this.getOverWall(p1, p2);
-		p1 = p2 = undefined;
-		if (area.left > this.width/2) {
-			p1 = {x: area.left, y: area.top};
-			p2 = {x: area.left, y: area.bottom};
-		} else if (area.right < this.width/2) {
-			p1 = {x: area.right, y: area.top};
-			p2 = {x: area.right, y: area.bottom};
-		}
-		var vWall = this.getOverWall(p1, p2);
-
-		elem.attr({
-			stroke: "#000",
-			strokeWidth: 1,
-			fill: "#bb88ee"
-		});
-		this.item.push(elem);
+		this.getOverWall(elem);
 	}.bind(this));
 };
 
-Svg.prototype.getOverWall = function(p1, p2) {
-	var Z = 100;
-	if (p1 && p2) {
-		var pz1 = this.getViewPosition(p1.x, p1.y, Z);
-		var pz2 = this.getViewPosition(p2.x, p2.y, Z);
-		var path = this.svg.path('M' + p1.x + ',' + p1.y +
-								 'L' + p2.x + ',' + p2.y +
-								 'L' + pz2.x + ',' + pz2.y +
-								 'L' + pz1.x + ',' + pz1.y +
-								 'Z');
-		path.attr({
-			stroke: "#000",
-			strokeWidth: 1,
-			fill: "#bb88ee",
-		});
+Svg.prototype.getOverWall = function(elem) {
+	function setOverWall() {
+		var Z = 100;
+		if (p1 && p2) {
+			var pz1 = this.getViewPosition(p1.x, p1.y, Z);
+			var pz2 = this.getViewPosition(p2.x, p2.y, Z);
+			var path = this.svg.path('M' + p1.x + ',' + p1.y +
+									 'L' + p2.x + ',' + p2.y +
+									 'L' + pz2.x + ',' + pz2.y +
+									 'L' + pz1.x + ',' + pz1.y +
+									 'Z');
+			path.attr({
+				stroke: "#000",
+				strokeWidth: 1,
+				fill: "#bb88ee",
+			});
+		}
 	}
+
+	var area = elem.opt.area;
+	var p1, p2;
+	p1 = p2 = undefined;
+	if (area.top > this.height/2) {
+		p1 = {x: area.left, y: area.top};
+		p2 = {x: area.right, y: area.top};
+	} else if (area.bottom < this.height/2) {
+		p1 = {x: area.left, y: area.bottom};
+		p2 = {x: area.right, y: area.bottom};
+	}
+	var hWall = setOverWall.call(this, p1, p2);
+	p1 = p2 = undefined;
+	if (area.left > this.width/2) {
+		p1 = {x: area.left, y: area.top};
+		p2 = {x: area.left, y: area.bottom};
+	} else if (area.right < this.width/2) {
+		p1 = {x: area.right, y: area.top};
+		p2 = {x: area.right, y: area.bottom};
+	}
+	var vWall = setOverWall.call(this, p1, p2);
+
+	elem.attr({
+		stroke: "#000",
+		strokeWidth: 1,
+		fill: "#bb88ee"
+	});
+	this.item.push(elem);
 };
 
 Svg.prototype.setFrame = function(x, y) {
