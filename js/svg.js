@@ -159,40 +159,40 @@ Svg.prototype.createAndSetFrame = function() {
 	this.addOverWallAsGroup(gr);
 	this.item.push(gr);
 
-	createSideWall.call(this, left, top);
+	this.createSideWall(left, top);
 
-	////////////////////////////// side frame
-	function createSideWall(x, y) {
-		var Z = 100;
-		var leftSide = x - this.state.config.leftSide;
-		var pz = this.getViewPosition(leftSide, y, Z);
-		var w = this.wallWidth;
-
-		var p1 = this.svg.path('M'+ x + ',' + y +
-							   'Q' + pz.x + ',' + y + ',' + pz.x + ' ' + pz.y +
-							   'L' + pz.x + ',' + (pz.y + w) +
-							   'Q' + pz.x + ',' + (y + w) + ',' + x + ' ' + (y + w) +
-							   'Z');
-		var p2 = this.svg.path('M' + pz.x + ',' + (pz.y + w) +
-							   'Q' + pz.x + ',' + (y + w) + ',' + x + ' ' + (y + w) +
-							   'L' + x + ',' + (pz.y + w) +
-							   'Z');
-		var g = this.svg.g(p1, p2);
-		g.attr({
-			stroke: "#000",
-			strokeWidth: 1,
-			fill: "#bb88ee",
-		});
-		$.each([p1, p2], function(i, p) {
-			p.opt = {g: g};
-		});
-		g.opt = {
-			type: 'Frame',
-			g: g,
-			area: {top: 0, bottom: 0, left: 0, right: 0},
-		};
-	}
 };
+
+Svg.prototype.createSideWall = function(x, y) {
+	var Z = 100;
+	var leftSide = x - this.state.config.leftSide;
+	var pz = this.getViewPosition(leftSide, y, Z);
+	var w = this.wallWidth;
+
+	var p1 = this.svg.path('M'+ x + ',' + y +
+						   'Q' + pz.x + ',' + y + ',' + pz.x + ' ' + pz.y +
+						   'L' + pz.x + ',' + (pz.y + w) +
+						   'Q' + pz.x + ',' + (y + w) + ',' + x + ' ' + (y + w) +
+						   'Z');
+	var p2 = this.svg.path('M' + pz.x + ',' + (pz.y + w) +
+						   'Q' + pz.x + ',' + (y + w) + ',' + x + ' ' + (y + w) +
+						   'L' + x + ',' + (pz.y + w) +
+						   'Z');
+	var g = this.svg.g(p1, p2);
+	g.attr({
+		stroke: "#000",
+		strokeWidth: 1,
+		fill: "#bb88ee",
+	});
+	$.each([p1, p2], function(i, p) {
+		p.opt = {g: g};
+	});
+	g.opt = {
+		type: 'Frame',
+		g: g,
+		area: {top: 0, bottom: 0, left: 0, right: 0},
+	};
+}
 
 Svg.prototype.addOverWallAsGroup = function(g) {
 	function setOverWall(p1, p2) {
