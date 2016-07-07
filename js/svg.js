@@ -114,15 +114,6 @@ Svg.prototype.createAndSetFrame = function() {
 
 	console.log(elemt);
 
-	$.each([elemt, eleml, elemb, elemr], function(i, elem) {
-		elem.attr({
-			stroke: "#000",
-			strokeWidth: 1,
-			fill: "#bb88ee"
-		});
-		this.item.push(elem);
-	}.bind(this));
-
 	elemt.opt = {
 		type: 'Frame',
 		g: elemt,
@@ -166,6 +157,13 @@ Svg.prototype.createAndSetFrame = function() {
 			p2 = {x: area.right, y: area.bottom};
 		}
 		var vWall = this.getOverWall(p1, p2);
+
+		elem.attr({
+			stroke: "#000",
+			strokeWidth: 1,
+			fill: "#bb88ee"
+		});
+		this.item.push(elem);
 	}.bind(this));
 };
 
