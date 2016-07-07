@@ -158,6 +158,38 @@ Svg.prototype.createAndSetFrame = function() {
 	};
 	this.addOverWallAsGroup(gr);
 	this.item.push(gr);
+
+	////////////////////////////// side frame
+	{
+		var Z = 100;
+		var leftSide = left - 200;
+		var pz = this.getViewPosition(leftSide, top, Z);
+		var w = this.wallWidth;
+
+		var p1 = this.svg.path('M'+ left + ',' + top +
+							   'Q' + pz.x + ',' + top + ',' + pz.x + ' ' + pz.y +
+							   'L' + pz.x + ',' + (pz.y + w) +
+							   'Q' + pz.x + ',' + (top + w) + ',' + left + ' ' + (top + w) +
+							   'Z');
+		var p2 = this.svg.path('M' + pz.x + ',' + (pz.y + w) +
+							   'Q' + pz.x + ',' + (top + w) + ',' + left + ' ' + (top + w) +
+							   'L' + left + ',' + (pz.y + w) +
+							   'Z');
+		var g = this.svg.g(p1, p2);
+		g.attr({
+			stroke: "#000",
+			strokeWidth: 1,
+			fill: "#bb88ee",
+		});
+		$.each([p1, p2], function(i, p) {
+			p.opt = {g: g};
+		});
+		g.opt = {
+			type: 'Frame',
+			g: g,
+			area: {top: 0, bottom: 0, left: 0, right: 0},
+		};
+	}
 };
 
 Svg.prototype.addOverWallAsGroup = function(g) {
