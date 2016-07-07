@@ -53,6 +53,16 @@ Svg.prototype.createDraggingItem = function(type) {
 };
 
 Svg.prototype.releaseItem = function() {
+	if (this.removeItem) {
+		$.each(this.item, function(idx, item) {
+			if (this.removeItem == item) {
+				this.item.splice(idx, 1);
+				return false;
+			}
+		}.bind(this));
+		this.removeItem.remove();
+		this.removeItem = undefined;
+	}
 	if (this.dragItem) {
 		var x, y;
 		if (this.dragItem.node.nodeName == 'circle') {
@@ -65,10 +75,6 @@ Svg.prototype.releaseItem = function() {
 		if (this.type[this.dragItem.opt.type].set(x, y)) {
 			this.item.push(this.dragItem);
 		}
-	}
-	if (this.removeItem) {
-		this.removeItem.remove();
-		this.removeItem = undefined;
 	}
 	this.dragItem = undefined;
 };
