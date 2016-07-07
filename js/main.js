@@ -38,7 +38,7 @@ Apl.prototype.hDown = function(e) {
 		var y = (e.pageY? e.pageY: e.touches[0].pageY);
 		var obj = Snap.getElementByPoint(x, y);
 		if (obj.opt !== undefined) {
-			var type = obj.opt.type;
+			var type = obj.opt.g.opt.type;
 			this.svg.reserveRemoveItem(obj.opt.g);
 			this.svg.createDraggingItem(type);
 			this.dragging = true;
