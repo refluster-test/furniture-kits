@@ -176,7 +176,7 @@ Svg.prototype.getOverWall = function(p1, p2) {
 								 'L' + p2.x + ',' + p2.y +
 								 'L' + pz2.x + ',' + pz2.y +
 								 'L' + pz1.x + ',' + pz1.y +
-								 'L' + p1.x + ',' + p1.y);
+								 'Z');
 		path.attr({
 			stroke: "#000",
 			strokeWidth: 1,
