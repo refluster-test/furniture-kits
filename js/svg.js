@@ -175,24 +175,28 @@ Svg.prototype.createSideWall = function(y, isLeft) {
 		side = sideRoot + this.state.config.rightSide;
 	}
 	var pz = this.getViewPosition(side, y, Z);
+	var p = [];
 
-	var p1 = this.svg.path('M'+ sideRoot + ',' + y +
-						   'Q' + pz.x + ',' + y + ',' + pz.x + ' ' + pz.y +
-						   'L' + pz.x + ',' + (pz.y + w) +
-						   'Q' + pz.x + ',' + (y + w) + ',' + sideRoot + ' ' + (y + w) +
-						   'Z');
-	var p2 = this.svg.path('M' + pz.x + ',' + (pz.y + w) +
-						   'Q' + pz.x + ',' + (y + w) + ',' + sideRoot + ' ' + (y + w) +
-						   'L' + sideRoot + ',' + (pz.y + w) +
-						   'Z');
-	var g = this.svg.g(p1, p2);
+	p.push(this.svg.path('M'+ sideRoot + ',' + y +
+						 'Q' + pz.x + ',' + y + ',' + pz.x + ' ' + pz.y +
+						 'L' + pz.x + ',' + (pz.y + w) +
+						 'Q' + pz.x + ',' + (y + w) + ',' + sideRoot + ' ' + (y + w) +
+						 'Z'));
+	p.push(this.svg.path('M' + pz.x + ',' + (pz.y + w) +
+						 'Q' + pz.x + ',' + (y + w) + ',' + sideRoot + ' ' + (y + w) +
+						 'L' + sideRoot + ',' + (pz.y + w) +
+						 'Z'));
+
+	var g = this.svg.g();
+	$.each(p, function(i, p) {
+		p.opt = {g: g};
+		g.add(p);
+	});
+
 	g.attr({
 		stroke: "#000",
 		strokeWidth: 1,
 		fill: "#bb88ee",
-	});
-	$.each([p1, p2], function(i, p) {
-		p.opt = {g: g};
 	});
 	g.opt = {
 		type: 'Frame',
