@@ -161,6 +161,7 @@ Svg.prototype.createAndSetFrame = function() {
 
 	this.createSideWall(top, true);
 	this.createSideWall(top, false);
+	this.createSideWall(600, false);
 };
 
 Svg.prototype.createSideWall = function(y, isLeft) {
@@ -182,10 +183,17 @@ Svg.prototype.createSideWall = function(y, isLeft) {
 						 'L' + pz.x + ',' + (pz.y + w) +
 						 'Q' + pz.x + ',' + (y + w) + ',' + sideRoot + ' ' + (y + w) +
 						 'Z'));
-	p.push(this.svg.path('M' + pz.x + ',' + (pz.y + w) +
-						 'Q' + pz.x + ',' + (y + w) + ',' + sideRoot + ' ' + (y + w) +
-						 'L' + sideRoot + ',' + (pz.y + w) +
-						 'Z'));
+	if (y + w < this.height/2) {
+		p.push(this.svg.path('M' + pz.x + ',' + (pz.y + w) +
+							 'Q' + pz.x + ',' + (y + w) + ',' + sideRoot + ' ' + (y + w) +
+							 'L' + sideRoot + ',' + (pz.y + w) +
+							 'Z'));
+	} else if (y > this.height/2) {
+		p.push(this.svg.path('M' + pz.x + ',' + pz.y +
+							 'Q' + pz.x + ',' + y + ',' + sideRoot + ' ' + y +
+							 'L' + sideRoot + ',' + pz.y +
+							 'Z'));
+	}
 
 	var g = this.svg.g();
 	$.each(p, function(i, p) {
