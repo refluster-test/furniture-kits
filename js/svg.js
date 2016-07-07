@@ -160,8 +160,8 @@ Svg.prototype.createAndSetFrame = function() {
 	this.item.push(gr);
 
 	var sw = [];
-	sw.push(this.createSideWall(top, true));
-	sw.push(this.createSideWall(top, false));
+	sw.push(this.getSideWall(top, true));
+	sw.push(this.getSideWall(top, false));
 //	this.createSideWall(600, false);
 	$.each(sw, function(i, sw) {
 		sw.opt = {
@@ -172,7 +172,7 @@ Svg.prototype.createAndSetFrame = function() {
 	});
 };
 
-Svg.prototype.createSideWall = function(y, isLeft) {
+Svg.prototype.getSideWall = function(y, isLeft) {
 	var Z = 100;
 	var w = this.wallWidth;
 	var side, sideRoot;
