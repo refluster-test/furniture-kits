@@ -6,6 +6,7 @@ var Database = function() {
 			wallColor: '#68c',
 			windowColor: '',
 			leftSide: 200,
+			rightSide: 250,
 		},
 		item: [
 /*

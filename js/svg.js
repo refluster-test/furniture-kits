@@ -159,24 +159,31 @@ Svg.prototype.createAndSetFrame = function() {
 	this.addOverWallAsGroup(gr);
 	this.item.push(gr);
 
-	this.createSideWall(left, top);
-
+	this.createSideWall(top, true);
+	this.createSideWall(top, false);
 };
 
-Svg.prototype.createSideWall = function(x, y) {
+Svg.prototype.createSideWall = function(y, isLeft) {
 	var Z = 100;
-	var leftSide = x - this.state.config.leftSide;
-	var pz = this.getViewPosition(leftSide, y, Z);
 	var w = this.wallWidth;
+	var side, sideRoot;
+	if (isLeft) {
+		sideRoot = (this.width - this.state.config.width)/2;
+		side = sideRoot - this.state.config.leftSide;
+	} else {
+		sideRoot = (this.width + this.state.config.width)/2;
+		side = sideRoot + this.state.config.rightSide;
+	}
+	var pz = this.getViewPosition(side, y, Z);
 
-	var p1 = this.svg.path('M'+ x + ',' + y +
+	var p1 = this.svg.path('M'+ sideRoot + ',' + y +
 						   'Q' + pz.x + ',' + y + ',' + pz.x + ' ' + pz.y +
 						   'L' + pz.x + ',' + (pz.y + w) +
-						   'Q' + pz.x + ',' + (y + w) + ',' + x + ' ' + (y + w) +
+						   'Q' + pz.x + ',' + (y + w) + ',' + sideRoot + ' ' + (y + w) +
 						   'Z');
 	var p2 = this.svg.path('M' + pz.x + ',' + (pz.y + w) +
-						   'Q' + pz.x + ',' + (y + w) + ',' + x + ' ' + (y + w) +
-						   'L' + x + ',' + (pz.y + w) +
+						   'Q' + pz.x + ',' + (y + w) + ',' + sideRoot + ' ' + (y + w) +
+						   'L' + sideRoot + ',' + (pz.y + w) +
 						   'Z');
 	var g = this.svg.g(p1, p2);
 	g.attr({
