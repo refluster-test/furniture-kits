@@ -159,9 +159,17 @@ Svg.prototype.createAndSetFrame = function() {
 	this.addOverWallAsGroup(gr);
 	this.item.push(gr);
 
-	this.createSideWall(top, true);
-	this.createSideWall(top, false);
-	this.createSideWall(600, false);
+	var sw = [];
+	sw.push(this.createSideWall(top, true));
+	sw.push(this.createSideWall(top, false));
+//	this.createSideWall(600, false);
+	$.each(sw, function(i, sw) {
+		sw.opt = {
+			type: 'Frame',
+			g: sw,
+			area: {top: 0, bottom: 0, left: 0, right: 0},
+		};
+	});
 };
 
 Svg.prototype.createSideWall = function(y, isLeft) {
@@ -206,11 +214,8 @@ Svg.prototype.createSideWall = function(y, isLeft) {
 		strokeWidth: 1,
 		fill: "#bb88ee",
 	});
-	g.opt = {
-		type: 'Frame',
-		g: g,
-		area: {top: 0, bottom: 0, left: 0, right: 0},
-	};
+
+	return g;
 }
 
 Svg.prototype.addOverWallAsGroup = function(g) {
