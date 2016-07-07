@@ -34,6 +34,7 @@ var Svg = function(left, top, width, height, svg) {
 		if (this.type[_it.type].set(_it.pos.x, _it.pos.y)) {
 			this.item.push(this.dragItem);
 		}
+		this.dragItem = undefined;
 	}.bind(this));
 };
 
