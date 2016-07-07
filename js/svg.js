@@ -162,7 +162,7 @@ Svg.prototype.createAndSetFrame = function() {
 	////////////////////////////// side frame
 	{
 		var Z = 100;
-		var leftSide = left - 200;
+		var leftSide = left - this.state.config.leftSide;
 		var pz = this.getViewPosition(leftSide, top, Z);
 		var w = this.wallWidth;
 
