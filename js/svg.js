@@ -131,52 +131,29 @@ Svg.prototype.createAndSetFrame = function() {
 	var top = (this.height - conf.height)/2;
 	var bottom = (this.height + conf.height)/2;
 
-	var eleml = this.svg.rect(left, top, this.wallWidth, bottom - top);
-	var elemb = this.svg.rect(left, bottom, right - left, this.wallWidth);
-	var elemr = this.svg.rect(right, top, this.wallWidth, bottom - top);
-
 	var g = this.get3dBox(top, left, top + this.wallWidth, right);
 	this.addOverWallAsGroup(g);
 	this.item.push(g);
 
-	var gl = this.svg.g(eleml);
-	eleml.opt = {g: gl};
-	gl.opt = {
-		type: 'Frame',
-		g: gl,
-		area: {top: top, bottom: bottom, left: left, right: left + this.wallWidth},
-	};
-	this.addOverWallAsGroup(gl);
-	this.item.push(gl);
+	var g = this.get3dBox(top, left, bottom, left + this.wallWidth);
+	this.addOverWallAsGroup(g);
+	this.item.push(g);
 
-	var gb = this.svg.g(elemb);
-	elemb.opt = {g: gb};
-	gb.opt = {
-		type: 'Frame',
-		g: gb,
-		area: {top: bottom, bottom: bottom + this.wallWidth, left: left, right: right},
-	};
-	this.addOverWallAsGroup(gb);
-	this.item.push(gb);
+	var g = this.get3dBox(bottom, left, bottom + this.wallWidth, right);
+	this.addOverWallAsGroup(g);
+	this.item.push(g);
 
-	var gr = this.svg.g(elemr);
-	elemr.opt = {g: gr};
-	gr.opt = {
-		type: 'Frame',
-		g: gr,
-		area: {top: top, bottom: bottom, left: right, right: right + this.wallWidth},
-	};
-	this.addOverWallAsGroup(gr);
-	this.item.push(gr);
+	var g = this.get3dBox(top, right, bottom, right + this.wallWidth);
+	this.addOverWallAsGroup(g);
+	this.item.push(g);
 
-	var sw = [];
-	sw.push(this.getSideWall(top, true));
-	sw.push(this.getSideWall(top, false));
-//	this.createSideWall(600, false);
-	$.each(sw, function(i, sw) {
-		sw.opt = {
+	var sideWall = [];
+	sideWall.push(this.getSideWall(top, true));
+	sideWall.push(this.getSideWall(top, false));
+	$.each(sideWall, function(i, w) {
+		w.opt = {
 			type: 'Frame',
-			g: sw,
+			g: w,
 			area: {top: 0, bottom: 0, left: 0, right: 0},
 		};
 	});
