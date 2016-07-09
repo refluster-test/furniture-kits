@@ -129,18 +129,15 @@ Svg.prototype.get3dBox = function(top, left, bottom, right) {
 
 	function setOverWall(p1, p2) {
 		var Z = 100;
-		if (p1 && p2) {
-			var pz1 = this.getViewPosition(p1.x, p1.y, Z);
-			var pz2 = this.getViewPosition(p2.x, p2.y, Z);
-			var path = this.svg.path('M' + p1.x + ',' + p1.y +
-									 'L' + p2.x + ',' + p2.y +
-									 'L' + pz2.x + ',' + pz2.y +
-									 'L' + pz1.x + ',' + pz1.y +
-									 'Z');
-			path.attr(this.wallAttr);
-			return path;
-		}
-		return undefined;
+		var pz1 = this.getViewPosition(p1.x, p1.y, Z);
+		var pz2 = this.getViewPosition(p2.x, p2.y, Z);
+		var path = this.svg.path('M' + p1.x + ',' + p1.y +
+								 'L' + p2.x + ',' + p2.y +
+								 'L' + pz2.x + ',' + pz2.y +
+								 'L' + pz1.x + ',' + pz1.y +
+								 'Z');
+		path.attr(this.wallAttr);
+		return path;
 	}
 
 	var area = g.opt.area;
