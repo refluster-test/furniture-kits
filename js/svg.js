@@ -5,6 +5,7 @@ var Svg = function(left, top, width, height, svg) {
 	this.state = new Database().restore();
 	this.dragItem = undefined;
 	this.wallWidth = 30;
+	this.zMax = 100;
 
 	this.type = {
 		'Frame': {
@@ -124,9 +125,8 @@ Svg.prototype.get3dBox = function(top, left, bottom, right) {
 	};
 
 	function setOverWall(p1, p2) {
-		var Z = 100;
-		var pz1 = this.getViewPosition(p1.x, p1.y, Z);
-		var pz2 = this.getViewPosition(p2.x, p2.y, Z);
+		var pz1 = this.getViewPosition(p1.x, p1.y, this.zMax);
+		var pz2 = this.getViewPosition(p2.x, p2.y, this.zMax);
 		var path = this.svg.path('M' + p1.x + ',' + p1.y +
 								 'L' + p2.x + ',' + p2.y +
 								 'L' + pz2.x + ',' + pz2.y +
@@ -192,7 +192,6 @@ Svg.prototype.createAndSetFrame = function() {
 };
 
 Svg.prototype.getSideWall = function(y, isLeft) {
-	var Z = 100;
 	var w = this.wallWidth;
 	var side, sideRoot;
 	if (isLeft) {
@@ -202,7 +201,7 @@ Svg.prototype.getSideWall = function(y, isLeft) {
 		sideRoot = (this.width + this.state.config.width)/2;
 		side = sideRoot + this.state.config.rightSide;
 	}
-	var pz = this.getViewPosition(side, y, Z);
+	var pz = this.getViewPosition(side, y, this.zMax);
 	var p = [];
 
 	p.push(this.svg.path('M'+ sideRoot + ',' + y +
