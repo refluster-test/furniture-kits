@@ -300,19 +300,24 @@ Svg.prototype.setWallVertical = function(x, y) {
 };
 
 Svg.prototype.setHanger = function(x, y) {
-	var it = this.dragItem;
 	var adj = this.getAdjItems(x, y);
 
 	if (!adj.top) {
-		this.dragItem.remove();
 		return false;
 	}
 
 	var top = adj.top.opt.area.bottom;
 	var width = 200;
 	var height = 300;
-	it.attr({x: x, y: top, width: width, height: height});
-	it.opt.area = {top: top, bottom: top + height, left: x, right: x + width};
+
+	var obj = this.svg.rect(x, top, width, height);
+	obj.opt = {
+		type: "Hanger",
+		g: obj,
+		area: {top: top, bottom: top + height, left: x, right: x + width},
+	};
+	obj.attr = this.wallAttr;
+	this.item.push(obj);
 	return true;
 };
 
