@@ -84,6 +84,7 @@ Svg.prototype.releaseItem = function() {
 			y = parseInt(this.dragItem.attr('y'));
 		}
 		this.type[this.dragItem.opt.type].set(x, y);
+		this.dragItem.remove();
 	}
 	this.dragItem = undefined;
 };
@@ -270,9 +271,6 @@ Svg.prototype.createHanger = function() {
 
 Svg.prototype.setWallHorizontal = function(x, y) {
 	var adj = this.getAdjItems(x, y);
-
-	this.dragItem.elem.remove();
-	this.dragItem = undefined;
 
 	if (!adj.left || !adj.right) {
 		return false;
