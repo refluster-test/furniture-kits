@@ -117,8 +117,7 @@ Svg.prototype.move = function(x, y, item) {
 Svg.prototype.get3dBox = function(top, left, bottom, right) {
 	var g = this.svg.g();
 	var front = this.svg.rect(left, top, right - left, bottom - top);
-	var hSide;
-	var vSide;
+	var hWall, vWall;
 
 	g.add(front);
 	front.opt = {g: g};
@@ -128,7 +127,46 @@ Svg.prototype.get3dBox = function(top, left, bottom, right) {
 		area: {top: top, bottom: bottom, left: left, right: right},
 	};
 
-	this.addOverWallAsGroup(g);
+	//this.addOverWallAsGroup(g);
+
+	function setOverWall(p1, p2) {
+		var Z = 100;
+		if (p1 && p2) {
+			var pz1 = this.getViewPosition(p1.x, p1.y, Z);
+			var pz2 = this.getViewPosition(p2.x, p2.y, Z);
+			var path = this.svg.path('M' + p1.x + ',' + p1.y +
+									 'L' + p2.x + ',' + p2.y +
+									 'L' + pz2.x + ',' + pz2.y +
+									 'L' + pz1.x + ',' + pz1.y +
+									 'Z');
+			path.attr(this.wallAttr);
+			return path;
+		}
+		return undefined;
+	}
+
+	var area = g.opt.area;
+	if (area.top > this.height/2) {
+		hWall = setOverWall.call(this, {x: area.left, y: area.top}, {x: area.right, y: area.top});
+	} else if (area.bottom < this.height/2) {
+		hWall = setOverWall.call(this, {x: area.left, y: area.bottom}, {x: area.right, y: area.bottom});
+	}
+	if (hWall) {
+		hWall.opt = {g: g};
+		g.add(hWall);
+	}
+	if (area.left > this.width/2) {
+		vWall = setOverWall.call(this, {x: area.left, y: area.top}, {x: area.left, y: area.bottom});
+	} else if (area.right < this.width/2) {
+		vWall = setOverWall.call(this, {x: area.right, y: area.top}, {x: area.right, y: area.bottom});
+	}
+	if (vWall) {
+		vWall.opt = {g: g};
+		g.add(vWall);
+	}
+
+	g.attr(this.wallAttr);
+
 
 	return g;
 };
@@ -206,47 +244,6 @@ Svg.prototype.getSideWall = function(y, isLeft) {
 
 	return g;
 }
-
-Svg.prototype.addOverWallAsGroup = function(g) {
-	function setOverWall(p1, p2) {
-		var Z = 100;
-		if (p1 && p2) {
-			var pz1 = this.getViewPosition(p1.x, p1.y, Z);
-			var pz2 = this.getViewPosition(p2.x, p2.y, Z);
-			var path = this.svg.path('M' + p1.x + ',' + p1.y +
-									 'L' + p2.x + ',' + p2.y +
-									 'L' + pz2.x + ',' + pz2.y +
-									 'L' + pz1.x + ',' + pz1.y +
-									 'Z');
-			path.attr(this.wallAttr);
-			return path;
-		}
-		return undefined;
-	}
-
-	var area = g.opt.area;
-	var hWall, vWall;
-	if (area.top > this.height/2) {
-		hWall = setOverWall.call(this, {x: area.left, y: area.top}, {x: area.right, y: area.top});
-	} else if (area.bottom < this.height/2) {
-		hWall = setOverWall.call(this, {x: area.left, y: area.bottom}, {x: area.right, y: area.bottom});
-	}
-	if (hWall) {
-		hWall.opt = {g: g};
-		g.add(hWall);
-	}
-	if (area.left > this.width/2) {
-		vWall = setOverWall.call(this, {x: area.left, y: area.top}, {x: area.left, y: area.bottom});
-	} else if (area.right < this.width/2) {
-		vWall = setOverWall.call(this, {x: area.right, y: area.top}, {x: area.right, y: area.bottom});
-	}
-	if (vWall) {
-		vWall.opt = {g: g};
-		g.add(vWall);
-	}
-
-	g.attr(this.wallAttr);
-};
 
 Svg.prototype.setFrame = function(x, y) {
 };
