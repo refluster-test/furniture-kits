@@ -226,29 +226,21 @@ Svg.prototype.addOverWallAsGroup = function(g) {
 	}
 
 	var area = g.opt.area;
-	var p1, p2;
-	p1 = p2 = undefined;
+	var hWall, vWall;
 	if (area.top > this.height/2) {
-		p1 = {x: area.left, y: area.top};
-		p2 = {x: area.right, y: area.top};
+		hWall = setOverWall.call(this, {x: area.left, y: area.top}, {x: area.right, y: area.top});
 	} else if (area.bottom < this.height/2) {
-		p1 = {x: area.left, y: area.bottom};
-		p2 = {x: area.right, y: area.bottom};
+		hWall = setOverWall.call(this, {x: area.left, y: area.bottom}, {x: area.right, y: area.bottom});
 	}
-	var hWall = setOverWall.call(this, p1, p2);
 	if (hWall) {
 		hWall.opt = {g: g};
 		g.add(hWall);
 	}
-	p1 = p2 = undefined;
 	if (area.left > this.width/2) {
-		p1 = {x: area.left, y: area.top};
-		p2 = {x: area.left, y: area.bottom};
+		vWall = setOverWall.call(this, {x: area.left, y: area.top}, {x: area.left, y: area.bottom});
 	} else if (area.right < this.width/2) {
-		p1 = {x: area.right, y: area.top};
-		p2 = {x: area.right, y: area.bottom};
+		vWall = setOverWall.call(this, {x: area.right, y: area.top}, {x: area.right, y: area.bottom});
 	}
-	var vWall = setOverWall.call(this, p1, p2);
 	if (vWall) {
 		vWall.opt = {g: g};
 		g.add(vWall);
