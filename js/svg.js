@@ -127,8 +127,6 @@ Svg.prototype.get3dBox = function(top, left, bottom, right) {
 		area: {top: top, bottom: bottom, left: left, right: right},
 	};
 
-	//this.addOverWallAsGroup(g);
-
 	function setOverWall(p1, p2) {
 		var Z = 100;
 		if (p1 && p2) {
@@ -151,22 +149,19 @@ Svg.prototype.get3dBox = function(top, left, bottom, right) {
 	} else if (area.bottom < this.height/2) {
 		hWall = setOverWall.call(this, {x: area.left, y: area.bottom}, {x: area.right, y: area.bottom});
 	}
-	if (hWall) {
-		hWall.opt = {g: g};
-		g.add(hWall);
-	}
 	if (area.left > this.width/2) {
 		vWall = setOverWall.call(this, {x: area.left, y: area.top}, {x: area.left, y: area.bottom});
 	} else if (area.right < this.width/2) {
 		vWall = setOverWall.call(this, {x: area.right, y: area.top}, {x: area.right, y: area.bottom});
 	}
-	if (vWall) {
-		vWall.opt = {g: g};
-		g.add(vWall);
-	}
+	$.each([hWall, vWall], function(i, w) {
+		if (w) {
+			w.opt = {g: g};
+			g.add(w);
+		}
+	}.bind(this));
 
 	g.attr(this.wallAttr);
-
 
 	return g;
 };
