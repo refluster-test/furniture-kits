@@ -121,6 +121,9 @@ Svg.prototype.get3dBox = function(top, left, bottom, right) {
 		g: g,
 		area: {top: top, bottom: bottom, left: left, right: right},
 	};
+
+	this.addOverWallAsGroup(g);
+
 	return g;
 };
 
@@ -132,19 +135,15 @@ Svg.prototype.createAndSetFrame = function() {
 	var bottom = (this.height + conf.height)/2;
 
 	var g = this.get3dBox(top, left, top + this.wallWidth, right);
-	this.addOverWallAsGroup(g);
 	this.item.push(g);
 
 	var g = this.get3dBox(top, left, bottom, left + this.wallWidth);
-	this.addOverWallAsGroup(g);
 	this.item.push(g);
 
 	var g = this.get3dBox(bottom, left, bottom + this.wallWidth, right);
-	this.addOverWallAsGroup(g);
 	this.item.push(g);
 
 	var g = this.get3dBox(top, right, bottom, right + this.wallWidth);
-	this.addOverWallAsGroup(g);
 	this.item.push(g);
 
 	var sideWall = [];
