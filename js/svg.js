@@ -182,16 +182,11 @@ Svg.prototype.createAndSetFrame = function() {
 	obj.opt.type = 'Frame';
 	this.item.push(obj);
 	
-	var sideWall = [];
-	sideWall.push(this.getSideWall(top, true));
-	sideWall.push(this.getSideWall(top, false));
-	$.each(sideWall, function(i, w) {
-		w.opt = {
-			type: 'Frame',
-			g: w,
-			area: {top: 0, bottom: 0, left: 0, right: 0},
-		};
-	});
+	var obj = this.getSideWall(top, true);
+	obj.opt.type = 'Frame';
+
+	var obj = this.getSideWall(top, false);
+	obj.opt.type = 'Frame';
 };
 
 Svg.prototype.getSideWall = function(y, isLeft) {
@@ -232,6 +227,10 @@ Svg.prototype.getSideWall = function(y, isLeft) {
 	});
 
 	g.attr(this.wallAttr);
+	g.opt = {
+		g: g,
+		area: {top: 0, bottom: 0, left: 0, right: 0},
+	};
 
 	return g;
 }
