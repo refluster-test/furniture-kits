@@ -285,24 +285,17 @@ Svg.prototype.setWallHorizontal = function(x, y) {
 };
 
 Svg.prototype.setWallVertical = function(x, y) {
-	var elem = this.dragItem;
 	var adj = this.getAdjItems(x, y);
 
 	if (!adj.top || !adj.bottom) {
-		this.dragItem.remove();
 		return false;
 	}
 
 	var top = adj.top.opt.area.bottom;
 	var bottom = adj.bottom.opt.area.top;
 
-	elem.attr({x: x, y: top, width: this.wallWidth, height: bottom - top});
-	var g = this.svg.g(elem);
-	g.opt = elem.opt;
-	g.opt.area =  {top: top, bottom: bottom, left: x, right: x + this.wallWidth};
-	elem.opt = {g: g};
-	this.addOverWallAsGroup(g);
-	this.dragItem = g;
+	var obj = this.get3dBox(top, x, bottom, x + this.wallWidth);
+	this.item.push(obj);
 	return true;
 };
 
