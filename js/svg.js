@@ -321,7 +321,7 @@ Svg.prototype.setHanger = function(x, y) {
 		g: obj,
 		area: {top: top, bottom: top + height, left: x, right: x + width},
 	};
-	obj.attr = this.wallAttr;
+	obj.attr(this.wallAttr);
 	this.item.push(obj);
 	return true;
 };
