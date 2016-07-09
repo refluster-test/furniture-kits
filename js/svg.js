@@ -27,6 +27,12 @@ var Svg = function(left, top, width, height, svg) {
 		},
 	};
 
+	this.wallAttr = {
+		stroke: "#000",
+		strokeWidth: 1,
+		fill: this.state.config.wallColor,
+	};
+
 	this.item = [];
 	this.createAndSetFrame();
 	$.each(this.state.item, function(idx, _it) {
@@ -195,11 +201,8 @@ Svg.prototype.getSideWall = function(y, isLeft) {
 		g.add(p);
 	});
 
-	g.attr({
-		stroke: "#000",
-		strokeWidth: 1,
-		fill: "#bb88ee",
-	});
+	console.log(this.wallAttr);
+	g.attr(this.wallAttr);
 
 	return g;
 }
@@ -215,11 +218,7 @@ Svg.prototype.addOverWallAsGroup = function(g) {
 									 'L' + pz2.x + ',' + pz2.y +
 									 'L' + pz1.x + ',' + pz1.y +
 									 'Z');
-			path.attr({
-				stroke: "#000",
-				strokeWidth: 1,
-				fill: "#bb88ee",
-			});
+			path.attr(this.wallAttr);
 			return path;
 		}
 		return undefined;
@@ -246,11 +245,7 @@ Svg.prototype.addOverWallAsGroup = function(g) {
 		g.add(vWall);
 	}
 
-	g.attr({
-		stroke: "#000",
-		strokeWidth: 1,
-		fill: "#bb88ee"
-	});
+	g.attr(this.wallAttr);
 };
 
 Svg.prototype.setFrame = function(x, y) {
@@ -258,11 +253,7 @@ Svg.prototype.setFrame = function(x, y) {
 
 Svg.prototype.createWallHorizontal = function() {
 	var elem = this.svg.rect(-1000, -1000, 80, 80);
-	elem.attr({
-		fill: this.state.config.wallColor,
-		stroke: "#000",
-		strokeWidth: 1,
-	});
+	elem.attr(this.wallAttr);
 	elem.opt = {
 		type: 'WallHorizontal',
 		g: elem,
@@ -273,11 +264,7 @@ Svg.prototype.createWallHorizontal = function() {
 
 Svg.prototype.createWallVertical = function() {
 	var elem = this.svg.rect(-1000, -1000, 80, 80);
-	elem.attr({
-		fill: this.state.config.wallColor,
-		stroke: "#000",
-		strokeWidth: 1,
-	});
+	elem.attr(this.wallAttr);
 	elem.opt = {
 		type: 'WallVertical',
 		g: elem,
@@ -288,11 +275,7 @@ Svg.prototype.createWallVertical = function() {
 
 Svg.prototype.createHanger = function() {
 	var elem = this.svg.rect(-1000, -1000, 80, 80);
-	elem.attr({
-		fill: this.state.config.wallColor,
-		stroke: "#000",
-		strokeWidth: 1,
-	});
+	elem.attr(this.wallAttr);
 	elem.opt = {
 		type: 'Hanger',
 		g: elem,

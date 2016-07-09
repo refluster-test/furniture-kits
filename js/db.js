@@ -3,7 +3,7 @@ var Database = function() {
 		config: {
 			width: 800,
 			height: 600,
-			wallColor: '#68c',
+			wallColor: '#bb88ee',
 			windowColor: '',
 			leftSide: 200,
 			rightSide: 250,
