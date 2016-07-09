@@ -328,7 +328,6 @@ Svg.prototype.setHanger = function(x, y) {
 	var width = 200;
 	var height = 300;
 
-	//var obj = this.svg.rect(x, top, width, height);
 	var obj = this.get3dPlain(top, x, top + height, x + width, 0);
 	obj.opt.type = "Hanger";
 	obj.attr(this.wallAttr);
