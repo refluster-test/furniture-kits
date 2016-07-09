@@ -166,21 +166,21 @@ Svg.prototype.createAndSetFrame = function() {
 	var top = (this.height - conf.height)/2;
 	var bottom = (this.height + conf.height)/2;
 
-	var g = this.get3dBox(top, left, top + this.wallWidth, right);
+	var obj = this.get3dBox(top, left, top + this.wallWidth, right);
 	obj.opt.type = 'Frame';
-	this.item.push(g);
+	this.item.push(obj);
 
-	var g = this.get3dBox(top, left, bottom, left + this.wallWidth);
+	var obj = this.get3dBox(top, left, bottom, left + this.wallWidth);
 	obj.opt.type = 'Frame';
-	this.item.push(g);
+	this.item.push(obj);
 
-	var g = this.get3dBox(bottom, left, bottom + this.wallWidth, right);
+	var obj = this.get3dBox(bottom, left, bottom + this.wallWidth, right);
 	obj.opt.type = 'Frame';
-	this.item.push(g);
+	this.item.push(obj);
 
-	var g = this.get3dBox(top, right, bottom, right + this.wallWidth);
+	var obj = this.get3dBox(top, right, bottom, right + this.wallWidth);
 	obj.opt.type = 'Frame';
-	this.item.push(g);
+	this.item.push(obj);
 	
 	var sideWall = [];
 	sideWall.push(this.getSideWall(top, true));
@@ -299,7 +299,7 @@ Svg.prototype.setWallVertical = function(x, y) {
 	var bottom = adj.bottom.opt.area.top;
 
 	var obj = this.get3dBox(top, x, bottom, x + this.wallWidth);
-	obj.opt.type = 'WallHorizontal';
+	obj.opt.type = 'WallVertical';
 	this.item.push(obj);
 	return true;
 };
