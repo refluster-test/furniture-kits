@@ -37,9 +37,7 @@ var Svg = function(left, top, width, height, svg) {
 	this.createAndSetFrame();
 	$.each(this.state.item, function(idx, _it) {
 		var it = this.createDraggingItem(_it.type);
-		if (this.type[_it.type].set(_it.pos.x, _it.pos.y)) {
-			this.item.push(this.dragItem);
-		}
+		this.type[_it.type].set(_it.pos.x, _it.pos.y);
 		this.dragItem = undefined;
 	}.bind(this));
 };
@@ -85,9 +83,7 @@ Svg.prototype.releaseItem = function() {
 			x = parseInt(this.dragItem.attr('x'));
 			y = parseInt(this.dragItem.attr('y'));
 		}
-		if (this.type[this.dragItem.opt.type].set(x, y)) {
-			this.item.push(this.dragItem);
-		}
+		this.type[this.dragItem.opt.type].set(x, y);
 	}
 	this.dragItem = undefined;
 };
@@ -181,7 +177,7 @@ Svg.prototype.createAndSetFrame = function() {
 
 	var g = this.get3dBox(top, right, bottom, right + this.wallWidth);
 	this.item.push(g);
-
+	
 	var sideWall = [];
 	sideWall.push(this.getSideWall(top, true));
 	sideWall.push(this.getSideWall(top, false));
@@ -231,7 +227,6 @@ Svg.prototype.getSideWall = function(y, isLeft) {
 		g.add(p);
 	});
 
-	console.log(this.wallAttr);
 	g.attr(this.wallAttr);
 
 	return g;
@@ -274,25 +269,20 @@ Svg.prototype.createHanger = function() {
 };
 
 Svg.prototype.setWallHorizontal = function(x, y) {
-	var elem = this.dragItem;
 	var adj = this.getAdjItems(x, y);
 
+	this.dragItem.elem.remove();
+	this.dragItem = undefined;
+
 	if (!adj.left || !adj.right) {
-		elem.remove();
 		return false;
 	}
 
 	var left = adj.left.opt.area.right;
 	var right = adj.right.opt.area.left;
 
-	elem.attr({x: left, y: y, width: right - left, height: this.wallWidth});
-
-	var g = this.svg.g(elem);
-	g.opt = elem.opt;
-	g.opt.area =  {top: y, bottom: y + this.wallWidth, left: left, right: right}
-	elem.opt = {g: g};
-	this.addOverWallAsGroup(g);
-	this.dragItem = g;
+	var obj = this.get3dBox(y, left, y  + this.wallWidth, right);
+	this.item.push(obj);
 	return true;
 };
 
