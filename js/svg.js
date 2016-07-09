@@ -159,6 +159,19 @@ Svg.prototype.get3dBox = function(top, left, bottom, right) {
 	return g;
 };
 
+Svg.prototype.get3dPlain = function(top, left, bottom, right, z) {
+	var obj = this.svg.rect(left, top, right - left, bottom - top);
+
+	obj.opt = {
+		g: obj,
+		area: {top: top, bottom: bottom, left: left, right: right},
+	};
+
+	obj.attr(this.wallAttr);
+
+	return obj;
+};
+
 Svg.prototype.createAndSetFrame = function() {
 	var conf = this.state.config;
 	var left = (this.width - conf.width)/2;
@@ -315,12 +328,9 @@ Svg.prototype.setHanger = function(x, y) {
 	var width = 200;
 	var height = 300;
 
-	var obj = this.svg.rect(x, top, width, height);
-	obj.opt = {
-		type: "Hanger",
-		g: obj,
-		area: {top: top, bottom: top + height, left: x, right: x + width},
-	};
+	//var obj = this.svg.rect(x, top, width, height);
+	var obj = this.get3dPlain(top, x, top + height, x + width, 0);
+	obj.opt.type = "Hanger";
 	obj.attr(this.wallAttr);
 	this.item.push(obj);
 	return true;
