@@ -184,9 +184,11 @@ Svg.prototype.createAndSetFrame = function() {
 	
 	var obj = this.getSideWall(top, true);
 	obj.opt.type = 'Frame';
+	this.item.push(obj);
 
 	var obj = this.getSideWall(top, false);
 	obj.opt.type = 'Frame';
+	this.item.push(obj);
 };
 
 Svg.prototype.getSideWall = function(y, isLeft) {
