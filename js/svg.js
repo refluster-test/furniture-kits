@@ -340,11 +340,12 @@ Svg.prototype.getAdjItems = function(x, y) {
 	var area = {top: 0, bottom: this.height, left: 0, right: this.width};
 
 	$.each(this.item, function(i, it) {
-		var bbox = it.getBBox();
-		if (it['0']) {
-			bbox = it['0'].opt.g.getBBox();
-			console.log(bbox);
+        var bbox = it.getBBox();
+        if (it['0']) {
+            bbox = it['0'].opt.g.getBBox();
+            console.log(bbox);
 		}
+		var a = it.opt.area;
 		var a = {
 			top: bbox.y,
 			bottom: bbox.y2,
@@ -386,5 +387,22 @@ Svg.prototype.getViewPosition = function(x, y, z) {
 };
 
 Svg.prototype.insertObjToScene = function(obj) {
-	this.item.push(obj);
+	function getXZ(obj) {
+		var x = (obj['0'] ? obj['0']: obj).getBBox().cx;
+		var z = this.type[obj.opt.type].zIndex;
+		return {x: x, z: z};
+	}
+
+	var xz = getXZ.call(this, obj);
+	var insIdx = 0;
+
+	$.each(this.item, function(i, o) {
+		if (true) {
+			insIdx = 0;
+			return false;
+		}
+	}.bind(this));
+
+	this.item.splice(insIdx, 0, obj);
+	obj.insertBefore(this.item[insIdx]);
 };
