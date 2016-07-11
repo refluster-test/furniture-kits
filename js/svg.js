@@ -340,7 +340,18 @@ Svg.prototype.getAdjItems = function(x, y) {
 	var area = {top: 0, bottom: this.height, left: 0, right: this.width};
 
 	$.each(this.item, function(i, it) {
-		var a = it.opt.area;
+		var bbox = it.getBBox();
+		if (it['0']) {
+			bbox = it['0'].opt.g.getBBox();
+			console.log(bbox);
+		}
+		var a = {
+			top: bbox.y,
+			bottom: bbox.y2,
+			left: bbox.x,
+			right: bbox.x2,
+		};
+
 		if (area.top < a.bottom && x >= a.left && x <= a.right && a.bottom < y) {
 			res.top = it;
 			area.top = a.bottom;
