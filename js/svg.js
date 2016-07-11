@@ -292,8 +292,8 @@ Svg.prototype.setWallHorizontal = function(x, y) {
 		return false;
 	}
 
-	var left = adj.left.opt.area.right;
-	var right = adj.right.opt.area.left;
+	var left = (adj.left['0'] ? adj.left['0']: adj.left).getBBox().x2;
+	var right = (adj.right['0'] ? adj.right['0']: adj.right).getBBox().x;
 
 	var obj = this.get3dBox(y, left, y  + this.wallWidth, right);
 	obj.opt.type = 'WallHorizontal';
@@ -308,8 +308,8 @@ Svg.prototype.setWallVertical = function(x, y) {
 		return false;
 	}
 
-	var top = adj.top.opt.area.bottom;
-	var bottom = adj.bottom.opt.area.top;
+	var top = (adj.top['0'] ? adj.top['0']: adj.top).getBBox().y2;
+	var bottom = (adj.bottom['0'] ? adj.bottom['0']: adj.bottom).getBBox().y;
 
 	var obj = this.get3dBox(top, x, bottom, x + this.wallWidth);
 	obj.opt.type = 'WallVertical';
@@ -324,7 +324,7 @@ Svg.prototype.setHanger = function(x, y) {
 		return false;
 	}
 
-	var top = adj.top.opt.area.bottom;
+	var top = (adj.top['0'] ? adj.top['0']: adj.top).getBBox().y2;
 	var width = 200;
 	var height = 300;
 
@@ -339,13 +339,8 @@ Svg.prototype.getAdjItems = function(x, y) {
 	var res = {};
 	var area = {top: 0, bottom: this.height, left: 0, right: this.width};
 
-	$.each(this.item, function(i, it) {
-        var bbox = it.getBBox();
-        if (it['0']) {
-            bbox = it['0'].opt.g.getBBox();
-            console.log(bbox);
-		}
-		var a = it.opt.area;
+	$.each(this.item, function(i, obj) {
+		var bbox = (obj['0'] ? obj['0']: obj).getBBox();
 		var a = {
 			top: bbox.y,
 			bottom: bbox.y2,
@@ -354,19 +349,19 @@ Svg.prototype.getAdjItems = function(x, y) {
 		};
 
 		if (area.top < a.bottom && x >= a.left && x <= a.right && a.bottom < y) {
-			res.top = it;
+			res.top = obj;
 			area.top = a.bottom;
 		}
 		if (area.bottom > a.top && x >= a.left && x <= a.right && a.top > y) {
-			res.bottom = it;
+			res.bottom = obj;
 			area.bottom = a.top;
 		}
 		if (area.left < a.right && y >= a.top && y <= a.bottom && a.right < x) {
-			res.left = it;
+			res.left = obj;
 			area.left = a.right;
 		}
 		if (area.right > a.left && y >= a.top && y <= a.bottom && a.left > x) {
-			res.right = it;
+			res.right = obj;
 			area.right = a.left;
 		}
 	});
