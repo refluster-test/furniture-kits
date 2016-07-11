@@ -181,27 +181,27 @@ Svg.prototype.createAndSetFrame = function() {
 
 	var obj = this.get3dBox(top, left, top + this.wallWidth, right);
 	obj.opt.type = 'Frame';
-	this.item.push(obj);
+	this.insertObjToScene(obj);
 
 	var obj = this.get3dBox(top, left, bottom, left + this.wallWidth);
 	obj.opt.type = 'Frame';
-	this.item.push(obj);
+	this.insertObjToScene(obj);
 
 	var obj = this.get3dBox(bottom, left, bottom + this.wallWidth, right);
 	obj.opt.type = 'Frame';
-	this.item.push(obj);
+	this.insertObjToScene(obj);
 
 	var obj = this.get3dBox(top, right, bottom, right + this.wallWidth);
 	obj.opt.type = 'Frame';
-	this.item.push(obj);
+	this.insertObjToScene(obj);
 	
 	var obj = this.getSideWall(top, true);
 	obj.opt.type = 'Frame';
-	this.item.push(obj);
+	this.insertObjToScene(obj);
 
 	var obj = this.getSideWall(top, false);
 	obj.opt.type = 'Frame';
-	this.item.push(obj);
+	this.insertObjToScene(obj);
 };
 
 Svg.prototype.getSideWall = function(y, isLeft) {
@@ -297,7 +297,7 @@ Svg.prototype.setWallHorizontal = function(x, y) {
 
 	var obj = this.get3dBox(y, left, y  + this.wallWidth, right);
 	obj.opt.type = 'WallHorizontal';
-	this.item.push(obj);
+	this.insertObjToScene(obj);
 	return true;
 };
 
@@ -313,7 +313,7 @@ Svg.prototype.setWallVertical = function(x, y) {
 
 	var obj = this.get3dBox(top, x, bottom, x + this.wallWidth);
 	obj.opt.type = 'WallVertical';
-	this.item.push(obj);
+	this.insertObjToScene(obj);
 	return true;
 };
 
@@ -331,7 +331,7 @@ Svg.prototype.setHanger = function(x, y) {
 	var obj = this.get3dPlain(top, x, top + height, x + width, 0);
 	obj.opt.type = "Hanger";
 	obj.attr(this.wallAttr);
-	this.item.push(obj);
+	this.insertObjToScene(obj);
 	return true;
 };
 
@@ -383,4 +383,8 @@ Svg.prototype.getViewPosition = function(x, y, z) {
 	var newY = parseInt((y - camY)*r + camY);
 
 	return {x: newX, y:newY};
+};
+
+Svg.prototype.insertObjToScene = function(obj) {
+	this.item.push(obj);
 };
