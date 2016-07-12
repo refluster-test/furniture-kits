@@ -2,11 +2,8 @@ var Svg = function(left, top, width, height, svg, state) {
 	this.svg = svg;
 	this.width = width;
 	this.height = height;
-	this.state = state;
-	this.dragItem = undefined;
 	this.wallWidth = 30;
 	this.zMax = 100;
-	this.insOrder = 0;
 
 	this.type = {
 		'Frame': {
@@ -32,16 +29,25 @@ var Svg = function(left, top, width, height, svg, state) {
 		},
 	};
 
+	this.init(state);
+};
+
+Svg.prototype.init = function() {
+	this.dragItem = undefined;
+	this.insOrder = 0;
+	this.state = state;
+
+	this.item = [];
+
 	this.wallAttr = {
 		stroke: "#000",
 		strokeWidth: 1,
 		fill: this.state.config.wallColor,
 	};
 
-	this.item = [];
 	this.createAndSetFrame();
 
-	var itemHist = this.state.item.sort(function(a, b) {
+	itemHist = this.state.item.sort(function(a, b) {
 		if (a.insOrder < b.insOrder) return -1;
 		if (a.insOrder > b.insOrder) return 1;
 		return 0;
@@ -52,9 +58,6 @@ var Svg = function(left, top, width, height, svg, state) {
 		this.type[_it.type].set(_it.pos.x, _it.pos.y);
 		this.dragItem = undefined;
 	}.bind(this));
-};
-
-Svg.prototype.init = function() {
 };
 
 Svg.prototype.createItem = function(type) {
