@@ -387,37 +387,62 @@ Svg.prototype.getViewPosition = function(x, y, z) {
 Svg.prototype.insertObjToScene = function(obj) {
 	function getXYZ(obj) {
 		var x = (obj['0'] ? obj['0']: obj).getBBox().cx;
-		var y = (obj['0'] ? obj['0']: obj).getBBox().cx;
+		var y = (obj['0'] ? obj['0']: obj).getBBox().cy;
 		var z = this.type[obj.opt.type].zIndex;
 		return {x: x, y: y, z: z};
 	}
 
+	var bbox = (obj['0'] ? obj['0']: obj).getBBox();
 	var xyz = getXYZ.call(this, obj);
-	var insIdx = this.item.length;
+	var adj = this.getAdjItems(xyz.x, xyz.y);
 
-	var dx = Math.abs(xyz.x - this.width/2);
-	var dy = Math.abs(xyz.y - this.height/2);
-	if (xyz.x > xyz.y) {
-		var dx = Math.abs(xyz.x - this.width/2);
-	} else {
-		var dy = Math.abs(xyz.y - this.height/2);
+	var lower = [];
+	var upper = [];
+
+	if (adj.top) {
+		if (bbox.y < this.height/2) {
+			lower.push(adj.top);
+		} else {
+			upper.push(adj.top);
+		}
 	}
 
-	$.each(this.item, function(i, o) {
-		var _xyz = getXYZ.call(this, o);
-		var _dx = Math.abs(_xyz.x - this.width/2);
-		var _dy = Math.abs(_xyz.y - this.height/2);
+	if (adj.bottom) {
+		if (bbox.y2 < this.height/2) {
+			upper.push(adj.bottom);
+		} else {
+			lower.push(adj.bottom);
+		}
+	}
 
-		if (xyz.z > _xyz.z) {
-			insIdx = i;
-			obj.insertBefore(this.item[insIdx]);
-			return false;
-		} else if (xyz.z == _xyz.z && _dx + _dy < dx + dy) {
-			insIdx = i;
-			obj.insertBefore(this.item[insIdx]);
-			return false;
+	if (adj.left) {
+		if (bbox.x < this.width/2) {
+			lower.push(adj.left);
+		} else {
+			upper.push(adj.left);
+		}
+	}
+
+	if (adj.right) {
+		if (bbox.x2 < this.width/2) {
+			upper.push(adj.right);
+		} else {
+			lower.push(adj.right);
+		}
+	}
+
+	var idx = 0;
+	$.each(lower, function(i, lo) {
+		var _idx = this.item.indexOf(lo);
+		if (idx < _idx) {
+			idx = _idx;
 		}
 	}.bind(this));
 
-	this.item.splice(insIdx, 0, obj);
+	if (this.item.length != 0) {
+		this.item.splice(idx + 1, 0, obj);
+		obj.insertAfter(this.item[idx]);
+	} else {
+		this.item.push(obj);
+	}
 };
