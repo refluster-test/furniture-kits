@@ -382,22 +382,39 @@ Svg.prototype.getViewPosition = function(x, y, z) {
 };
 
 Svg.prototype.insertObjToScene = function(obj) {
-	function getXZ(obj) {
+	function getXYZ(obj) {
 		var x = (obj['0'] ? obj['0']: obj).getBBox().cx;
+		var y = (obj['0'] ? obj['0']: obj).getBBox().cx;
 		var z = this.type[obj.opt.type].zIndex;
-		return {x: x, z: z};
+		return {x: x, y: y, z: z};
 	}
 
-	var xz = getXZ.call(this, obj);
-	var insIdx = 0;
+	var xyz = getXYZ.call(this, obj);
+	var insIdx = this.item.length;
+
+	var dx = Math.abs(xyz.x - this.width/2);
+	if (xyz.x > xyz.y) {
+		var dx = Math.abs(xyz.x - this.width/2);
+	} else {
+		var dy = Math.abs(xyz.y - this.height/2);
+	}
 
 	$.each(this.item, function(i, o) {
-		if (true) {
-			insIdx = 0;
+		var _xyz = getXYZ.call(this, o);
+		var _dx = Math.abs(_xyz.x - this.width/2);
+		var _dy = Math.abs(_xyz.y - this.height/2);
+
+		if (_dx < dx) {
+			insIdx = i;
 			return false;
 		}
 	}.bind(this));
 
+	if (this.item.length > 2) {
+		insIdx = 2;
+	};
+
+	console.log(insIdx);
 	this.item.splice(insIdx, 0, obj);
 	obj.insertBefore(this.item[insIdx]);
 };
