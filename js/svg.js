@@ -32,12 +32,13 @@ var Svg = function(left, top, width, height, svg, state) {
 	this.init(state);
 };
 
-Svg.prototype.init = function() {
+Svg.prototype.init = function(state) {
 	this.dragItem = undefined;
 	this.insOrder = 0;
 	this.state = state;
 
 	this.item = [];
+	this.svg.clear();
 
 	this.wallAttr = {
 		stroke: "#000",
@@ -453,5 +454,5 @@ Svg.prototype.toJson = function() {
 };
 
 Svg.prototype.fromJson = function(s) {
-	console.log(s);
+	this.init(s);
 };
