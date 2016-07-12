@@ -79,6 +79,8 @@ Apl.prototype.hMove = function(e, p) {
 
 Apl.prototype.saveState = function(e) {
 	console.log('press save');
+	console.log(this.svg.toJson());
+	console.log(JSON.stringify(this.svg.toJson()));
 };
 
 $(function() {

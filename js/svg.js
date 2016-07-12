@@ -2,7 +2,8 @@ var Svg = function(left, top, width, height, svg) {
 	this.svg = svg;
 	this.width = width;
 	this.height = height;
-	this.state = new Database().restore();
+	this.db = new Database();
+	this.state = this.db.restore();
 	this.dragItem = undefined;
 	this.wallWidth = 30;
 	this.zMax = 100;
@@ -416,4 +417,16 @@ Svg.prototype.insertObjToScene = function(obj) {
 	} else {
 		this.item.push(obj);
 	}
+};
+
+Svg.prototype.toJson = function() {
+	var s = [];
+
+	$.each(this.item, function(i, d) {
+		var bbox = (d['0']? d['0']: d).getBBox();
+		s.push({type: d.opt.type,
+				pos: {x: bbox.cx, y: bbox.cy}});
+	});
+	return {config: this.state.config,
+			item: s};
 };
