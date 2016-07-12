@@ -88,11 +88,20 @@ Apl.prototype.saveState = function(e) {
 	console.log(JSON.stringify(this.svg.toJson()));
 };
 
+Apl.prototype.restoreState = function(s) {
+	console.log('press restore');
+//	this.svg.fromJson(JSON.parse(s));
+};
+
 $(function() {
 	var s = '{"config":{"width":800,"height":600,"wallColor":"#bb88ee","windowColor":"","leftSide":200,"rightSide":250},"item":[{"type":"WallHorizontal","pos":{"x":142,"y":233},"insOrder":8},{"type":"WallVertical","pos":{"x":265,"y":114},"insOrder":6},{"type":"WallHorizontal","pos":{"x":295,"y":628},"insOrder":9},{"type":"WallHorizontal","pos":{"x":295,"y":417},"insOrder":10},{"type":"WallVertical","pos":{"x":625,"y":114},"insOrder":11},{"type":"Hanger","pos":{"x":381,"y":114},"insOrder":7}]}'
-	var apl = new Apl(s);
+	var apl = new Apl();
 
 	$('#save').click(function() {
 		apl.saveState();
+	});
+	
+	$('#restore').click(function() {
+		apl.restoreState(s);
 	});
 });
