@@ -30,6 +30,8 @@ var Apl = function() {
 	$('#svg').bind('touchstart', this.hDown.bind(this));
 	$('#svg').bind('touchend', this.hUp.bind(this));
 	$('#svg').bind('touchmove', this.hMove.bind(this));
+
+	$('#save').click(this.saveState.bind(this));
 };
 
 Apl.prototype.hDown = function(e) {
@@ -73,6 +75,10 @@ Apl.prototype.hMove = function(e, p) {
 		this.svg.move(x, y);
 	}
 	e.preventDefault();
+};
+
+Apl.prototype.saveState = function(e) {
+	console.log('press save');
 };
 
 $(function() {
