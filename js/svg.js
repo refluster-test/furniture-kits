@@ -54,6 +54,9 @@ var Svg = function(left, top, width, height, svg, state) {
 	}.bind(this));
 };
 
+Svg.prototype.init = function() {
+};
+
 Svg.prototype.createItem = function(type) {
 	return this.type[type].create();
 };
@@ -444,4 +447,8 @@ Svg.prototype.toJson = function() {
 	});
 	return {config: this.state.config,
 			item: s};
+};
+
+Svg.prototype.fromJson = function(s) {
+	console.log(s);
 };

@@ -90,7 +90,7 @@ Apl.prototype.saveState = function(e) {
 
 Apl.prototype.restoreState = function(s) {
 	console.log('press restore');
-//	this.svg.fromJson(JSON.parse(s));
+	this.svg.fromJson(JSON.parse(s));
 };
 
 $(function() {
