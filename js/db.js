@@ -18,6 +18,7 @@ var Database = function() {
 			{
 				type: 'WallHorizontal',
 				pos: {x: 400, y: 180},
+				insOrder: 0,
 			},
 /*
 			{

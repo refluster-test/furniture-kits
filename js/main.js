@@ -1,6 +1,6 @@
 const WH_RATIO = (3/4);
 
-var Apl = function() {
+var Apl = function(stateJson) {
 	this.dragging = false;
 	this.svg = Snap('#svg');
 
@@ -15,9 +15,14 @@ var Apl = function() {
 
 	$('#svg').attr('viewBox', '0 0 ' + this.svgWidth + ' ' + this.svgHeight);
 
-	this.db = new Database();
+	if (stateJson) {
+		state = JSON.parse(stateJson);
+	} else {
+		this.db = new Database();
+		state = this.db.restore();
+	}
 
-	this.svg = new Svg(0, 0, this.svgWidth, this.svgHeight, this.svg, this.db.restore());
+	this.svg = new Svg(0, 0, this.svgWidth, this.svgHeight, this.svg, state);
 
 	// create menu
 	this.Menu = new Menu(function(type) {
@@ -84,7 +89,8 @@ Apl.prototype.saveState = function(e) {
 };
 
 $(function() {
-	var apl = new Apl();
+	var s = '{"config":{"width":800,"height":600,"wallColor":"#bb88ee","windowColor":"","leftSide":200,"rightSide":250},"item":[{"type":"WallHorizontal","pos":{"x":527,"y":210},"insOrder":6},{"type":"WallHorizontal","pos":{"x":212.5,"y":344},"insOrder":9},{"type":"WallVertical","pos":{"x":298,"y":454.5},"insOrder":7},{"type":"WallHorizontal","pos":{"x":612.5,"y":270},"insOrder":12},{"type":"WallVertical","pos":{"x":615,"y":318},"insOrder":13},{"type":"WallHorizontal","pos":{"x":612.5,"y":366},"insOrder":8},{"type":"WallVertical","pos":{"x":404,"y":532.5},"insOrder":10},{"type":"Hanger","pos":{"x":577,"y":531},"insOrder":11}]}'
+	var apl = new Apl(s);
 
 	$('#save').click(function() {
 		apl.saveState();

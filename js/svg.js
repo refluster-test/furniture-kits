@@ -6,6 +6,7 @@ var Svg = function(left, top, width, height, svg, state) {
 	this.dragItem = undefined;
 	this.wallWidth = 30;
 	this.zMax = 100;
+	this.insOrder = 0;
 
 	this.type = {
 		'Frame': {
@@ -39,7 +40,14 @@ var Svg = function(left, top, width, height, svg, state) {
 
 	this.item = [];
 	this.createAndSetFrame();
-	$.each(this.state.item, function(idx, _it) {
+
+	var itemHist = this.state.item.sort(function(a, b) {
+		if (a.insOrder < b.insOrder) return -1;
+		if (a.insOrder > b.insOrder) return 1;
+		return 0;
+	});
+
+	$.each(itemHist, function(idx, _it) {
 		var it = this.createDraggingItem(_it.type);
 		this.type[_it.type].set(_it.pos.x, _it.pos.y);
 		this.dragItem = undefined;
@@ -125,6 +133,7 @@ Svg.prototype.get3dBox = function(top, left, bottom, right) {
 	g.opt = {
 		g: g,
 		area: {top: top, bottom: bottom, left: left, right: right},
+		insOrder: this.insOrder++,
 	};
 
 	function setOverWall(p1, p2) {
@@ -168,6 +177,7 @@ Svg.prototype.get3dPlain = function(top, left, bottom, right, z) {
 	obj.opt = {
 		g: obj,
 		area: {top: top, bottom: bottom, left: left, right: right},
+		insOrder: this.insOrder++,
 	};
 
 	obj.attr(this.wallAttr);
@@ -247,6 +257,7 @@ Svg.prototype.getSideWall = function(y, isLeft) {
 	g.opt = {
 		g: g,
 		area: {top: 0, bottom: 0, left: 0, right: 0},
+		insOrder: this.insOrder++,
 	};
 
 	return g;
@@ -422,9 +433,14 @@ Svg.prototype.toJson = function() {
 	var s = [];
 
 	$.each(this.item, function(i, d) {
+		if (d.opt.type == 'Frame') {
+			return true;
+		}
 		var bbox = (d['0']? d['0']: d).getBBox();
 		s.push({type: d.opt.type,
-				pos: {x: bbox.cx, y: bbox.cy}});
+				pos: {x: bbox.cx, y: bbox.cy},
+				insOrder: d.opt.insOrder,
+			   });
 	});
 	return {config: this.state.config,
 			item: s};
