@@ -1,9 +1,8 @@
-var Svg = function(left, top, width, height, svg) {
+var Svg = function(left, top, width, height, svg, state) {
 	this.svg = svg;
 	this.width = width;
 	this.height = height;
-	this.db = new Database();
-	this.state = this.db.restore();
+	this.state = state;
 	this.dragItem = undefined;
 	this.wallWidth = 30;
 	this.zMax = 100;

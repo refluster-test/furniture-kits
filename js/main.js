@@ -15,7 +15,9 @@ var Apl = function() {
 
 	$('#svg').attr('viewBox', '0 0 ' + this.svgWidth + ' ' + this.svgHeight);
 
-	this.svg = new Svg(0, 0, this.svgWidth, this.svgHeight, this.svg);
+	this.db = new Database();
+
+	this.svg = new Svg(0, 0, this.svgWidth, this.svgHeight, this.svg, this.db.restore());
 
 	// create menu
 	this.Menu = new Menu(function(type) {
