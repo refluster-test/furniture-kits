@@ -9,22 +9,25 @@ var Svg = function(left, top, width, height, svg) {
 
 	this.type = {
 		'Frame': {
-			zIndex: 0,
+			zIndex: this.zMax,
 		},
 		'WallHorizontal': {
 			zIndex: 0,
 			create: this.createWallHorizontal.bind(this),
 			set: this.setWallHorizontal.bind(this),
+			zIndex: this.zMax/2,
 		},
 		'WallVertical': {
 			zIndex: 0,
 			create: this.createWallVertical.bind(this),
 			set: this.setWallVertical.bind(this),
+			zIndex: this.zMax/2,
 		},
 		'Hanger': {
 			zIndex: 0,
 			create: this.createHanger.bind(this),
 			set: this.setHanger.bind(this),
+			zIndex: this.zMax/2,
 		},
 	};
 
@@ -393,6 +396,7 @@ Svg.prototype.insertObjToScene = function(obj) {
 	var insIdx = this.item.length;
 
 	var dx = Math.abs(xyz.x - this.width/2);
+	var dy = Math.abs(xyz.y - this.height/2);
 	if (xyz.x > xyz.y) {
 		var dx = Math.abs(xyz.x - this.width/2);
 	} else {
@@ -404,7 +408,11 @@ Svg.prototype.insertObjToScene = function(obj) {
 		var _dx = Math.abs(_xyz.x - this.width/2);
 		var _dy = Math.abs(_xyz.y - this.height/2);
 
-		if (_dx < dx) {
+		if (xyz.z > _xyz.z) {
+			insIdx = i;
+			obj.insertBefore(this.item[insIdx]);
+			return false;
+		} else if (xyz.z == _xyz.z && _dx + _dy < dx + dy) {
 			insIdx = i;
 			obj.insertBefore(this.item[insIdx]);
 			return false;
