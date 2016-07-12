@@ -385,16 +385,8 @@ Svg.prototype.getViewPosition = function(x, y, z) {
 };
 
 Svg.prototype.insertObjToScene = function(obj) {
-	function getXYZ(obj) {
-		var x = (obj['0'] ? obj['0']: obj).getBBox().cx;
-		var y = (obj['0'] ? obj['0']: obj).getBBox().cy;
-		var z = this.type[obj.opt.type].zIndex;
-		return {x: x, y: y, z: z};
-	}
-
 	var bbox = (obj['0'] ? obj['0']: obj).getBBox();
-	var xyz = getXYZ.call(this, obj);
-	var adj = this.getAdjItems(xyz.x, xyz.y);
+	var adj = this.getAdjItems(bbox.cx, bbox.cy);
 
 	var lower = [];
 	var upper = [];
