@@ -389,29 +389,17 @@ Svg.prototype.insertObjToScene = function(obj) {
 	var adj = this.getAdjItems(bbox.cx, bbox.cy);
 
 	var lower = [];
-
-	if (adj.top) {
-		if (bbox.y < this.height/2) {
-			lower.push(adj.top);
-		}
+	if (adj.top && bbox.y < this.height/2) {
+		lower.push(adj.top);
 	}
-
-	if (adj.bottom) {
-		if (bbox.y2 > this.height/2) {
-			lower.push(adj.bottom);
-		}
+	if (adj.bottom && bbox.y2 > this.height/2) {
+		lower.push(adj.bottom);
 	}
-
-	if (adj.left) {
-		if (bbox.x < this.width/2) {
-			lower.push(adj.left);
-		}
+	if (adj.left && bbox.x < this.width/2) {
+		lower.push(adj.left);
 	}
-
-	if (adj.right) {
-		if (bbox.x2 > this.width/2) {
-			lower.push(adj.right);
-		}
+	if (adj.right && bbox.x2 > this.width/2) {
+		lower.push(adj.right);
 	}
 
 	var idx = 0;
