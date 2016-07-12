@@ -406,15 +406,10 @@ Svg.prototype.insertObjToScene = function(obj) {
 
 		if (_dx < dx) {
 			insIdx = i;
+			obj.insertBefore(this.item[insIdx]);
 			return false;
 		}
 	}.bind(this));
 
-	if (this.item.length > 2) {
-		insIdx = 2;
-	};
-
-	console.log(insIdx);
 	this.item.splice(insIdx, 0, obj);
-	obj.insertBefore(this.item[insIdx]);
 };
