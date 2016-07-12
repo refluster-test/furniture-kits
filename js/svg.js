@@ -362,19 +362,19 @@ Svg.prototype.getAdjItems = function(x, y) {
 			right: bbox.x2,
 		};
 
-		if (area.top < a.bottom && x >= a.left && x <= a.right && a.bottom < y) {
+		if (area.top < a.bottom && x >= a.left && x <= a.right && a.bottom <= y) {
 			res.top = obj;
 			area.top = a.bottom;
 		}
-		if (area.bottom > a.top && x >= a.left && x <= a.right && a.top > y) {
+		if (area.bottom > a.top && x >= a.left && x <= a.right && a.top >= y) {
 			res.bottom = obj;
 			area.bottom = a.top;
 		}
-		if (area.left < a.right && y >= a.top && y <= a.bottom && a.right < x) {
+		if (area.left < a.right && y >= a.top && y <= a.bottom && a.right <= x) {
 			res.left = obj;
 			area.left = a.right;
 		}
-		if (area.right > a.left && y >= a.top && y <= a.bottom && a.left > x) {
+		if (area.right > a.left && y >= a.top && y <= a.bottom && a.left >= x) {
 			res.right = obj;
 			area.right = a.left;
 		}
@@ -438,7 +438,7 @@ Svg.prototype.toJson = function() {
 		}
 		var bbox = (d['0']? d['0']: d).getBBox();
 		s.push({type: d.opt.type,
-				pos: {x: bbox.cx, y: bbox.cy},
+				pos: {x: bbox.x, y: bbox.y},
 				insOrder: d.opt.insOrder,
 			   });
 	});

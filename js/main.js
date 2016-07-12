@@ -89,7 +89,7 @@ Apl.prototype.saveState = function(e) {
 };
 
 $(function() {
-	var s = '{"config":{"width":800,"height":600,"wallColor":"#bb88ee","windowColor":"","leftSide":200,"rightSide":250},"item":[{"type":"WallHorizontal","pos":{"x":527,"y":210},"insOrder":6},{"type":"WallHorizontal","pos":{"x":212.5,"y":344},"insOrder":9},{"type":"WallVertical","pos":{"x":298,"y":454.5},"insOrder":7},{"type":"WallHorizontal","pos":{"x":612.5,"y":270},"insOrder":12},{"type":"WallVertical","pos":{"x":615,"y":318},"insOrder":13},{"type":"WallHorizontal","pos":{"x":612.5,"y":366},"insOrder":8},{"type":"WallVertical","pos":{"x":404,"y":532.5},"insOrder":10},{"type":"Hanger","pos":{"x":577,"y":531},"insOrder":11}]}'
+	var s = '{"config":{"width":800,"height":600,"wallColor":"#bb88ee","windowColor":"","leftSide":200,"rightSide":250},"item":[{"type":"WallHorizontal","pos":{"x":142,"y":233},"insOrder":8},{"type":"WallVertical","pos":{"x":265,"y":114},"insOrder":6},{"type":"WallHorizontal","pos":{"x":295,"y":628},"insOrder":9},{"type":"WallHorizontal","pos":{"x":295,"y":417},"insOrder":10},{"type":"WallVertical","pos":{"x":625,"y":114},"insOrder":11},{"type":"Hanger","pos":{"x":381,"y":114},"insOrder":7}]}'
 	var apl = new Apl(s);
 
 	$('#save').click(function() {
